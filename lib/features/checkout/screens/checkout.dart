@@ -25,8 +25,11 @@ class CheckoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
 
-    return BlocProvider(
-      create: (_) => sl<CheckoutCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => sl<CheckoutCubit>()),
+        BlocProvider(create: (_) => sl<OrderCubit>()),
+      ],
       child: Scaffold(
         appBar: const TEComAppBar(
           title: Text('Order Review'),
@@ -40,9 +43,6 @@ class CheckoutScreen extends StatelessWidget {
               children: [
                 const CartItems(showAddRemoveButtons: false),
                 const SizedBox(height: TSizes.spaceBtwSections),
-
-                // const TCouponCode(),
-                // const SizedBox(height: TSizes.spaceBtwSections),
 
                 RoundedContainer(
                   borderColor: TColors.dashboardAppbarBackground,
@@ -73,8 +73,7 @@ class CheckoutScreen extends StatelessWidget {
         bottomNavigationBar: BlocBuilder<CartCubit, CartState>(
           builder: (context, cartState) {
             final subTotal = cartState.totalCartPrice;
-            final totalAmount = TPricingCalculator.
-            calculateTotalPrice(subTotal, 'US');
+            final totalAmount = TPricingCalculator.calculateTotalPrice(subTotal, 'US');
 
             return Padding(
               padding: const EdgeInsets.all(TSizes.defaultSpace),
@@ -83,8 +82,10 @@ class CheckoutScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: subTotal > 0
                       ? () {
-                    context.read<OrderCubit>().processOrder(context: context,
-                        totalAmount: totalAmount);
+                    context.read<OrderCubit>().processOrder(
+                      context: context,
+                      totalAmount: totalAmount,
+                    );
                   }
                       : () {
                     TLoaders.warningSnackBar(

@@ -20,7 +20,7 @@ import 'order_repo.dart';
       }
 
       final result =
-      await _db.collection('Users').doc(userId).collection('Orders').get();
+      await _db.collection('users').doc(userId).collection('Orders').get();
       final List<OrderModel> ordersList =
       result.docs.map((documentSnapshot) => OrderModel.fromSnapshot(documentSnapshot)).toList();
       final List<OrderEntity> ordersEntity = ordersList.map((e)=> e.toEntity()).toList();
@@ -32,7 +32,7 @@ import 'order_repo.dart';
 
   Future<Either<Failure, void>> saveOrder(OrderModel order, String userId) async {
     try {
-      await _db.collection('Users')
+      await _db.collection('users')
           .doc(userId).collection('Orders').add(order.toJson());
       return const Right(null);
 

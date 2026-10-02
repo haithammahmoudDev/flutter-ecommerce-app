@@ -56,7 +56,7 @@ class ProductDetailScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     const RatingAndShare(),
+                     RatingAndShare(product: product,),
 
                     ProductMetaData(product: product),
 

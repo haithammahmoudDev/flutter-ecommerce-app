@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fit_store/features/home/presentation/controller/products_cubit/images_cubit.dart';
 import 'package:fit_store/features/settings/data/models/user_model.dart';
@@ -9,6 +10,7 @@ import 'package:fit_store/personalization/presentation/controllers/cart/cart_cub
 import 'package:fit_store/personalization/presentation/controllers/order/order_cubit.dart';
 import 'package:fit_store/personalization/presentation/controllers/theme/theme_controller_provider.dart';
 import 'package:fit_store/routes/custom_routes/user_model_entity.dart';
+import 'package:fit_store/utils/helpers/deep_link_handler.dart';
 import 'package:fit_store/utils/validators/addess_model_adapter.dart';
 import 'package:fit_store/utils/validators/banner_model_adapter.dart';
 import 'package:fit_store/utils/validators/brand_model_adapter.dart';
@@ -19,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:provider/provider.dart'; // 1. Make sure provider is imported
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'common/di/injection_container.dart';
@@ -60,8 +62,22 @@ Future<void> main() async {
 
   TNotificationService();
 
+  // Deep links: open product details from a shared link
+  // Deep links: open product details from a shared link
+  final deepLinkHandler = DeepLinkHandler(
+    fetchProductById: (id) async {
+      final doc = await FirebaseFirestore.instance
+          .collection('Products')
+          .doc(id)
+          .get();
+
+      final data = doc.data();
+      if (!doc.exists || data == null) return null;
+
+      return ProductModel.fromFirebaseJson(data, doc.id).toEntity();
+    },
+  );
   runApp(
-    // 2. Wrap MultiBlocProvider with ChangeNotifierProvider.value
     ChangeNotifierProvider.value(
       value: themeController,
       child: MultiBlocProvider(
@@ -95,4 +111,6 @@ Future<void> main() async {
       ),
     ),
   );
+
+  deepLinkHandler.init();
 }
