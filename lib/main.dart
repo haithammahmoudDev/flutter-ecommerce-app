@@ -20,6 +20,7 @@ import 'package:fit_store/utils/validators/order_model_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -77,6 +78,8 @@ Future<void> main() async {
       return ProductModel.fromFirebaseJson(data, doc.id).toEntity();
     },
   );
+  Stripe.publishableKey = 'pk_test_51ULx0vB6bwxuHciWCgNMl0dc4k9xBljcL3uNNdlrzXc4XWIsAgnFHupiDX8L8TCDXDt6d5ffUUTQK9cKIBLEpn1t00ZPLJzGRj';
+  await Stripe.instance.applySettings();
   runApp(
     ChangeNotifierProvider.value(
       value: themeController,

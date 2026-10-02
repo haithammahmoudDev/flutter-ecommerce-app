@@ -5,6 +5,7 @@ import 'package:fit_store/personalization/data/models/address_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../common/widgets/success_screen/success_screen.dart';
@@ -64,7 +65,111 @@ class OrderCubit extends Cubit<OrderState> {
     );
   }
 
-  /// Process order and save to Firestore, or pay with PayPal (Supabase + WebView)
+  /// Helper method to process Stripe payments
+  Future<void> _processStripePayment({
+    required BuildContext context,
+    required double totalAmount,
+    required CardBrandAcceptance cardBrandAcceptance,
+    required OrderModel order,
+    required String userId,
+  }) async {
+    bool loaderVisible = true;
+    void hideLoader() {
+      if (loaderVisible && context.mounted) {
+        TFullScreenLoader.stopLoading(context);
+      }
+      loaderVisible = false;
+    }
+
+    try {
+      final supabaseAnonKey = dotenv.env['SUPABASE_PUBLISHER_KEY']!;
+      const functionBaseUrl = 'https://uvymvisxemcodavxgoks.supabase.co/functions/v1';
+
+      // 1) Call Edge Function to create Payment Intent
+      final response = await http.post(
+        Uri.parse('$functionBaseUrl/create-stripe-payment'),
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseAnonKey,
+          'Authorization': 'Bearer $supabaseAnonKey',
+        },
+        body: jsonEncode({
+          'amount': totalAmount,
+          'currency': 'usd',
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        throw 'Failed to create payment intent: ${response.body}';
+      }
+
+      final data = jsonDecode(response.body);
+      if (data['error'] != null) {
+        throw data['error'];
+      }
+
+      final clientSecret = data['clientSecret'];
+
+      // Hide full screen loader before showing Stripe Payment Sheet
+      hideLoader();
+      if (!context.mounted) return;
+
+      // 2) Initialize Stripe Payment Sheet
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          merchantDisplayName: 'Fit Store',
+          paymentIntentClientSecret: clientSecret,
+          style: ThemeMode.dark,
+          appearance: const PaymentSheetAppearance(
+            colors: PaymentSheetAppearanceColors(
+              primary: Colors.blue,
+            ),
+          ),
+          cardBrandAcceptance: cardBrandAcceptance,
+        ),
+      );
+
+      // 3) Present Stripe Payment Sheet to the user
+      await Stripe.instance.presentPaymentSheet();
+
+      // 4) Payment successful: show loader, save order to Firestore, and clear cart
+      if (!context.mounted) return;
+      TFullScreenLoader.popUpCircular(context);
+      loaderVisible = true;
+
+      final saved = await _orderRepository.saveOrder(order, userId);
+      saved.fold<void>(
+            (error) => throw error.message,
+            (_) {},
+      );
+
+      final cartCubit = context.read<CartCubit>();
+      cartCubit.clearCart();
+
+      hideLoader();
+      emit(state.copyWith(status: OrderStatusEnum.processingSuccess));
+      _goToSuccess(context);
+    } catch (e) {
+      hideLoader();
+      emit(state.copyWith(
+        status: OrderStatusEnum.error,
+        errorMessage: e.toString(),
+      ));
+      if (context.mounted) {
+        if (e is StripeException) {
+          TLoaders.warningSnackBar(
+            title: 'Payment cancelled',
+            message: e.error.localizedMessage ?? 'Payment was cancelled.',
+            context: context,
+          );
+        } else {
+          TLoaders.errorSnackBar(title: 'Stripe Error', message: e.toString(), context: context);
+        }
+      }
+    }
+  }
+
+  /// Process order based on selected payment method
   Future<void> processOrder({
     required BuildContext context,
     required double totalAmount,
@@ -97,8 +202,10 @@ class OrderCubit extends Cubit<OrderState> {
       items: cartItems.toList(),
     );
 
-    // ================= PayPal flow =================
-    if (paymentMethod.name.toLowerCase() == 'paypal') {
+    final methodName = paymentMethod.name.toLowerCase().replaceAll('_', '').replaceAll(' ', '');
+
+    // ================= 1) PayPal Flow =================
+    if (methodName == 'paypal') {
       bool loaderVisible = true;
       void hideLoader() {
         if (loaderVisible && context.mounted) {
@@ -154,7 +261,7 @@ class OrderCubit extends Cubit<OrderState> {
           return;
         }
 
-        // 3) Capture the approved payment (Using rapid-processor as requested)
+        // 3) Capture the approved payment
         if (!context.mounted) return;
         TFullScreenLoader.popUpCircular(context);
         loaderVisible = true;
@@ -202,7 +309,447 @@ class OrderCubit extends Cubit<OrderState> {
       return;
     }
 
-    // --- Normal flow for the other payment methods ---
+    // ================= 2) Credit Card Flow (يقبل جميع البطاقات عبر Stripe) =================
+    if (methodName == 'creditcard') {
+      await _processStripePayment(
+        context: context,
+        totalAmount: totalAmount,
+        cardBrandAcceptance: const CardBrandAcceptance.all(),
+        order: order,
+        userId: userId,
+      );
+      return;
+    }
+
+    // ================= 3) Vodafone Cash Flow =================
+// ================= 3) Vodafone Cash Flow =================
+    // ================= 3) Vodafone Cash Flow =================
+    if (methodName == 'vodafonecash') {
+      // إيقاف اللودر الابتدائي الذي تم فتحه في بداية الدالة
+      TFullScreenLoader.stopLoading(context);
+
+      final TextEditingController phoneController = TextEditingController();
+      final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 1) Header: Logo + Title + Close Button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Image.asset(
+                              'assets/icons/payment_methods/vc.png',
+                              height: 32,
+                              width: 32,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          const Text(
+                            'Vodafone Cash',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(dialogContext),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 2) Subtitle / Instructions
+                  const Text(
+                    'Enter your mobile wallet number to receive the payment request.',
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // 3) Phone Input Field with Validation
+                  TextFormField(
+                    controller: phoneController,
+                    keyboardType: TextInputType.phone,
+                    maxLength: 11,
+                    decoration: InputDecoration(
+                      labelText: 'Wallet Phone Number',
+                      hintText: '010XXXXXXXX',
+                      prefixIcon: const Icon(Icons.phone_android_rounded),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.red, width: 2),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter your phone number';
+                      }
+                      if (!value.startsWith('01') || value.length != 11) {
+                        return 'Enter a valid 11-digit Vodafone number (01x...)';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+
+                  // 4) Professional Confirm Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      onPressed: () async {
+                        if (formKey.currentState!.validate()) {
+                          Navigator.pop(dialogContext);
+
+                          // بدء التحميل الحقيقي عند الحفظ
+                          TFullScreenLoader.popUpCircular(context);
+
+                          final result = await _orderRepository.saveOrder(order, userId);
+
+                          result.fold((error) {
+                            TFullScreenLoader.stopLoading(context);
+                            emit(state.copyWith(
+                              status: OrderStatusEnum.error,
+                              errorMessage: error.message,
+                            ));
+                            TLoaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
+                          }, (_) {
+                            cartCubit.clearCart();
+                            TFullScreenLoader.stopLoading(context);
+                            emit(state.copyWith(status: OrderStatusEnum.processingSuccess));
+                            _goToSuccess(context);
+                          });
+                        }
+                      },
+                      child: const Text(
+                        'Confirm & Pay',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+
+    // ================= 4) Fawry Flow (Simulation) =================
+    if (methodName == 'fawry') {
+      // إيقاف اللودر الابتدائي الذي تم فتحه في بداية الدالة
+      TFullScreenLoader.stopLoading(context);
+
+      final String mockRefNumber = '789${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
+
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 1) Header: Logo + Title + Close Button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.orange.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Image.asset(
+                            'assets/icons/payment_methods/Fawry-Logo.jpg.webp',
+                            height: 32,
+                            width: 32,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.payment_rounded, color: Colors.orange),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'FawryPay',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(dialogContext),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // 2) Instructions
+                const Text(
+                  'Please use the reference number below to complete your payment at any Fawry outlet or via MyFawry App:',
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+                const SizedBox(height: 20),
+
+                // 3) Reference Number Box
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.orange.shade50,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.orange.shade300, width: 1.5),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Reference Number',
+                        style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        mockRefNumber,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2.5,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // 4) Simulate Payment Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(dialogContext);
+
+                      // بدء التحميل الحقيقي عند الحفظ
+                      TFullScreenLoader.popUpCircular(context);
+
+                      final result = await _orderRepository.saveOrder(order, userId);
+
+                      result.fold((error) {
+                        TFullScreenLoader.stopLoading(context);
+                        emit(state.copyWith(
+                          status: OrderStatusEnum.error,
+                          errorMessage: error.message,
+                        ));
+                        TLoaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
+                      }, (_) {
+                        cartCubit.clearCart();
+                        TFullScreenLoader.stopLoading(context);
+                        emit(state.copyWith(status: OrderStatusEnum.processingSuccess));
+                        _goToSuccess(context);
+                      });
+                    },
+                    child: const Text(
+                      'I Have Paid (Simulate Success)',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+    // ================= 5) InstaPay Flow (Simulation) =================
+    if (methodName == 'instapay') {
+      TFullScreenLoader.stopLoading(context);
+
+      final TextEditingController ipaController = TextEditingController();
+      final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 1) Header: Logo + Title + Close Button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.purple.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(Icons.account_balance_wallet_rounded, color: Colors.purple, size: 28),
+                          ),
+                          const SizedBox(width: 12),
+                          const Text(
+                            'InstaPay',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(dialogContext),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 2) Instructions
+                  const Text(
+                    'Enter your InstaPay address (IPA) or username to receive the transfer request:',
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // 3) IPA Input Field
+                  TextFormField(
+                    controller: ipaController,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      labelText: 'InstaPay Address (IPA)',
+                      hintText: 'username@instapay',
+                      prefixIcon: const Icon(Icons.alternate_email_rounded),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.purple, width: 2),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter your InstaPay address';
+                      }
+                      if (!value.contains('@')) {
+                        return 'Enter a valid IPA (e.g. name@instapay)';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+
+                  // 4) Simulate Payment Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purple, // لون مميز لـ InstaPay
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      onPressed: () async {
+                        if (formKey.currentState!.validate()) {
+                          Navigator.pop(dialogContext);
+
+                          TFullScreenLoader.popUpCircular(context);
+
+                          final result = await _orderRepository.saveOrder(order, userId);
+
+                          result.fold((error) {
+                            TFullScreenLoader.stopLoading(context);
+                            emit(state.copyWith(
+                              status: OrderStatusEnum.error,
+                              errorMessage: error.message,
+                            ));
+                            TLoaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
+                          }, (_) {
+                            cartCubit.clearCart();
+                            TFullScreenLoader.stopLoading(context);
+                            emit(state.copyWith(status: OrderStatusEnum.processingSuccess));
+                            _goToSuccess(context);
+                          });
+                        }
+                      },
+                      child: const Text(
+                        'Pay via InstaPay (Simulate)',
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+
+    // --- Normal flow for Cash on Delivery ---
     final result = await _orderRepository.saveOrder(order, userId);
     result.fold((error) {
       TFullScreenLoader.stopLoading(context);

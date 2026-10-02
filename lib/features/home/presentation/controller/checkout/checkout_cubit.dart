@@ -10,11 +10,11 @@ import 'checkout_state.dart';
 class CheckoutCubit extends Cubit<CheckoutState> {
   CheckoutCubit() : super(CheckoutState.initial());
 
-   void selectPaymentMethod(PaymentMethodModel paymentMethod) {
+  void selectPaymentMethod(PaymentMethodModel paymentMethod) {
     emit(state.copyWith(selectedPaymentMethod: paymentMethod));
   }
 
-   Future<dynamic> showPaymentMethodsModal(BuildContext context) {
+  Future<dynamic> showPaymentMethodsModal(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       builder: (_) => BlocProvider.value(
@@ -30,38 +30,35 @@ class CheckoutCubit extends Cubit<CheckoutState> {
                   showActionButton: false,
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
+
+                // 1) PayPal
                 TPaymentTile(
                   paymentMethod: PaymentMethodModel(name: 'Paypal', image: TImages.paypal),
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
-                TPaymentTile(
-                  paymentMethod: PaymentMethodModel(name: 'Google Pay', image: TImages.googlePay),
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems / 2),
-                TPaymentTile(
-                  paymentMethod: PaymentMethodModel(name: 'Apple Pay', image: TImages.applePay),
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems / 2),
-                TPaymentTile(
-                  paymentMethod: PaymentMethodModel(name: 'VISA', image: TImages.visa),
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems / 2),
-                TPaymentTile(
-                  paymentMethod: PaymentMethodModel(name: 'Master Card', image: TImages.masterCard),
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems / 2),
-                TPaymentTile(
-                  paymentMethod: PaymentMethodModel(name: 'Paytm', image: TImages.paytm),
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems / 2),
-                TPaymentTile(
-                  paymentMethod: PaymentMethodModel(name: 'Paystack', image: TImages.paystack),
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems / 2),
+
+                // 2) Credit Card (الشاملة لكل البطاقات عبر Stripe)
                 TPaymentTile(
                   paymentMethod: PaymentMethodModel(name: 'Credit Card', image: TImages.creditCard),
                 ),
-                const SizedBox(height: TSizes.spaceBtwSections),
+                const SizedBox(height: TSizes.spaceBtwItems / 2),
+
+                // 3) Vodafone Cash
+                TPaymentTile(
+                  paymentMethod: PaymentMethodModel(name: 'Vodafone Cash', image: 'assets/icons/payment_methods/vc.png'),
+                ),
+
+                const SizedBox(height: TSizes.spaceBtwItems / 2),
+                // داخل دالة showPaymentMethodsModal في CheckoutCubit
+                TPaymentTile(
+                  paymentMethod: PaymentMethodModel(name: 'Fawry', image: 'assets/icons/payment_methods/Fawry-Logo.jpg.webp'),
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems / 2),
+                TPaymentTile(
+                  paymentMethod: PaymentMethodModel(name: 'InstaPay',
+                      image: 'assets/icons/payment_methods/cee7c78a0483d165342d302ad395cf343be0fb861de76174e0d2a99e68bad6aa_600 (1).webp'),
+                ),
+                const SizedBox(height: TSizes.spaceBtwItems / 2),
               ],
             ),
           ),

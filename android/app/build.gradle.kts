@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId = "com.haitham.fitstore2026"
-        minSdk = flutter.minSdkVersion
+        minSdk = flutter.minSdkVersion // تأكد أن الـ minSdk في ملف local.properties أو gradle.properties مضبوط على 21 على الأقل
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
