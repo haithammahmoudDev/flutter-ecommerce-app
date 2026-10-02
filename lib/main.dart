@@ -25,7 +25,7 @@ import 'app.dart';
 import 'common/di/injection_container.dart';
 import 'common/local_storage/local_storage.dart';
 import 'common/preferences/preferences_manager.dart';
-import 'common/preferences/save_user_by_hive.dart';
+import 'common/preferences/local_reo.dart';
 import 'data/services/notifications/notification_service.dart';
 import 'features/auth/data/models/user_model.dart';
 import 'features/cart/models/cart_item_model.dart';

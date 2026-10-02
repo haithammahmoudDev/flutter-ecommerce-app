@@ -22,6 +22,18 @@ enum PaymentMethods {paypal, googlepay, applePay, visa, masterCard, creditCard, 
 /// 1. نوع المنتج (منفرد أو يحتوي على خيارات ومتغيرات)
 enum ProductType { single, variable }
 enum ProductsStatus { initial, loading, success, error }
+enum BannerTargetType {
+  none,
+  store,
+  product,
+  category,
+  external;
+
+  bool get requiresTarget =>
+      this == BannerTargetType.product ||
+          this == BannerTargetType.category ||
+          this == BannerTargetType.external;
+}
 
 
 

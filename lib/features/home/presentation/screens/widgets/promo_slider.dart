@@ -9,6 +9,7 @@ import '../../../../../../common/widgets/custom_shapes/containers/circular_conta
 import '../../../../../../common/widgets/images/t_rounded_image.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/sizes.dart';
+import '../../../../../../utils/constants/enums.dart';
 import '../../../../../common/di/injection_container.dart';
 
 class TPromoSlider extends StatelessWidget {
@@ -94,11 +95,37 @@ class TPromoSlider extends StatelessWidget {
             },
           ),
           items: banners
-              .map((banner) => TRoundedImage(imageUrl: banner.imageUrl,
-              onPressed: (){
-                Navigator.pushNamed(context, banners[currentIndex].targetScreen);
-              },
-              isNetworkImage: true))
+              .map((banner) => TRoundedImage(
+            imageUrl: banner.imageUrl,
+            isNetworkImage: true,
+            onPressed: () {
+              // منطق التوجيه بناءً على الـ targetType القادم من الـ Admin Panel
+              switch (banner.targetType) {
+                case BannerTargetType.none:
+                  break;
+                case BannerTargetType.store:
+                // Navigator.pushNamed(context, '/store-screen');
+                  break;
+                case BannerTargetType.product:
+                  if (banner.targetId.isNotEmpty) {
+                    // Navigator.pushNamed(context, '/product-details',
+                    // arguments: banner.targetId);
+                  }
+                  break;
+                case BannerTargetType.category:
+                  if (banner.targetId.isNotEmpty) {
+                    // Navigator.pushNamed(context, '/sub-categories',
+                    // arguments: banner.targetId);
+                  }
+                  break;
+                case BannerTargetType.external:
+                  if (banner.targetId.isNotEmpty) {
+                    // فتح رابط خارجي URL
+                  }
+                  break;
+              }
+            },
+          ))
               .toList(),
         ),
         const SizedBox(height: TSizes.spaceBtwItems),

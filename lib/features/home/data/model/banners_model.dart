@@ -1,37 +1,71 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../../../../utils/constants/enums.dart';
 import '../../domain/entities/banners_entity.dart';
 
-class BannerModel extends BannerEntity {
+class BannerModel {
+  final String id;
+  final String imageUrl;
+  final bool isActive;
+  final BannerTargetType targetType;
+  final String targetId;
+  final String? targetName;
+
   const BannerModel({
-    required super.imageUrl,
-    required super.targetScreen,
-    required super.active,
+    required this.id,
+    required this.imageUrl,
+    required this.isActive,
+    required this.targetType,
+    required this.targetId,
+    this.targetName,
   });
+
+  /// تحويل الـ Model إلى Entity للاستخدام في الـ Domain / Presentation
+  BannerEntity toEntity() {
+    return BannerEntity(
+      id: id,
+      imageUrl: imageUrl,
+      isActive: isActive,
+      targetType: targetType,
+      targetId: targetId,
+      targetName: targetName,
+    );
+  }
+
+  /// قراءة البيانات من Map القادمة من الـ Database Services
+  factory BannerModel.fromFirebaseJson(Map<String, dynamic> json, {String id = ''}) {
+    BannerTargetType parseTargetType(String? typeStr) {
+      return BannerTargetType.values.firstWhere(
+            (e) => e.name.toLowerCase() == (typeStr ?? '').toLowerCase(),
+        orElse: () => BannerTargetType.none,
+      );
+    }
+
+    return BannerModel(
+      id: json['id'] ?? id,
+      imageUrl: json['imageUrl'] ?? '',
+      isActive: json['isActive'] ?? json['active'] ?? true,
+      targetType: parseTargetType(json['targetType']),
+      targetId: json['targetId'] ?? '',
+      targetName: json['targetName'],
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'imageUrl': imageUrl,
-      'targetScreen': targetScreen,
-      'active': active,
+      'isActive': isActive,
+      'targetType': targetType.name,
+      'targetId': targetId,
+      'targetName': targetName,
     };
   }
 
-  factory BannerModel.fromFirebaseJson(Map<String, dynamic> json) {
-    return BannerModel(
-      imageUrl: json['imageUrl'] ?? '',
-      targetScreen: json['targetScreen'] ?? '',
-      active: json['active'] ?? false,
-    );
-  }
-
-  BannerEntity toEntity() {
-    return BannerEntity(
-      imageUrl: imageUrl,
-      targetScreen: targetScreen,
-      active: active,
-    );
-  }
-
+  static BannerModel empty() => const BannerModel(
+    id: '',
+    imageUrl: '',
+    isActive: false,
+    targetType: BannerTargetType.none,
+    targetId: '',
+  );
 }
-

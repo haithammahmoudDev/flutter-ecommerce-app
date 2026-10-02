@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_store/common/network/firebase/database_services.dart';
 import 'package:fit_store/common/preferences/preferences_manager.dart';
-import 'package:fit_store/common/preferences/save_user_by_hive.dart';
+import 'package:fit_store/common/preferences/local_reo.dart';
 import 'package:fit_store/common/widgets/success_screen/success_screen.dart';
 import 'package:fit_store/features/auth/data/models/user_model.dart';
 import 'package:fit_store/features/auth/domain/repos/verify_email_repo.dart';

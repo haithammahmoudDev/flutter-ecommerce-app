@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fit_store/common/preferences/save_user_by_hive.dart';
+import 'package:fit_store/common/preferences/local_reo.dart';
 import 'package:fit_store/features/home/domain/entities/banners_entity.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/home/domain/repos/home_repo.dart';

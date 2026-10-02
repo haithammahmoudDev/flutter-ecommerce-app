@@ -6,7 +6,7 @@ import '../../features/settings/data/models/user_model_adapter.dart';
 import '../../utils/validators/addess_model_adapter.dart';
 import '../../utils/validators/category_model_adapter.dart';
 import '../../utils/validators/product_attributes_model_adapter.dart';
-import 'save_user_by_hive.dart';
+import 'local_reo.dart';
 import '../../features/cart/models/cart_item_model.dart';
 import '../../features/home/data/model/banners_model.dart';
 import '../../features/home/data/model/product_model.dart';
