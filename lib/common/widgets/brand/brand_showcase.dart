@@ -27,16 +27,13 @@ class TBrandShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // تصفية الصور للتأكد من أنها صالحة وليست فارغة
-    final validImages = images.where((image) => image.isNotEmpty).toList();
+     final validImages = images.where((image) => image.isNotEmpty).toList();
 
-    // إذا لم تكن هناك أي صور نهائياً، قم بإخفاء الكارت بالكامل
-    if (validImages.isEmpty) {
+     if (validImages.isEmpty) {
       return const SizedBox.shrink();
     }
 
-    // تجهيز 3 خانات ثابتة لتنسيق الشكل، وإكمال الخانات الناقصة بنصوص فارغة
-    final paddedImages = List.generate(
+     final paddedImages = List.generate(
       3,
           (index) => index < validImages.length ? validImages[index] : '',
     );
@@ -49,8 +46,7 @@ class TBrandShowcase extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
       child: Column(
         children: [
-          /// -- Brand header with product count and proper cubit provisioning.
-          Brandcard(
+           Brandcard(
             showBorder: false,
             brand: brand,
             onTap: () {
@@ -73,12 +69,10 @@ class TBrandShowcase extends StatelessWidget {
           ),
           const SizedBox(height: TSizes.spaceBtwItems),
 
-          /// -- Up to 3 product thumbnails (with empty padding for missing slots).
-          Row(
+           Row(
             children: paddedImages.map((image) {
               if (image.isEmpty) {
-                // 💡 خانة فارغة شفافة تماماً بدون أي شيمر أو مربعات رمادية
-                return Expanded(
+                 return Expanded(
                   child: Container(
                     height: 100,
                     margin: const EdgeInsets.only(right: TSizes.sm),
@@ -94,7 +88,7 @@ class TBrandShowcase extends StatelessWidget {
   }
 
   Widget _productThumbnail(BuildContext context, String image) {
-    final bool isDark = THelperFunctions.isDarkMode(context);
+    final bool isDark = HelperFunctions.isDarkMode(context);
     return Expanded(
       child: RoundedContainer(
         height: 100,

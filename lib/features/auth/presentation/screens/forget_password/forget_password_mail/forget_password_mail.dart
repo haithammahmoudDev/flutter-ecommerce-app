@@ -1,11 +1,8 @@
 import 'package:fit_store/features/auth/presentation/cubit/reset_password_cubit/reset_password_cubit.dart';
 import 'package:fit_store/features/auth/presentation/screens/forget_password/forget_password_mail/reset_password_screen.dart';
-import 'package:fit_store/features/auth/presentation/screens/signup/verify_email.dart';
-import 'package:fit_store/utils/popups/exports.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import '../../../../../../common/di/injection_container.dart';
 import '../../../../../../common/widgets/buttons/primary_button.dart';
 import '../../../../../../common/widgets/form/form_header_widget.dart';
@@ -14,6 +11,7 @@ import '../../../../../../utils/constants/image_strings.dart';
 import '../../../../../../utils/constants/sizes.dart';
 import '../../../../../../utils/constants/text_strings.dart';
 import '../../../../../../utils/helpers/helper_functions.dart';
+import '../../../../../../utils/popups/loaders.dart';
 
 class ForgetPasswordMailScreen extends StatefulWidget {
   const ForgetPasswordMailScreen({super.key});
@@ -41,7 +39,7 @@ class _ForgetPasswordMailScreenState extends State<ForgetPasswordMailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return BlocProvider(
       create: (context) => sl<ResetPasswordCubit>(),
@@ -50,14 +48,14 @@ class _ForgetPasswordMailScreenState extends State<ForgetPasswordMailScreen> {
           return BlocListener<ResetPasswordCubit, ResetPasswordState>(
             listener: (context, state) {
               if (state is ResetPasswordFailure) {
-                TLoaders.errorSnackBar(
+                Loaders.errorSnackBar(
                   title: 'error',
                   context: context,
                   message: state.errorMessage,
                 );
               }
               if (state is ResetPasswordSuccess) {
-                TLoaders.successSnackBar(
+                Loaders.successSnackBar(
                   title: 'Email sent',
                   context: context,
                   message: 'Email link sent to Reset your Password',
@@ -107,7 +105,7 @@ class _ForgetPasswordMailScreenState extends State<ForgetPasswordMailScreen> {
                                     return 'Enter a valid email address';
                                   }
                                   return null;
-                                }), // تأكد من ربط الـ Controller هنا لكي تعمل دالة الإرسال بشكل صحيح
+                                }),
                                 decoration: const InputDecoration(
                                   label: Text(AppTexts.email),
                                   hintText: AppTexts.email,
@@ -130,7 +128,7 @@ class _ForgetPasswordMailScreenState extends State<ForgetPasswordMailScreen> {
                                           onPressed: () async {
                                             if (_formKey.currentState!
                                                 .validate()) {
-                                               context
+                                              context
                                                   .read<ResetPasswordCubit>()
                                                   .sendPasswordResetEmail(
                                                     email: email.text.trim(),

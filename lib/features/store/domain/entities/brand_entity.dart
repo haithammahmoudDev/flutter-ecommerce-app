@@ -13,6 +13,5 @@ class BrandEntity {
     this.productsCount,
   });
 
-  /// إنشاء كائن كيان فارغ
   static BrandEntity empty() => BrandEntity(id: '', image: '', name: '');
 }

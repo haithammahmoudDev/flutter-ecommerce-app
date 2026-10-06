@@ -19,7 +19,7 @@ class ForgetPasswordBtnWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     //Use for Dark Theme
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return GestureDetector(
       onTap: onTap,

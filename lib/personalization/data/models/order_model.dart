@@ -1,13 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-// NOTE: Verify this import points to the correct OrderEntity for your
-// architecture. If your domain layer lives under `personalization`,
-// update this path accordingly (see explanation below).
 import '../../../features/auth/domain/entities/order_entity.dart';
 import '../../../features/cart/models/cart_item_model.dart';
 import '../../../utils/constants/enums.dart';
 import '../../../utils/helpers/helper_functions.dart';
-import 'address_entity.dart';
 import 'address_model.dart';
 
 class OrderModel {
@@ -33,10 +28,10 @@ class OrderModel {
     this.deliveryDate,
   });
 
-  String get formattedOrderDate => THelperFunctions.getFormattedDate(orderDate);
+  String get formattedOrderDate => HelperFunctions.getFormattedDate(orderDate);
 
   String get formattedDeliveryDate =>
-      deliveryDate != null ? THelperFunctions.getFormattedDate(deliveryDate!) : '';
+      deliveryDate != null ? HelperFunctions.getFormattedDate(deliveryDate!) : '';
 
   String get orderStatusText => status == OrderStatus.delivered
       ? 'Delivered'
@@ -59,7 +54,6 @@ class OrderModel {
     );
   }
 
-  /// دالة الإنشاء من Entity (التحويل العكسي)
   factory OrderModel.fromEntity(OrderEntity entity) {
     return OrderModel(
       id: entity.id,
@@ -78,7 +72,7 @@ class OrderModel {
     return {
       'id': id,
       'userId': userId,
-      'status': status.toString(), // Enum to string
+      'status': status.toString(),
       'totalAmount': totalAmount,
       'orderDate': orderDate,
       'paymentMethod': paymentMethod,
@@ -88,7 +82,6 @@ class OrderModel {
     };
   }
 
-  /// 🛠️ دالة تحويل البيانات من خريطة JSON العادية
   factory OrderModel.fromJson(Map<String, dynamic>? json) {
     if (json == null || json.isEmpty) {
       return OrderModel(
@@ -100,14 +93,12 @@ class OrderModel {
       );
     }
 
-    // معالجة آمنة للتاريخ سواء كان Timestamp أو String
     DateTime _parseDate(dynamic date) {
       if (date is Timestamp) return date.toDate();
       if (date is String) return DateTime.tryParse(date) ?? DateTime.now();
       return DateTime.now();
     }
 
-    // معالجة آمنة لحالة الطلب Enum
     OrderStatus _parseStatus(String? statusStr) {
       return OrderStatus.values.firstWhere(
             (e) => e.toString() == statusStr || e.name == statusStr,
@@ -141,7 +132,6 @@ class OrderModel {
     return OrderModel.fromJson(data).copyWithId(snapshot.id);
   }
 
-  // دالة مساعدة لتحديث المعرّف عند القراءة من الـ Snapshot
   OrderModel copyWithId(String newId) {
     return OrderModel(
       id: newId,

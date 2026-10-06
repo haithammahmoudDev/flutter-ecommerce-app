@@ -54,7 +54,7 @@ class _BrandProductsState extends State<BrandProducts> {
                     );
                   }
                   if (state.brandProducts.isEmpty) {
-                    return const SizedBox.shrink(); // 💡 تم الإخفاء تماماً بدلاً من النص
+                    return const SizedBox.shrink();
                   }
                   return SortableProducts(products: state.brandProducts);
                 },

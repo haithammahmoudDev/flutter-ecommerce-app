@@ -21,25 +21,16 @@ class TVerticalProductShimmer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// هيكل الصورة الخلفية للمنتج (180x180)
             TShimmerEffect(width: 180, height: 180, radius: TSizes.productImageRadius),
             SizedBox(height: TSizes.spaceBtwItems),
-
-            /// هيكل نص عنوان المنتج الرئيسي
             TShimmerEffect(width: 160, height: 15),
             SizedBox(height: TSizes.spaceBtwItems / 2),
-
-            /// هيكل نص اسم الماركة/البراند
             TShimmerEffect(width: 110, height: 12),
             SizedBox(height: TSizes.spaceBtwItems),
-
-            /// هيكل منطقة السعر والزر السفلي
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // هيكل السعر
                 TShimmerEffect(width: 60, height: 20),
-                // هيكل زر الإضافة السريع أسفل البطاقة
                 TShimmerEffect(
                   width: TSizes.iconLg * 1.2,
                   height: TSizes.iconLg * 1.2,

@@ -72,11 +72,11 @@ class _UserAddressScreenState extends State<UserAddressScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.location_off_outlined, // 📍 أيقونة تعبر عن عدم وجود عناوين
+                      Icons.location_off_outlined,
                       size: 64,
                       color: Colors.grey,
                     ),
-                    SizedBox(height: 16), // مسافة بين الأيقونة والنص
+                    SizedBox(height: 16),
                     Text(
                       'No addresses found!',
                       style: TextStyle(
@@ -96,7 +96,7 @@ class _UserAddressScreenState extends State<UserAddressScreen> {
                 itemCount: state.addresses.length,
                 itemBuilder: (context, index) {
                   final address = state.addresses[index];
-                  return TSingleAddress(
+                  return SingleAddress(
                     address: address,
                     onTap: () {
                       context.read<AddressCubit>().selectAddress(address);

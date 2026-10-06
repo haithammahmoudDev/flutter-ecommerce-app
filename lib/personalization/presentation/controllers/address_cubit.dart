@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fit_store/common/preferences/loacal_storage_service.dart';
 import 'package:fit_store/personalization/data/models/address_model.dart';
-import 'package:fit_store/personalization/data/repos/address_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/widgets/texts/section_heading.dart';
@@ -26,141 +25,174 @@ class AddressCubit extends Cubit<AddressState> {
   final countryController = TextEditingController();
   final addressFormKey = GlobalKey<FormState>();
 
-  AddressCubit({required this._addressRepo}) : super( AddressState());
+  AddressCubit({required this._addressRepo}) : super(AddressState());
 
   Future<void> fetchUserAddresses() async {
     emit(state.copyWith(status: AddressStatus.loading));
-    final List<AddressModel>? userAddressesCached = LocalStorageService.addressRepo.getData();
-    final bool isConnectedInternet = await NetworkManager.instance.isConnected();
+    final List<AddressModel>? userAddressesCached = LocalStorageService
+        .addressRepo
+        .getData();
+    final bool isConnectedInternet = await NetworkManager.instance
+        .isConnected();
 
     if (isConnectedInternet) {
       print(userAddressesCached);
       final result = await _addressRepo.fetchUserAddresses();
 
       result.fold(
-            (failure) {
+        (failure) {
           if (userAddressesCached != null && userAddressesCached.isNotEmpty) {
-            final List<AddressEntity> addressEntities = userAddressesCached.map((e) => e.toEntity()).toList();
+            final List<AddressEntity> addressEntities = userAddressesCached
+                .map((e) => e.toEntity())
+                .toList();
             final selected = addressEntities.firstWhere(
-                  (element) => element.selectedAddress,
+              (element) => element.selectedAddress,
               orElse: () => AddressEntity.emptyAddress,
             );
-            emit(state.copyWith(
-              status: AddressStatus.success,
-              addresses: addressEntities,
-              selectedAddress: selected,
-            ));
+            emit(
+              state.copyWith(
+                status: AddressStatus.success,
+                addresses: addressEntities,
+                selectedAddress: selected,
+              ),
+            );
           } else {
-            emit(state.copyWith(
-              status: AddressStatus.error,
-              errorMessage: failure.message,
-            ));
+            emit(
+              state.copyWith(
+                status: AddressStatus.error,
+                errorMessage: failure.message,
+              ),
+            );
           }
         },
-            (successAddresses) {
+        (successAddresses) {
           final selected = successAddresses.firstWhere(
-                (element) => element.selectedAddress,
+            (element) => element.selectedAddress,
             orElse: () => AddressEntity.emptyAddress,
           );
 
-          emit(state.copyWith(
-            status: AddressStatus.success,
-            addresses: successAddresses,
-            selectedAddress: selected,
-          ));
+          emit(
+            state.copyWith(
+              status: AddressStatus.success,
+              addresses: successAddresses,
+              selectedAddress: selected,
+            ),
+          );
         },
       );
     } else {
       if (userAddressesCached != null && userAddressesCached.isNotEmpty) {
-        final List<AddressEntity> addressEntities = userAddressesCached.map((e) => e.toEntity()).toList();
+        final List<AddressEntity> addressEntities = userAddressesCached
+            .map((e) => e.toEntity())
+            .toList();
         final selected = addressEntities.firstWhere(
-              (element) => element.selectedAddress,
+          (element) => element.selectedAddress,
           orElse: () => AddressEntity.emptyAddress,
         );
 
-        emit(state.copyWith(
-          status: AddressStatus.success,
-          addresses: addressEntities,
-          selectedAddress: selected,
-        ));
+        emit(
+          state.copyWith(
+            status: AddressStatus.success,
+            addresses: addressEntities,
+            selectedAddress: selected,
+          ),
+        );
       } else {
-        // لا يوجد إنترنت ولا يوجد كاش
-        emit(state.copyWith(
-          status: AddressStatus.error,
-          errorMessage: "No internet connection, please check your network.",
-        ));
+        emit(
+          state.copyWith(
+            status: AddressStatus.error,
+            errorMessage: "No internet connection, please check your network.",
+          ),
+        );
       }
     }
   }
-
 
   Future<void> selectAddress(AddressEntity newSelectedAddress) async {
     final previousAddresses = state.addresses;
     final previousSelected = state.selectedAddress;
 
     final optimisticList = state.addresses.map((address) {
-      return address.copyWith(selectedAddress: address.id == newSelectedAddress.id);
+      return address.copyWith(
+        selectedAddress: address.id == newSelectedAddress.id,
+      );
     }).toList();
 
-    final optimisticSelected = newSelectedAddress.copyWith(selectedAddress: true);
+    final optimisticSelected = newSelectedAddress.copyWith(
+      selectedAddress: true,
+    );
 
-    emit(state.copyWith(
-      status: AddressStatus.loading,
-      addresses: optimisticList,
-      selectedAddress: optimisticSelected,
-    ));
+    emit(
+      state.copyWith(
+        status: AddressStatus.loading,
+        addresses: optimisticList,
+        selectedAddress: optimisticSelected,
+      ),
+    );
 
     if (!await NetworkManager.instance.isConnected()) {
-      emit(state.copyWith(
-        status: AddressStatus.error,
-        errorMessage: 'لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.',
-        addresses: previousAddresses,
-        selectedAddress: previousSelected,
-      ));
+      emit(
+        state.copyWith(
+          status: AddressStatus.error,
+          errorMessage: 'لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.',
+          addresses: previousAddresses,
+          selectedAddress: previousSelected,
+        ),
+      );
       return;
     }
 
     bool hasError = false;
 
-    if (previousSelected.id.isNotEmpty && previousSelected.id != newSelectedAddress.id) {
-      final result = await _addressRepo.updateSelectedField(previousSelected.id, false);
-      result.fold(
-              (error) {
-            hasError = true;
-            emit(state.copyWith(
-              status: AddressStatus.error,
-              errorMessage: error.message,
-              addresses: previousAddresses,
-              selectedAddress: previousSelected,
-            ));
-          },
-              (_){}
+    if (previousSelected.id.isNotEmpty &&
+        previousSelected.id != newSelectedAddress.id) {
+      final result = await _addressRepo.updateSelectedField(
+        previousSelected.id,
+        false,
       );
+      result.fold((error) {
+        hasError = true;
+        emit(
+          state.copyWith(
+            status: AddressStatus.error,
+            errorMessage: error.message,
+            addresses: previousAddresses,
+            selectedAddress: previousSelected,
+          ),
+        );
+      }, (_) {});
     }
 
     if (hasError) return;
 
-    final selectResult = await _addressRepo.updateSelectedField(newSelectedAddress.id, true);
+    final selectResult = await _addressRepo.updateSelectedField(
+      newSelectedAddress.id,
+      true,
+    );
 
     selectResult.fold(
-          (failure) {
-        emit(state.copyWith(
-          status: AddressStatus.error,
-          errorMessage: failure.message,
-          addresses: previousAddresses,
-          selectedAddress: previousSelected,
-        ));
+      (failure) {
+        emit(
+          state.copyWith(
+            status: AddressStatus.error,
+            errorMessage: failure.message,
+            addresses: previousAddresses,
+            selectedAddress: previousSelected,
+          ),
+        );
       },
-          (_) async {
+      (_) async {
         emit(state.copyWith(status: AddressStatus.success));
         await LocalStorageService.addressRepo.saveData(
-          optimisticList.map((entity) => AddressModel.fromEntity(entity)).toList(),
+          optimisticList
+              .map((entity) => AddressModel.fromEntity(entity))
+              .toList(),
         );
       },
     );
   }
 
-   Future<dynamic> selectNewAddressPopup(BuildContext context) {
+  Future<dynamic> selectNewAddressPopup(BuildContext context) {
     fetchUserAddresses();
 
     return showModalBottomSheet(
@@ -194,7 +226,7 @@ class AddressCubit extends Cubit<AddressState> {
                       itemCount: state.addresses.length,
                       itemBuilder: (_, index) {
                         final address = state.addresses[index];
-                        return TSingleAddress(
+                        return SingleAddress(
                           address: address,
                           onTap: () async {
                             await selectAddress(address);
@@ -230,7 +262,7 @@ class AddressCubit extends Cubit<AddressState> {
     );
   }
 
-   Future<void> addNewAddress() async {
+  Future<void> addNewAddress() async {
     if (!addressFormKey.currentState!.validate()) return;
 
     emit(state.copyWith(status: AddressStatus.loading));
@@ -251,13 +283,15 @@ class AddressCubit extends Cubit<AddressState> {
     final result = await _addressRepo.addAddress(newAddress);
 
     result.fold(
-          (failure) {
-        emit(state.copyWith(
-          status: AddressStatus.error,
-          errorMessage: failure.message,
-        ));
+      (failure) {
+        emit(
+          state.copyWith(
+            status: AddressStatus.error,
+            errorMessage: failure.message,
+          ),
+        );
       },
-          (addressId) async {
+      (addressId) async {
         final addressWithId = newAddress.copyWith(id: addressId);
 
         await selectAddress(addressWithId);
@@ -269,7 +303,7 @@ class AddressCubit extends Cubit<AddressState> {
     );
   }
 
-   void clearFormFields() {
+  void clearFormFields() {
     nameController.clear();
     phoneNumberController.clear();
     streetController.clear();

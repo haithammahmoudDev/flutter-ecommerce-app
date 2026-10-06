@@ -57,7 +57,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
     emit(state.copyWith(favorites: updated));
 
-    TLoaders.customToast(
+    Loaders.customToast(
       message: isAdding
           ? 'Product has been added to the Wishlist.'
           : 'Product has been removed from the Wishlist.',

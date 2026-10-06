@@ -22,19 +22,19 @@ class CartCubit extends Cubit<CartState> {
     final VariationCubit variationCubit = context.read<VariationCubit>();
 
     if (state.productQuantityInCart < 1) {
-      TLoaders.customToast(message: 'Select Quantity', context: context);
+      Loaders.customToast(message: 'Select Quantity', context: context);
       return;
     }
 
      if (product.productType == ProductType.variable.name &&
         variationCubit.state.selectedVariation.id.isEmpty) {
-      TLoaders.customToast(message: 'Select Variation', context: context);
+      Loaders.customToast(message: 'Select Variation', context: context);
       return;
     }
 
     if (product.productType == ProductType.variable.name) {
       if (variationCubit.state.selectedVariation.stock < 1) {
-        TLoaders.warningSnackBar(
+        Loaders.warningSnackBar(
           message: 'Selected variation is out of stock.',
           title: 'Oh Snap!',
           context: context,
@@ -43,7 +43,7 @@ class CartCubit extends Cubit<CartState> {
       }
     } else {
       if (product.stock < 1) {
-        TLoaders.warningSnackBar(
+        Loaders.warningSnackBar(
           message: 'Selected Product is out of stock.',
           title: 'Oh Snap!',
           context: context,
@@ -67,7 +67,7 @@ class CartCubit extends Cubit<CartState> {
       updatedCartItems.add(selectedCartItem);
     }
     await updateCart(updatedCartItems);
-    TLoaders.customToast(
+    Loaders.customToast(
         message: 'Your Product has been added to the Cart.', context: context);
   }
 
@@ -191,7 +191,7 @@ class CartCubit extends Cubit<CartState> {
                 updateCart(updatedCartItems);
 
                 Navigator.of(dialogContext).pop();
-                TLoaders.customToast(
+                Loaders.customToast(
                   message: 'Product removed from the Cart.',
                   context: context,
                 );

@@ -1,5 +1,3 @@
-// Path in project: lib/features/store/data/repos/store_repo_imple.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fit_store/common/errors/failure.dart';
@@ -249,7 +247,6 @@ class StoreRepoImple implements StoreRepo {
     }
   }
 
-  /// 2) جلب منتجات التصنيف محددة بـ 4 عناصر فقط (Limit = 4) مع نظام الكاش والشبكة
   @override
   Future<Either<Failure, List<ProductEntity>>> fetchLimitedProductsForCategory({
     required String categoryId,

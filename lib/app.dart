@@ -17,7 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
         title: 'Starter Template',
         debugShowCheckedModeBanner: false,
         navigatorKey: NavigationService.navigatorKey,
-        themeMode: themeController.themeMode, // هيتحدث تلقائياً حسب الاختيار (System / Light / Dark)
+        themeMode: themeController.themeMode,
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
         onGenerateRoute: AppRoutes.onGenerateRoute,

@@ -19,15 +19,13 @@ class SortableProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AllProductsCubit, AllProductsState>(
       builder: (context, state) {
-        // إذا قام المستخدم بالفرز نأخذ المنتجات المُرتبة من الـ state، وإلا نَعرض القائمة الممررة فوراً
-        final displayProducts = state.products.isNotEmpty ? state.products : products;
+         final displayProducts = state.products.isNotEmpty ? state.products : products;
 
         return Column(
           children: [
-            /// Dropdown
-            DropdownButtonFormField<String>(
+             DropdownButtonFormField<String>(
               decoration: const InputDecoration(prefixIcon: Icon(Iconsax.sort)),
-              value: state.selectedSortOption, // القيمة المخزنة في الـ state (الافتراضية Name)
+              value: state.selectedSortOption,
               onChanged: (value) {
                 if (value != null) {
                   context.read<AllProductsCubit>().sortProducts(value);
@@ -39,7 +37,6 @@ class SortableProducts extends StatelessWidget {
             ),
             const SizedBox(height: TSizes.spaceBtwSections),
 
-            /// Products Grid
             TGridLayout(
               itemCount: displayProducts.length,
               itemBuilder: (_, index) => TProductCardVertical(product: displayProducts[index]),

@@ -10,7 +10,6 @@ import 'package:fit_store/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../controller/products_cubit/products_cubit.dart';
 import '../product_detail/product_detail.dart';
 
@@ -21,7 +20,7 @@ class TProductCardHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
     final productsCubit = context.read<ProductsCubit>();
 
     final bool isVariable =
@@ -95,8 +94,7 @@ class TProductCardHorizontal extends StatelessWidget {
                         ),
                       ),
 
-                      /// -- Sale Tag (نسبة الخصم)
-                      if (salePercentage != null && salePercentage.isNotEmpty)
+                       if (salePercentage != null && salePercentage.isNotEmpty)
                         Positioned(
                           top: 1,
                           left: 0,
@@ -203,8 +201,7 @@ class TProductCardHorizontal extends StatelessWidget {
               ],
             ),
 
-            /// -- Favourite Icon (القلب في أعلى اليمين / الشمال الشرقي للكارت بالكامل)
-            Positioned(
+             Positioned(
               top: 30,
               right: 0,
               child: TFavouriteIcon(productId: product.id),

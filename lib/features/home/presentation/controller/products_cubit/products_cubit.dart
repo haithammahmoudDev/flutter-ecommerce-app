@@ -127,8 +127,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
   }
 
-  /// حساب نطاق الأسعار الأصلية (Regular Prices Range) للمنتج المتغير لعرضها مشطوبة (مع علامة $)
-  String getProductOriginalPriceRange(ProductEntity product) {
+   String getProductOriginalPriceRange(ProductEntity product) {
     if (product.productType == ProductType.single.toString() ||
         product.productVariations == null ||
         product.productVariations!.isEmpty) {

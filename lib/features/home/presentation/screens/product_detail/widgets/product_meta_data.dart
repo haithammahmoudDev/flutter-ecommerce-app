@@ -11,7 +11,6 @@ import '../../../../../../common/widgets/texts/t_product_title_text.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/enums.dart';
 import '../../../../../../utils/constants/sizes.dart';
-import '../../../../../../utils/helpers/helper_functions.dart';
 import '../../../../domain/entities/product_entity.dart';
 
 class ProductMetaData extends StatelessWidget {

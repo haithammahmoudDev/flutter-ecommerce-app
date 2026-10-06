@@ -1,8 +1,5 @@
-/* -- App Text Strings -- */
 
-/// This class contains all the App Text in String formats.
 class AppTexts {
-  // -- GLOBAL Texts
   static const String and = "and";
   static const String tYes = "Yes";
   static const String skip = "Skip";
@@ -22,10 +19,8 @@ class AppTexts {
   static const String forgetPassword = "Forget Password?";
   static const String homeAppbarSubTitle = "Coding With T";
 
-  // -- Splash Screen Text
   static const String tAppName = "Fit Store";
 
-  // -- On Boarding Text
   static const String onBoardingTitle1 = "Build Awesome Apps";
   static const String onBoardingTitle2 = "Learn from YouTube";
   static const String onBoardingTitle3 = "Get Code & Resources";
@@ -39,12 +34,10 @@ class AppTexts {
   static const String onBoardingCounter2 = "2/3";
   static const String onBoardingCounter3 = "3/3";
 
-  // -- Welcome Screen Text
   static const String welcomeTitle = "Build Awesome Apps";
   static const String welcomeSubTitle =
       "Let's put your creativity on the development highway.";
 
-  // -- Login Screen Text
   static const String tLoginTitle = "Welcome Back,";
   static const String tLoginSubTitle =
       "Make it work, make it right, make it fast.";
@@ -58,13 +51,11 @@ class AppTexts {
   static const String tPhoneNumber = "Phone Number";
   static const String tGoogle = "Google";
 
-  // -- Sign Up Screen Text
   static const String tSignUpTitle = "Get On Board!";
   static const String tSignUpSubTitle =
       "Create your profile to start your Journey.";
   static const String tAlreadyHaveAnAccount = "Already have an Account";
 
-  // -- Verify Email Screen Text
   static const String confirmEmail = "Verify your email address!";
   static const String confirmEmailSubTitle =
       "Congratulations! Your Account Awaits: Verify Your Email to Start Shopping and Experience a World of Unrivaled Deals and Personalized Offers.";
@@ -74,28 +65,23 @@ class AppTexts {
   static const String yourAccountCreatedSubTitle =
       "Welcome to Your Application: Your Account is Created, Unleash the Joy of Seamless Online Experience!";
 
-  // -- Forget Password Text
   static const String tForgetPasswordTitle = "Make Selection!";
   static const String tForgetPasswordSubTitle =
       "Select one of the options given below to reset your password.";
   static const String tResetViaEMail = "Reset via Mail Verification";
   static const String tResetViaPhone = "Reset via Phone Verification";
 
-  // -- Forget Password Via Phone - Text
   static const String tForgetPhoneSubTitle =
       "Enter your registered Phone No to receive OTP";
 
-  // -- Forget Password Via E-Mail - Text
   static const String tForgetMailSubTitle =
       "Enter your registered E-Mail to receive OTP";
 
-  // -- OTP Screen - Text
   static const String tOtpTitle = "CO\nDE";
   static const String tOtpSubTitle = "Verification";
   static const String tOtpMessage =
       "Enter the verification code sent on your Phone Number ";
 
-  // -- Phone Number Authentication - Text
   static const String phoneNo = '745-628-5429';
   static const String selectCountry = 'Select Country';
   static const String signupScreenTitle = "signupScreenTitle";
@@ -122,14 +108,12 @@ class AppTexts {
   static const String resendOTP = "Re-Send OTP";
   static const String thenLets = "Then let’s ";
 
-  // -- Email Verification
   static const String tEmailVerificationTitle = "Verify your email address";
   static const String tEmailVerificationSubTitle =
       "We have just send email verification link on your email. Please check email and click on that link to verify your Email address. \n\n If not auto redirected after verification, click on the Continue button.";
   static const String tResendEmailLink = "Resend E-Mail Link";
   static const String tBackToLogin = "Back to login";
 
-  // -- Dashboard Screen - Text
   static const String dashboardTitle = "Hey, Coding with T";
   static const String dashboardHeading = "Explore Courses";
   static const String dashboardSearch = "Search...";
@@ -139,29 +123,24 @@ class AppTexts {
   static const String dashboardBannerSubTitle = "10 Lessons";
   static const String dashboardBannerTitle1 = "Android for Beginners";
 
-  // -- Profile Screen - Text
   static const String profile = "Profile";
   static const String editProfile = "Edit Profile";
   static const String logoutDialogHeading = "Logout";
   static const String profileHeading = "Coding with T";
   static const String profileSubHeading = "superAdmin@codingwitht.com";
 
-  // -- Menu
   static const String menu5 = logout;
   static const String menu1 = "Settings";
   static const String menu4 = "Information";
   static const String menu2 = "Billing Details";
   static const String menu3 = "User Management";
 
-  // -- Update Profile Screen - Text
   static const String delete = "Delete";
   static const String joined = "Joined ";
   static const String joinedAt = " 31 October 2022";
 
-  // -- Validation
   static const String dateOfBirthError = "You must be at least 18 years old.";
 
-  // -- Dashboard 1
   static const String popularProducts = "Popular Products";
   static const String homeAppbarTitle = "Good day for shopping";
 }

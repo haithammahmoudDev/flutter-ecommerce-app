@@ -1,11 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fit_store/utils/popups/exports.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
-
-import '../../../../../utils/constants/image_strings.dart';
-import '../../../../../utils/helpers/network_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/repos/email_auth_repo.dart';
 
 part 'email_auth_event.dart';

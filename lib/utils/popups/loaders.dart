@@ -5,7 +5,7 @@ import 'package:iconsax/iconsax.dart';
  import '../constants/colors.dart';
 import '../helpers/helper_functions.dart';
 
-class TLoaders {
+class Loaders {
   static void hideSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
@@ -26,7 +26,7 @@ class TLoaders {
           margin: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            color: THelperFunctions.isDarkMode(context)
+            color: HelperFunctions.isDarkMode(context)
                 ? TColors.darkerGrey.withValues(alpha: 0.9)
                 : TColors.grey.withValues(alpha: 0.9),
           ),

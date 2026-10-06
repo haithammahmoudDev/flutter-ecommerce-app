@@ -3,7 +3,6 @@ import 'package:fit_store/features/home/presentation/controller/products_cubit/p
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../../../../common/widgets/image_text/image_text_vertical.dart';
 import '../../../../../../common/widgets/texts/section_heading.dart';
 import '../../../../../../utils/constants/colors.dart';

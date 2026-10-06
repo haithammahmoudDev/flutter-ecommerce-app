@@ -9,8 +9,8 @@ import '../../../../utils/helpers/helper_functions.dart';
 import '../../../home/presentation/controller/checkout/checkout_cubit.dart';
 import '../../models/payment_method_model.dart';
 
-class TPaymentTile extends StatelessWidget {
-  const TPaymentTile({super.key, required this.paymentMethod});
+class PaymentTile extends StatelessWidget {
+  const PaymentTile({super.key, required this.paymentMethod});
 
   final PaymentMethodModel paymentMethod;
 
@@ -25,7 +25,7 @@ class TPaymentTile extends StatelessWidget {
       leading: RoundedContainer(
         width: 60,
         height: 40,
-        backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.white : TColors.white,
+        backgroundColor: HelperFunctions.isDarkMode(context) ? TColors.white : TColors.white,
         padding: const EdgeInsets.all(TSizes.sm),
         child: Image(
           image: AssetImage(paymentMethod.image),

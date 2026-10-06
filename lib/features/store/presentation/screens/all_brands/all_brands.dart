@@ -1,5 +1,3 @@
-// Path in project: lib/features/store/presentation/screens/all_brands/all_brands.dart
-
 import 'package:fit_store/common/widgets/appbar/home_appbar.dart';
 import 'package:fit_store/common/widgets/brand/brandCard.dart';
 import 'package:fit_store/common/widgets/layouts/grid_layout.dart';
@@ -10,7 +8,6 @@ import 'package:fit_store/features/store/presentation/screens/all_brands/brand_p
 import 'package:fit_store/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../domain/entities/brand_entity.dart';
 
 class AllBrandsScreen extends StatefulWidget {

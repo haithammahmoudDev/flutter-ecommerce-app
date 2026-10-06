@@ -5,7 +5,7 @@ import '../../common/widgets/loaders/circular_loader.dart';
 import '../constants/colors.dart';
 import '../helpers/helper_functions.dart';
 
- class TFullScreenLoader {
+ class FullScreenLoader {
   static void openLoadingDialog(String text, String animation, BuildContext context) {
     showDialog(
       context: context,
@@ -13,7 +13,7 @@ import '../helpers/helper_functions.dart';
       builder: (_) => PopScope(
         canPop: false,
         child: Container(
-          color: THelperFunctions.isDarkMode(context) ? TColors.darkContainer :
+          color: HelperFunctions.isDarkMode(context) ? TColors.darkContainer :
           TColors.white,
           width: double.infinity,
           height: double.infinity,

@@ -9,8 +9,8 @@ import 'package:iconsax/iconsax.dart';
 import '../../../data/models/address_entity.dart';
 import '../../controllers/address_cubit.dart';
 
-class TSingleAddress extends StatelessWidget {
-  const TSingleAddress({
+class SingleAddress extends StatelessWidget {
+  const SingleAddress({
     super.key,
     required this.address,
     required this.onTap,
@@ -21,7 +21,7 @@ class TSingleAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return BlocBuilder<AddressCubit, AddressState>(
       builder: (context, state) {

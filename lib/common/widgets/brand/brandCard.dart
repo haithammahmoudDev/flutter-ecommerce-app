@@ -3,9 +3,7 @@ import 'package:fit_store/common/widgets/images/t_circular_image.dart';
 import 'package:fit_store/common/widgets/texts/t_brand_title_text_with_verified_icon.dart';
 import 'package:fit_store/features/store/domain/entities/brand_entity.dart';
 import 'package:fit_store/utils/constants/enums.dart';
-import 'package:fit_store/utils/constants/image_strings.dart';
 import 'package:fit_store/utils/constants/sizes.dart';
-import 'package:fit_store/utils/helpers/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

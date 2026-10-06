@@ -1,10 +1,9 @@
-import 'package:fit_store/utils/helpers/exports.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/sizes.dart';
 import '../../../../../../utils/constants/text_strings.dart';
+import '../../../../../../utils/helpers/helper_functions.dart';
 
 class TermsAndConditionOncheckbox extends StatefulWidget {
     TermsAndConditionOncheckbox({super.key, required this.valueChanged,});
@@ -19,7 +18,7 @@ class _TermsAndConditionOncheckboxState extends State<TermsAndConditionOncheckbo
   @override
   Widget build(BuildContext context) {
 
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
     return
       Row(
         children: [

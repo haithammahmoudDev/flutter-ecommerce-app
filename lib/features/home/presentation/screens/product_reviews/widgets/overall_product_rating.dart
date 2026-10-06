@@ -19,7 +19,6 @@ class OverallProductRating extends StatelessWidget {
               RatingProgressIndicator(text: '3',value: .5),
               RatingProgressIndicator(text: '2',value: .5),
               RatingProgressIndicator(text: '1',value: .5),
-
             ],
           ),
         ),

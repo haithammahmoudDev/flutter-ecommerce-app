@@ -1,5 +1,3 @@
-// Path in project: lib/features/home/presentation/screens/sub_categories/sub_categories.dart (أو المسار الخاص بك)
-
 import 'package:fit_store/common/widgets/appbar/home_appbar.dart';
 import 'package:fit_store/common/widgets/images/t_rounded_image.dart';
 import 'package:fit_store/common/widgets/texts/section_heading.dart';
@@ -84,11 +82,9 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                     final subProducts = state.productsFor(subCategory.id);
                     final subStatus = state.statusFor(subCategory.id);
 
-                    // 💡 إذا اكتمل التحميل ولم توجد منتجات، قم بإخفاء القسم بالكامل (العنوان والمنتجات)
                     if (subStatus == SubProductsCategoryStatus.success && subProducts.isEmpty) {
                       return const SizedBox.shrink();
                     }
-                    // 💡 إذا حدث خطأ في جلب منتجات هذا القسم الفرعي، قم بإخفائه أيضاً
                     if (subStatus == SubProductsCategoryStatus.error) {
                       return const SizedBox.shrink();
                     }
@@ -150,7 +146,6 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
     );
   }
 
-  // Shimmer Layout for Entire Screen Loading
   Widget _buildCategoryShimmer() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,7 +176,6 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
     );
   }
 
-  // Shimmer Layout for Horizontal Product Cards
   Widget _buildHorizontalProductShimmer() {
     return SizedBox(
       height: 135,

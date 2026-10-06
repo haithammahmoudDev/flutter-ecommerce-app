@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/sizes.dart';
 import '../../../../../../utils/device/device_utility.dart';
@@ -14,9 +13,7 @@ class TSearchContainer extends StatelessWidget {
     this.showBackground = true,
     this.showBorder = true,
     this.onTap,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: TSizes.defaultSpace,
-    ),
+    this.padding = const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
   });
 
   final String text;
@@ -28,7 +25,7 @@ class TSearchContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return GestureDetector(
       onTap: onTap,
@@ -41,26 +38,14 @@ class TSearchContainer extends StatelessWidget {
             color: showBackground
                 ? (dark ? TColors.dark : TColors.white)
                 : Colors.transparent,
-            borderRadius: BorderRadius.circular(
-              TSizes.cardRadiusLg,
-            ),
-            border: showBorder
-                ? Border.all(color: TColors.grey)
-                : null,
+            borderRadius: BorderRadius.circular(TSizes.cardRadiusLg),
+            border: showBorder ? Border.all(color: TColors.grey) : null,
           ),
           child: Row(
             children: [
-              Icon(
-                icon,
-                color: dark
-                    ? TColors.darkerGrey
-                    : Colors.grey,
-              ),
+              Icon(icon, color: dark ? TColors.darkerGrey : Colors.grey),
               const SizedBox(width: TSizes.spaceBtwItems),
-              Text(
-                text,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
+              Text(text, style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
         ),

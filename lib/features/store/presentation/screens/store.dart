@@ -1,6 +1,3 @@
-// Path in project: lib/features/store/presentation/screens/store.dart
-
-import 'package:fit_store/common/widgets/appbar/appbar.dart';
 import 'package:fit_store/common/widgets/brand/brandCard.dart';
 import 'package:fit_store/common/widgets/layouts/grid_layout.dart';
 import 'package:fit_store/common/widgets/texts/section_heading.dart';
@@ -9,7 +6,6 @@ import 'package:fit_store/features/home/presentation/controller/products_cubit/p
 import 'package:fit_store/features/store/domain/entities/brand_entity.dart';
 import 'package:fit_store/features/store/presentation/controller/brand_cubit/brand_cubit.dart';
 import 'package:fit_store/features/store/presentation/widgets/gategory_tab.dart';
-import 'package:fit_store/utils/helpers/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -18,6 +14,7 @@ import '../../../../common/widgets/appbar/tabbar.dart';
 import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/helpers/helper_functions.dart';
 import '../../../home/presentation/controller/categories_cubit/categories_cubit.dart';
 import '../../../home/presentation/screens/widgets/header_search_container.dart';
 import 'all_brands/all_brands.dart';
@@ -33,18 +30,21 @@ class StoreScreen extends StatelessWidget {
         return Scaffold(
           body: BlocBuilder<CategoriesCubit, CategoriesState>(
             buildWhen: (previous, current) =>
-            previous.categoryEntityList != current.categoryEntityList ||
+                previous.categoryEntityList != current.categoryEntityList ||
                 previous.status != current.status,
             builder: (context, categoriesState) {
-              final List<CategoryEntity> featuredCategories = categoriesState.categoryEntityList
+              final List<CategoryEntity> featuredCategories = categoriesState
+                  .categoryEntityList
                   .where((e) => e.isFeatured == true)
                   .toList();
 
-              bool isLoading = categoriesState.status == CategoriesStatus.loading ||
-                  (categoriesState.categoryEntityList.isEmpty && categoriesState.status != CategoriesStatus.success);
+              bool isLoading =
+                  categoriesState.status == CategoriesStatus.loading ||
+                  (categoriesState.categoryEntityList.isEmpty &&
+                      categoriesState.status != CategoriesStatus.success);
 
               if (isLoading) {
-                final isDark = THelperFunctions.isDarkMode(context);
+                final isDark = HelperFunctions.isDarkMode(context);
                 return Padding(
                   padding: const EdgeInsets.all(TSizes.defaultSpace),
                   child: Column(
@@ -56,8 +56,12 @@ class StoreScreen extends StatelessWidget {
                           itemCount: 4,
                           itemBuilder: (context, index) {
                             return Shimmer.fromColors(
-                              baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
-                              highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+                              baseColor: isDark
+                                  ? Colors.grey[800]!
+                                  : Colors.grey[300]!,
+                              highlightColor: isDark
+                                  ? Colors.grey[700]!
+                                  : Colors.grey[100]!,
                               child: RoundedContainer(
                                 padding: const EdgeInsets.all(TSizes.sm),
                                 showBorder: true,
@@ -91,7 +95,11 @@ class StoreScreen extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Iconsax.category, size: 56, color: TColors.darkGrey),
+                        const Icon(
+                          Iconsax.category,
+                          size: 56,
+                          color: TColors.darkGrey,
+                        ),
                         const SizedBox(height: TSizes.spaceBtwItems),
                         Text(
                           'No Categories Found',
@@ -111,14 +119,19 @@ class StoreScreen extends StatelessWidget {
                     return [
                       SliverAppBar(
                         automaticallyImplyLeading: false,
-                        backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.black : Colors.white,
+                        backgroundColor: HelperFunctions.isDarkMode(context)
+                            ? TColors.black
+                            : Colors.white,
                         surfaceTintColor: Colors.transparent,
                         expandedHeight: 440,
                         pinned: true,
                         floating: false,
                         elevation: 0,
                         scrolledUnderElevation: 0,
-                        title: Text('Store', style: Theme.of(context).textTheme.headlineMedium),
+                        title: Text(
+                          'Store',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
                         actions: [
                           IconButton(
                             onPressed: () {
@@ -126,7 +139,9 @@ class StoreScreen extends StatelessWidget {
                             },
                             icon: Icon(
                               Iconsax.shopping_bag,
-                              color: THelperFunctions.isDarkMode(context) ? TColors.white : TColors.black,
+                              color: HelperFunctions.isDarkMode(context)
+                                  ? TColors.white
+                                  : TColors.black,
                             ),
                           ),
                         ],
@@ -147,7 +162,8 @@ class StoreScreen extends StatelessWidget {
                                 title: 'Featured Brands',
                                 onPressed: () {
                                   final brandCubit = context.read<BrandCubit>();
-                                  final productsCubit = context.read<ProductsCubit>();
+                                  final productsCubit = context
+                                      .read<ProductsCubit>();
 
                                   Navigator.push(
                                     context,
@@ -155,7 +171,9 @@ class StoreScreen extends StatelessWidget {
                                       builder: (context) => MultiBlocProvider(
                                         providers: [
                                           BlocProvider.value(value: brandCubit),
-                                          BlocProvider.value(value: productsCubit),
+                                          BlocProvider.value(
+                                            value: productsCubit,
+                                          ),
                                         ],
                                         child: const AllBrandsScreen(),
                                       ),
@@ -163,24 +181,36 @@ class StoreScreen extends StatelessWidget {
                                   );
                                 },
                               ),
-                              const SizedBox(height: TSizes.spaceBtwItems / 1.5),
+                              const SizedBox(
+                                height: TSizes.spaceBtwItems / 1.5,
+                              ),
                               BlocBuilder<BrandCubit, BrandState>(
                                 buildWhen: (previous, current) =>
-                                previous.featuredStatus != current.featuredStatus ||
-                                    previous.featuredBrands != current.featuredBrands,
+                                    previous.featuredStatus !=
+                                        current.featuredStatus ||
+                                    previous.featuredBrands !=
+                                        current.featuredBrands,
                                 builder: (context, state) {
-                                  if (state.featuredStatus == FeaturedBrandsStatus.loading) {
-                                    final isDark = THelperFunctions.isDarkMode(context);
-
+                                  if (state.featuredStatus ==
+                                      FeaturedBrandsStatus.loading) {
+                                    final isDark = HelperFunctions.isDarkMode(
+                                      context,
+                                    );
                                     return TGridLayout(
                                       mainAxisExtent: 80,
                                       itemCount: 4,
                                       itemBuilder: (context, index) {
                                         return Shimmer.fromColors(
-                                          baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
-                                          highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+                                          baseColor: isDark
+                                              ? Colors.grey[800]!
+                                              : Colors.grey[300]!,
+                                          highlightColor: isDark
+                                              ? Colors.grey[700]!
+                                              : Colors.grey[100]!,
                                           child: RoundedContainer(
-                                            padding: const EdgeInsets.all(TSizes.sm),
+                                            padding: const EdgeInsets.all(
+                                              TSizes.sm,
+                                            ),
                                             showBorder: true,
                                             backgroundColor: Colors.transparent,
                                             child: Row(
@@ -188,10 +218,11 @@ class StoreScreen extends StatelessWidget {
                                                 Container(
                                                   width: 56,
                                                   height: 56,
-                                                  decoration: const BoxDecoration(
-                                                    color: Colors.white,
-                                                    shape: BoxShape.circle,
-                                                  ),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                        color: Colors.white,
+                                                        shape: BoxShape.circle,
+                                                      ),
                                                 ),
                                               ],
                                             ),
@@ -201,18 +232,33 @@ class StoreScreen extends StatelessWidget {
                                     );
                                   }
 
-                                  if (state.featuredStatus == FeaturedBrandsStatus.error) {
+                                  if (state.featuredStatus ==
+                                      FeaturedBrandsStatus.error) {
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: TSizes.spaceBtwItems * 1.5),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: TSizes.spaceBtwItems * 1.5,
+                                      ),
                                       child: Center(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            const Icon(Iconsax.warning_2, size: 36, color: TColors.darkGrey),
-                                            const SizedBox(height: TSizes.spaceBtwItems / 2),
+                                            const Icon(
+                                              Iconsax.warning_2,
+                                              size: 36,
+                                              color: TColors.darkGrey,
+                                            ),
+                                            const SizedBox(
+                                              height: TSizes.spaceBtwItems / 2,
+                                            ),
                                             Text(
-                                              state.errorMessage ?? 'Could not load featured brands.',
-                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: TColors.darkGrey),
+                                              state.errorMessage ??
+                                                  'Could not load featured brands.',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
+                                                    color: TColors.darkGrey,
+                                                  ),
                                               textAlign: TextAlign.center,
                                             ),
                                           ],
@@ -221,7 +267,8 @@ class StoreScreen extends StatelessWidget {
                                     );
                                   }
 
-                                  final List<BrandEntity> featuredBrands = state.featuredBrands;
+                                  final List<BrandEntity> featuredBrands =
+                                      state.featuredBrands;
 
                                   if (featuredBrands.isEmpty) {
                                     return const SizedBox.shrink();
@@ -229,9 +276,13 @@ class StoreScreen extends StatelessWidget {
 
                                   return TGridLayout(
                                     mainAxisExtent: 80,
-                                    itemCount: featuredBrands.length > 4 ? 4 : featuredBrands.length,
-                                    itemBuilder: (context, index) =>
-                                        Brandcard(brand: featuredBrands[index], showBorder: true),
+                                    itemCount: featuredBrands.length > 4
+                                        ? 4
+                                        : featuredBrands.length,
+                                    itemBuilder: (context, index) => Brandcard(
+                                      brand: featuredBrands[index],
+                                      showBorder: true,
+                                    ),
                                   );
                                 },
                               ),
@@ -241,10 +292,16 @@ class StoreScreen extends StatelessWidget {
                         bottom: PreferredSize(
                           preferredSize: const Size.fromHeight(kToolbarHeight),
                           child: ColoredBox(
-                            color: THelperFunctions.isDarkMode(context) ? TColors.black : Colors.white,
+                            color: HelperFunctions.isDarkMode(context)
+                                ? TColors.black
+                                : Colors.white,
                             child: TTabBar(
-                              tabs: featuredCategories.map((category) =>
-                                  Tab(child: Text(category.name))).toList(),
+                              tabs: featuredCategories
+                                  .map(
+                                    (category) =>
+                                        Tab(child: Text(category.name)),
+                                  )
+                                  .toList(),
                             ),
                           ),
                         ),
@@ -253,7 +310,7 @@ class StoreScreen extends StatelessWidget {
                   },
                   body: MediaQuery.removePadding(
                     context: context,
-                    removeTop: true, // لإزالة أي مسافة علوية افتراضية تحت الـ TabBar
+                    removeTop: true,
                     child: TabBarView(
                       children: featuredCategories.map((category) {
                         return CategoryTab(category: category);

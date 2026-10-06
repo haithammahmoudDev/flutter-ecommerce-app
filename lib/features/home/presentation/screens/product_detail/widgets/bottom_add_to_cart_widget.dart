@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../../../common/widgets/icons/t_circular_icon.dart';
 import '../../../../../../personalization/presentation/controllers/cart/cart_cubit.dart';
 import '../../../../../../personalization/presentation/controllers/cart/cart_state.dart';
@@ -21,7 +20,7 @@ class BottomAddToCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
      context.read<CartCubit>().updateAlreadyAddedProductCount(product, context);
 

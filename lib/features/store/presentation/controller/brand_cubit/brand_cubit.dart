@@ -1,13 +1,9 @@
-// Path in project: lib/features/store/presentation/controller/brand_cubit/brand_cubit.dart
-
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fit_store/common/preferences/loacal_storage_service.dart';
 import 'package:fit_store/features/store/domain/entities/brand_entity.dart';
 import 'package:fit_store/features/store/domain/repos/store_repo.dart';
-
 import '../../../../../utils/helpers/network_manager.dart';
 import '../../../../home/domain/entities/product_entity.dart';
 import '../../../data/models/brand_model.dart';
@@ -214,19 +210,15 @@ class BrandCubit extends Cubit<BrandState> {
     }
   }
 
-  /// -- جلب المنتجات المحدودة (4 عناصر فقط) للـ Preview في واجهة التبويب
   Future<void> fetchLimitedProductsForCategory({required String categoryId}) async {
-    print('>>> BrandCubit: fetchLimitedProductsForCategory called for categoryId: $categoryId');
-    if (state.categoryProductsMap.containsKey(categoryId)) return;
+     if (state.categoryProductsMap.containsKey(categoryId)) return;
 
     final result = await _storeRepo.fetchLimitedProductsForCategory(categoryId: categoryId);
     result.fold(
           (failure) {
-        print('>>> BrandCubit: fetchLimitedProductsForCategory failed -> ${failure.message}');
-      },
+       },
           (successProducts) {
-        print('>>> BrandCubit: fetchLimitedProductsForCategory success -> count: ${successProducts.length}');
-        emit(state.copyWith(
+         emit(state.copyWith(
           categoryProductsMap: {
             ...state.categoryProductsMap,
             categoryId: successProducts,
@@ -236,19 +228,15 @@ class BrandCubit extends Cubit<BrandState> {
     );
   }
 
-  /// -- جلب كل المنتجات بدون حد (تستخدم عند الحاجة لجلب الكل من خلال الـ BrandCubit)
-  Future<void> fetchProductsForCategory({required String categoryId}) async {
-    print('>>> BrandCubit: fetchProductsForCategory called for categoryId: $categoryId');
-    if (state.categoryProductsMap.containsKey(categoryId)) return;
+   Future<void> fetchProductsForCategory({required String categoryId}) async {
+     if (state.categoryProductsMap.containsKey(categoryId)) return;
 
     final result = await _storeRepo.fetchProductsForCategory(categoryId: categoryId);
     result.fold(
           (failure) {
-        print('>>> BrandCubit: fetchProductsForCategory failed -> ${failure.message}');
-      },
+       },
           (successProducts) {
-        print('>>> BrandCubit: fetchProductsForCategory success -> count: ${successProducts.length}');
-        emit(state.copyWith(
+         emit(state.copyWith(
           categoryProductsMap: {
             ...state.categoryProductsMap,
             categoryId: successProducts,

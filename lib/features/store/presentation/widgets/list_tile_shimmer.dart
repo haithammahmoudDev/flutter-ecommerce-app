@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
-
 import '../../../../common/widgets/shimmers/shimmer.dart';
 import '../../../../utils/constants/sizes.dart';
 
-class TListTileShimmer extends StatelessWidget {
-  const TListTileShimmer({super.key});
+class ListTileShimmer extends StatelessWidget {
+  const ListTileShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {

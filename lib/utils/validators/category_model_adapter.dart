@@ -1,9 +1,9 @@
 import 'package:hive_ce/hive.dart';
-import '../../features/home/data/model/category_model.dart'; // اضبط المسار حسب مشروعك
+import '../../features/home/data/model/category_model.dart';
 
 class CategoryModelAdapter extends TypeAdapter<CategoryModel> {
   @override
-  final int typeId = 9; // تم إعطاؤه id فريد رقم 9
+  final int typeId = 9;
 
   @override
   CategoryModel read(BinaryReader reader) {

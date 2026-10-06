@@ -25,10 +25,7 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
   static const String _noConnectionMessage = 'No internet connection, please check your network.';
 
-  /// -- جلب كل المنتجات
-  Future<void> fetchAllProducts() async {
-    print('==================================================');
-    print('🔍 [AllProductsCubit] fetchAllProducts CALLED');
+   Future<void> fetchAllProducts() async {
 
     emit(state.copyWith(status: AllProductsStatus.loading));
 
@@ -57,11 +54,9 @@ class AllProductsCubit extends Cubit<AllProductsState> {
         errorMessage: _noConnectionMessage,
       ));
     }
-    print('==================================================');
-  }
+   }
 
-  /// -- جلب المنتجات عبر الاستعلام (Query)
-  Future<void> fetchProductsByQuery(Map<String, dynamic>? query) async {
+   Future<void> fetchProductsByQuery(Map<String, dynamic>? query) async {
     if (query == null || query.isEmpty) {
       emit(state.copyWith(
         status: AllProductsStatus.error,
@@ -99,12 +94,9 @@ class AllProductsCubit extends Cubit<AllProductsState> {
     }
   }
 
-  /// -- جلب كل منتجات التصنيف (Category) بدون تحديد حد (All Products)
-  Future<void> fetchProductsForCategory({
+   Future<void> fetchProductsForCategory({
     required String categoryId,
   }) async {
-    print('==================================================');
-    print('🔍 [AllProductsCubit] fetchProductsForCategory CALLED for ID: $categoryId');
 
     emit(state.copyWith(status: AllProductsStatus.loading));
 
@@ -129,11 +121,9 @@ class AllProductsCubit extends Cubit<AllProductsState> {
         },
       );
     } else {
-      print('📴 [AllProductsCubit] No internet. Loading category products from cache...');
-      _fetchCategoryProductsFromCache(categoryId: categoryId);
+       _fetchCategoryProductsFromCache(categoryId: categoryId);
     }
-    print('==================================================');
-  }
+   }
 
   /// -- دالة مساعدة لجلب كل منتجات التصنيف من الـ Hive Cache محلياً
   void _fetchCategoryProductsFromCache({required String categoryId}) {
@@ -148,18 +138,15 @@ class AllProductsCubit extends Cubit<AllProductsState> {
         products: productEntities,
         errorMessage: null,
       ));
-      print('📦 [AllProductsCubit] Loaded category products from Hive cache successfully.');
-    } else {
-      print('❌ [AllProductsCubit] No cached products found.');
-      emit(state.copyWith(
+     } else {
+       emit(state.copyWith(
         status: AllProductsStatus.error,
         errorMessage: _noConnectionMessage,
       ));
     }
   }
 
-  /// -- فرز وترتيب المنتجات
-  void sortProducts(String sortOption) {
+   void sortProducts(String sortOption) {
     final List<ProductEntity> sortedProducts = List<ProductEntity>.from(state.products);
 
     switch (sortOption) {
@@ -200,8 +187,7 @@ class AllProductsCubit extends Cubit<AllProductsState> {
     ));
   }
 
-  /// -- تعيين قائمة منتجات جاهزة مباشرة
-  void assignProducts(List<ProductEntity> products) {
+   void assignProducts(List<ProductEntity> products) {
     emit(state.copyWith(
       status: AllProductsStatus.success,
       products: products,

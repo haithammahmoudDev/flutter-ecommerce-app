@@ -1,4 +1,3 @@
-/// Exception class for handling various platform-related errors.
 class TPlatformException implements Exception {
   final String code;
 

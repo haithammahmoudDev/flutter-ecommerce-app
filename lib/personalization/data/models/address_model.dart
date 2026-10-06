@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_store/utils/formatters/formatter.dart';
-import '../../../features/auth/domain/entities/address_entity.dart';
 import 'address_entity.dart';
 
 class AddressModel {
@@ -59,8 +58,7 @@ class AddressModel {
     };
   }
 
-  /// Create AddressModel from Firebase Document
-  factory AddressModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+   factory AddressModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     if (data == null) return AddressModel.empty();
 
@@ -82,11 +80,7 @@ class AddressModel {
     );
   }
 
-  /// -------------------------------------------------------------
-  /// Mappers: التحويل بين Entity و Model
-  /// -------------------------------------------------------------
 
-  /// Convert Model -> Entity
   AddressEntity toEntity() {
     return AddressEntity(
       id: id,
@@ -102,8 +96,7 @@ class AddressModel {
     );
   }
 
-  /// Convert Entity -> Model
-  factory AddressModel.fromEntity(AddressEntity entity) {
+   factory AddressModel.fromEntity(AddressEntity entity) {
     return AddressModel(
       id: entity.id,
       name: entity.name,
@@ -151,8 +144,7 @@ class AddressModel {
   }
 
   factory AddressModel.fromMap(Map<String, dynamic> data) {
-    // معالجة آمنة للتاريخ والوقت لمنع تعطل التطبيق
-    DateTime? _parseDate(dynamic date) {
+     DateTime? _parseDate(dynamic date) {
       if (date == null) return null;
       if (date is Timestamp) return date.toDate();
       if (date is String) return DateTime.tryParse(date);

@@ -23,7 +23,7 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return MultiBlocProvider(
       providers: [
@@ -88,7 +88,7 @@ class CheckoutScreen extends StatelessWidget {
                     );
                   }
                       : () {
-                    TLoaders.warningSnackBar(
+                    Loaders.warningSnackBar(
                       title: 'Empty Cart',
                       message: 'Add items in the cart in order to proceed.',
                       context: context,

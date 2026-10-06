@@ -1,4 +1,3 @@
-import 'package:fit_store/utils/helpers/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,6 +8,7 @@ import '../../../../../routes/routes.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/device/device_utility.dart';
+import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../domain/entities/product_entity.dart';
 import '../../controller/products_cubit/images_cubit.dart';
 import '../../controller/products_cubit/variation_cubit.dart';
@@ -20,25 +20,20 @@ import 'widgets/product_meta_data.dart';
 import 'widgets/rating_share_widget.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({
-    super.key,
-    required this.product,
-  });
+  const ProductDetailScreen({super.key, required this.product});
 
   static const routeName = TRoutes.productDetails;
   final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = THelperFunctions.isDarkMode(context);
+    final bool isDark = HelperFunctions.isDarkMode(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => sl<ImagesCubit>()..getAllProductImages(product),
         ),
-        BlocProvider(
-          create: (context) => sl<VariationCubit>(),
-        ),
+        BlocProvider(create: (context) => sl<VariationCubit>()),
       ],
       child: Scaffold(
         bottomNavigationBar: BottomAddToCart(product: product.toModel()),
@@ -56,7 +51,7 @@ class ProductDetailScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     RatingAndShare(product: product,),
+                    RatingAndShare(product: product),
 
                     ProductMetaData(product: product),
 
@@ -67,7 +62,7 @@ class ProductDetailScreen extends StatelessWidget {
                     if (product.productType == 'variable')
                       const SizedBox(height: TSizes.spaceBtwSections / 2),
 
-                     SizedBox(
+                    SizedBox(
                       width: TDeviceUtils.getScreenWidth(context),
                       child: ElevatedButton(
                         onPressed: () {
@@ -83,13 +78,13 @@ class ProductDetailScreen extends StatelessWidget {
 
                     const SizedBox(height: TSizes.spaceBtwSections / 2),
 
-                     const SectionHeading(
+                    const SectionHeading(
                       title: 'Description',
                       showActionButton: false,
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems),
 
-                     ReadMoreText(
+                    ReadMoreText(
                       product.description ??
                           'No description available for this product.',
                       trimLines: 2,
@@ -111,15 +106,15 @@ class ProductDetailScreen extends StatelessWidget {
                     const Divider(),
                     const SizedBox(height: TSizes.spaceBtwItems),
 
-                     GestureDetector(
-                       onTap: (){
-                         Navigator.pushNamed(
-                           context,
-                           ProductReviewsScreen.routeName,
-                           arguments: product,
-                         );
-                       },
-                       child: Row(
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          ProductReviewsScreen.routeName,
+                          arguments: product,
+                        );
+                      },
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const SectionHeading(
@@ -127,13 +122,13 @@ class ProductDetailScreen extends StatelessWidget {
                             showActionButton: false,
                           ),
                           Icon(
-                              Iconsax.arrow_right_3,
-                              size: 18,
+                            Iconsax.arrow_right_3,
+                            size: 18,
                             color: isDark ? TColors.white : TColors.dark,
                           ),
                         ],
-                                           ),
-                     ),
+                      ),
+                    ),
                   ],
                 ),
               ),

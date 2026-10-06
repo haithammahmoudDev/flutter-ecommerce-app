@@ -17,7 +17,7 @@ class PhoneOtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
     return Scaffold(
       backgroundColor: dark ? TColors.dark : TColors.white,
       body: Container(

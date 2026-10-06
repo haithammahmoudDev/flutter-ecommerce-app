@@ -12,10 +12,8 @@ class CategoriesState extends Equatable {
   final List<CategoryEntity> subCategories;
   final SubCategoriesStatus subCategoriesStatus;
 
-  /// Products for each subcategory, keyed by subCategoryId.
   final Map<String, List<ProductEntity>> productsBySubCategoryId;
 
-  /// Load status for each subcategory's products, keyed by subCategoryId.
   final Map<String, SubProductsCategoryStatus> subProductsCategoryStatusMap;
 
   final String? errorMessage;

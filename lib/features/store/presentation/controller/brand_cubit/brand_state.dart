@@ -1,5 +1,3 @@
-// Path in project: lib/features/store/presentation/controller/brand_cubit/brand_state.dart
-
 part of 'brand_cubit.dart';
 
 enum AllBrandsStatus { loading, success, error }
@@ -8,8 +6,6 @@ enum CategoryBrandsStatus { loading, success, error }
 enum CategoryBrandProductsStatus { loading, success, error }
 enum BrandProductsStatus { loading, success, error }
 
-/// Sentinel used by [BrandState.copyWith] to distinguish "no value passed"
-/// from "explicitly passed null" for [BrandState.errorMessage].
 const Object _unsetErrorMessage = Object();
 
 class BrandState extends Equatable {
@@ -18,10 +14,9 @@ class BrandState extends Equatable {
   final List<ProductEntity> brandProducts;
   final List<BrandEntity> categoryBrands;
 
-  // الخريطة لحفظ براندات ومنتجات كل تاب لوحده
   final Map<String, List<BrandEntity>> categoryBrandsMap;
   final Map<String, List<ProductEntity>> categoryBrandProducts;
-  final Map<String, List<ProductEntity>> categoryProductsMap; // 👈 تمت الإضافة هنا
+  final Map<String, List<ProductEntity>> categoryProductsMap;
 
   final FeaturedBrandsStatus featuredStatus;
   final AllBrandsStatus allBrandsStatus;
@@ -38,7 +33,7 @@ class BrandState extends Equatable {
     this.brandProducts = const [],
     this.allBrands = const [],
     this.categoryBrandProducts = const {},
-    this.categoryProductsMap = const {}, // 👈 تمت الإضافة هنا
+    this.categoryProductsMap = const {},
     this.featuredStatus = FeaturedBrandsStatus.loading,
     this.allBrandsStatus = AllBrandsStatus.loading,
     this.categoryBrandsStatus = CategoryBrandsStatus.loading,
@@ -54,7 +49,7 @@ class BrandState extends Equatable {
     List<BrandEntity>? allBrands,
     List<ProductEntity>? brandProducts,
     Map<String, List<ProductEntity>>? categoryBrandProducts,
-    Map<String, List<ProductEntity>>? categoryProductsMap, // 👈 تمت الإضافة هنا
+    Map<String, List<ProductEntity>>? categoryProductsMap,
     FeaturedBrandsStatus? featuredStatus,
     AllBrandsStatus? allBrandsStatus,
     CategoryBrandsStatus? categoryBrandsStatus,
@@ -69,7 +64,7 @@ class BrandState extends Equatable {
       brandProducts: brandProducts ?? this.brandProducts,
       allBrands: allBrands ?? this.allBrands,
       categoryBrandProducts: categoryBrandProducts ?? this.categoryBrandProducts,
-      categoryProductsMap: categoryProductsMap ?? this.categoryProductsMap, // 👈 تمت الإضافة هنا
+      categoryProductsMap: categoryProductsMap ?? this.categoryProductsMap,
       featuredStatus: featuredStatus ?? this.featuredStatus,
       allBrandsStatus: allBrandsStatus ?? this.allBrandsStatus,
       categoryBrandsStatus: categoryBrandsStatus ?? this.categoryBrandsStatus,
@@ -87,7 +82,7 @@ class BrandState extends Equatable {
     brandProducts,
     allBrands,
     categoryBrandProducts,
-    categoryProductsMap, // 👈 تمت الإضافة هنا
+    categoryProductsMap,
     featuredStatus,
     allBrandsStatus,
     categoryBrandsStatus,

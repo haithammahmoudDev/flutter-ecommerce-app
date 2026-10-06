@@ -72,9 +72,6 @@ class CategoriesCubit extends Cubit<CategoriesState> {
             subCategoriesStatus: SubCategoriesStatus.success,
             subCategories: success,
           ));
-          // One products fetch per subcategory, keyed by its own id
-          // (fetchProductsForSubCategory guards against duplicate/in-flight
-          // fetches for the same id).
           for (final sub in success) {
             fetchProductsForSubCategory(subCategoryId: sub.id);
           }
@@ -101,10 +98,6 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   }
 
   Future<void> fetchProductsForSubCategory({required String subCategoryId}) async {
-    // 🔍 DEBUG: اطبع قيمة المعرف اللي بيتبعت فعلياً للـ Repo، وقارنها يدوياً
-    // بمستندات ProductCategory / Products في Firestore Console.
-    // شيل السطر ده بعد ما تتأكد من مصدر المشكلة.
-    print('DEBUG: fetchProductsForSubCategory called with subCategoryId = $subCategoryId');
 
     final currentStatus = state.subProductsCategoryStatusMap[subCategoryId];
     if (currentStatus == SubProductsCategoryStatus.loading ||
@@ -125,7 +118,6 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     if (isConnectedInternet) {
       final result = await categoryRepo.fetchProductsForCategory(categoryId: subCategoryId);
 
-      // 🔍 DEBUG: اطبع عدد المنتجات اللي رجعت فعلياً من الـ Repo
       result.fold(
             (error) => print('DEBUG: fetchProductsForCategory FAILED → ${error.message}'),
             (products) => print('DEBUG: fetchProductsForCategory returned ${products.length} product(s) for id=$subCategoryId'),

@@ -1,18 +1,16 @@
 import 'package:fit_store/personalization/presentation/screens/profile/widgets/change_phone_num.dart';
 import 'package:fit_store/personalization/presentation/screens/profile/widgets/change_user_name.dart';
 import 'package:fit_store/personalization/presentation/screens/profile/widgets/profile_menu.dart';
-import 'package:fit_store/personalization/presentation/screens/profile/widgets/profile_menu_shimmer.dart';
-import 'package:fit_store/utils/popups/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/buttons/primary_button.dart';
 import '../../../../common/widgets/images/t_circular_image.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../features/settings/presentation/controllers/user_cubit/user_cubit.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/popups/full_screen_loader.dart';
 import '../../../../utils/popups/loaders.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -24,19 +22,19 @@ class ProfileScreen extends StatelessWidget {
       listener: (context, state) {
         if (state.userDataStatus == UserDataStatus.error) {
           Navigator.pop(context);
-          TLoaders.errorSnackBar(
+          Loaders.errorSnackBar(
             title: 'Operation Failed',
             context: context,
             message: state.errorMessage ?? 'Something went wrong.',
           );
         }
         if (state.userDataStatus == UserDataStatus.loading) {
-           TFullScreenLoader.popUpCircular(context);
+           FullScreenLoader.popUpCircular(context);
          }
 
         if (state.userDataStatus == UserDataStatus.loaded) {
           Navigator.pop(context);
-          TLoaders.successSnackBar(
+          Loaders.successSnackBar(
             context: context,
              message: 'The operation was completed successfully!', title: 'successfully!',
           );        }

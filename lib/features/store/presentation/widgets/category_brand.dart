@@ -1,8 +1,5 @@
-// Path in project: lib/features/store/presentation/widgets/category_brand.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../common/widgets/brand/brand_showcase.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
@@ -28,7 +25,6 @@ class _CategoryBrandsState extends State<CategoryBrands> {
   @override
   void initState() {
     super.initState();
-    // 💡 جلب البيانات فقط إذا لم تكن مخزنة مسبقاً في الخريطة لمنع التحميل المتكرر
     final cubit = context.read<BrandCubit>();
     if (!cubit.state.categoryBrandsMap.containsKey(widget.category.id)) {
       cubit.fetchBrandsForCategory(categoryId: widget.category.id);
@@ -42,10 +38,8 @@ class _CategoryBrandsState extends State<CategoryBrands> {
       previous.categoryBrandsMap[widget.category.id] != current.categoryBrandsMap[widget.category.id] ||
           previous.categoryBrandsStatus != current.categoryBrandsStatus,
       builder: (context, state) {
-        // 💡 قراءة البراندات الخاصة بهذا القسم فقط من الخريطة
         final List<BrandEntity>? brands = state.categoryBrandsMap[widget.category.id];
 
-        // إذا كانت البيانات لم تُحمل بعد لهذا التاب تحديداً
         if (brands == null) {
           return Column(
             children: List.generate(
@@ -59,9 +53,9 @@ class _CategoryBrandsState extends State<CategoryBrands> {
                 ),
                 child: const Column(
                   children: [
-                    TListTileShimmer(),
+                    ListTileShimmer(),
                     SizedBox(height: TSizes.spaceBtwItems),
-                    TBoxesShimmer(),
+                    BoxesShimmer(),
                   ],
                 ),
               ),
@@ -80,14 +74,14 @@ class _CategoryBrandsState extends State<CategoryBrands> {
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(
-                mainAxisSize: MainAxisSize.min, // لجعل العمود يأخذ أقل مساحة ممكنة في المنتصف
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    Icons.category_outlined, // يمكنك تغيير الأيقونة لما يناسب تطبيقك
+                    Icons.category_outlined,
                     size: 64,
                     color: Colors.grey,
                   ),
-                  SizedBox(height: 16), // مسافة فاصلة بين الأيقونة والنص
+                  SizedBox(height: 16),
                   Text(
                     'No brands available for this category yet.',
                     textAlign: TextAlign.center,
@@ -115,9 +109,6 @@ class _CategoryBrandsState extends State<CategoryBrands> {
   }
 }
 
-/// Loads and shows a single brand's TBrandShowcase preview. Kept as its own
-/// StatefulWidget so the fetch call happens exactly once in `initState`
-/// instead of on every rebuild of the parent ListView.
 class _CategoryBrandPreview extends StatefulWidget {
   const _CategoryBrandPreview({required this.brand});
 
@@ -150,7 +141,7 @@ class _CategoryBrandPreviewState extends State<_CategoryBrandPreview> {
               border: Border.all(color: TColors.darkGrey),
               borderRadius: BorderRadius.circular(TSizes.cardRadiusMd),
             ),
-            child: const TBoxesShimmer(),
+            child: const BoxesShimmer(),
           );
         }
 

@@ -13,7 +13,7 @@ class DashboardTopCourses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final list = DashboardTopCoursesModel.list;
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
     return SizedBox(
       height: 210,
       child: ListView.builder(

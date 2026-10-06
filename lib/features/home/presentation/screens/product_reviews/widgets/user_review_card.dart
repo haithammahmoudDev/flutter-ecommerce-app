@@ -2,19 +2,20 @@ import 'package:fit_store/common/widgets/custom_shapes/containers/rounded_contai
 import 'package:fit_store/utils/constants/colors.dart';
 import 'package:fit_store/utils/constants/image_strings.dart';
 import 'package:fit_store/utils/constants/sizes.dart';
-import 'package:fit_store/utils/helpers/exports.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 
+import '../../../../../../utils/helpers/helper_functions.dart';
+
 class UserReviewCard extends StatelessWidget {
   const UserReviewCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bool dark = THelperFunctions.isDarkMode(context);
+    final bool dark = HelperFunctions.isDarkMode(context);
     return Column(
       children: [
         Row(

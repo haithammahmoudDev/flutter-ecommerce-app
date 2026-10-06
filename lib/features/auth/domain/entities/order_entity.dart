@@ -27,10 +27,10 @@ class OrderEntity {
   });
 
   /// دوال العرض المساعدة (Getters) مطابقة للـ Model
-  String get formattedOrderDate => THelperFunctions.getFormattedDate(orderDate);
+  String get formattedOrderDate => HelperFunctions.getFormattedDate(orderDate);
 
   String get formattedDeliveryDate => deliveryDate != null
-      ? THelperFunctions.getFormattedDate(deliveryDate!)
+      ? HelperFunctions.getFormattedDate(deliveryDate!)
       : '';
 
   String get orderStatusText => status == OrderStatus.delivered

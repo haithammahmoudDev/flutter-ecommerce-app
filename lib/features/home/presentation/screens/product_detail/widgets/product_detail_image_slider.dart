@@ -21,8 +21,8 @@ class ProductImageSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
-    final heightSafeArea = THelperFunctions.getTopSafeArea(context);
+    final dark = HelperFunctions.isDarkMode(context);
+    final heightSafeArea = HelperFunctions.getTopSafeArea(context);
     return TCurvedEdgesWidget(
       child: Container(
         color: dark ? TColors.darkerGrey : Color(0xFFF4F4F4),

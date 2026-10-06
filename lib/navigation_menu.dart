@@ -3,12 +3,11 @@ import 'package:fit_store/features/settings/presentation/screens/settings/settin
 import 'package:fit_store/features/home/presentation/controller/categories_cubit/categories_cubit.dart';
 import 'package:fit_store/features/store/presentation/screens/store.dart';
 import 'package:fit_store/personalization/presentation/controllers/address_cubit.dart';
-import 'package:fit_store/utils/helpers/exports.dart';
+import 'package:fit_store/utils/helpers/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-
 import 'common/di/injection_container.dart';
 import 'features/home/presentation/screens/home.dart';
 import 'features/favourites/favourite.dart';
@@ -36,7 +35,7 @@ class NavigationMenu extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          final darkMode = THelperFunctions.isDarkMode(context);
+          final darkMode = HelperFunctions.isDarkMode(context);
 
           return BlocBuilder<NavigationBarCubit, NavigationBarState>(
             builder: (context, state) {

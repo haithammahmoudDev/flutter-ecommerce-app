@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-
 import '../../../features/auth/presentation/cubit/social_auth-bloc/social_auth_cubit.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/text_strings.dart';
-import '../../../routes/routes.dart';
 import '../buttons/clickable_richtext_widget.dart';
-import '../buttons/primary_button.dart';
 import '../buttons/social_button.dart';
 
 class SocialFooter extends StatelessWidget {

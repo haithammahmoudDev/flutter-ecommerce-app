@@ -1,5 +1,3 @@
-// core/network/firebase/auth_client_impl.dart
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth_client.dart';
 
@@ -63,17 +61,14 @@ class AuthClientImpl implements AuthClient {
     return client.currentUser?.emailVerified ?? false;
   }
 
-  // ← NEW: تحديث كلمة المرور (الـ user لازم يكون signed in حديثاً)
   @override
   Future<void> updatePassword({required String newPassword}) async =>
       await client.currentUser!.updatePassword(newPassword);
 
-  // ← NEW: تسجيل الخروج بعد إعادة تعيين كلمة المرور
   @override
   Future<void> signOut() async =>
       await client.signOut();
 
-  // ← NEW: بناء الـ credential وإعادة التحقق بيه
   @override
   Future<void> reAuthenticateWithEmailAndPassword({
     required String email,

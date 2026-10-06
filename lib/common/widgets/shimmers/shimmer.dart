@@ -18,7 +18,7 @@ class TShimmerEffect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
     return Shimmer.fromColors(
       baseColor: dark ? Colors.grey[850]! : Colors.grey[300]!,
       highlightColor: dark ? Colors.grey[700]! : Colors.grey[100]!,

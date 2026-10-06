@@ -34,7 +34,7 @@ class LoginFormWidget extends StatelessWidget {
         BlocListener<EmailAuthBloc, EmailAuthState>(
           listener: (context, state) async {
             if (state is EmailAuthLoading) {
-              TFullScreenLoader.openLoadingDialog(
+              FullScreenLoader.openLoadingDialog(
                 'Logging your in....',
                 TImages.docerAnimation,
                 context,
@@ -42,8 +42,8 @@ class LoginFormWidget extends StatelessWidget {
             }
 
             if (state is EmailAuthFailure) {
-              TFullScreenLoader.stopLoading(context);
-              TLoaders.errorSnackBar(
+              FullScreenLoader.stopLoading(context);
+              Loaders.errorSnackBar(
                 title: 'Error',
                 message: state.errorMessage,
                 context: context,
@@ -51,8 +51,8 @@ class LoginFormWidget extends StatelessWidget {
             }
 
             if (state is EmailNotVerified) {
-              TFullScreenLoader.stopLoading(context);
-              TLoaders.warningSnackBar(
+              FullScreenLoader.stopLoading(context);
+              Loaders.warningSnackBar(
                 title: 'Warning',
                 message: 'You must verified your email',
                 context: context,
@@ -66,8 +66,8 @@ class LoginFormWidget extends StatelessWidget {
 
             if (state is EmailAuthSuccess) {
               await PreferencesManager().setBool('rememberMe', rememberMe);
-              TFullScreenLoader.stopLoading(context);
-              TLoaders.successSnackBar(
+              FullScreenLoader.stopLoading(context);
+              Loaders.successSnackBar(
                 title: 'Success',
                 message: 'Your account has been login successfully!',
                 context: context,
@@ -83,18 +83,18 @@ class LoginFormWidget extends StatelessWidget {
         BlocListener<SocialAuthCubit, SocialAuthState>(
           listener: (context, state) async{
             if (state is EmailAuthLoading) {
-              TFullScreenLoader.openLoadingDialog(
+              FullScreenLoader.openLoadingDialog(
                 'Logging your in....',
                 TImages.docerAnimation,
                 context,
               );
             }
             if(state is SocialAuthFailure){
-              TLoaders.errorSnackBar(title: 'error', context: context, message: state.errorMessage);
+              Loaders.errorSnackBar(title: 'error', context: context, message: state.errorMessage);
             }
             if(state is SocialAuthSuccess){
               await PreferencesManager().setBool('rememberMe', rememberMe);
-              TFullScreenLoader.stopLoading(context);
+              FullScreenLoader.stopLoading(context);
               Navigator.pushNamedAndRemoveUntil(
                 context,
                  NavigationMenu.routeName,

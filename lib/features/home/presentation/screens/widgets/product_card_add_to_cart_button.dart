@@ -1,15 +1,9 @@
-import 'package:fit_store/features/cart/controllers/cart_cubit.dart';
-import 'package:fit_store/features/cart/controllers/cart_state.dart';
 import 'package:fit_store/features/home/data/model/product_model.dart';
-import 'package:fit_store/features/home/presentation/screens/product_detail/product_detail.dart';
-import 'package:fit_store/routes/routes.dart';
 import 'package:fit_store/utils/constants/colors.dart';
-import 'package:fit_store/utils/constants/enums.dart';
 import 'package:fit_store/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../../personalization/presentation/controllers/cart/cart_cubit.dart';
 import '../../../../../personalization/presentation/controllers/cart/cart_state.dart';
 

@@ -3,7 +3,7 @@ import '../../features/home/data/model/product_attribute_model.dart';
 
 class ProductAttributeModelAdapter extends TypeAdapter<ProductAttributeModel> {
   @override
-  final int typeId = 7; // Fixed: was 4, colliding with CartItemModelAdapter
+  final int typeId = 7;
 
   @override
   ProductAttributeModel read(BinaryReader reader) {

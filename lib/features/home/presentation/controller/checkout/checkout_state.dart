@@ -13,7 +13,7 @@ class CheckoutState extends Equatable {
     return CheckoutState(
       selectedPaymentMethod: PaymentMethodModel(
         name: 'Paypal',
-        image: TImages.paypal, // قم باستيراد TImages
+        image: TImages.paypal,
       ),
     );
   }

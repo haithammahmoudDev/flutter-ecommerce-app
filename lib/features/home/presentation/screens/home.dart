@@ -11,14 +11,13 @@ import 'package:fit_store/features/home/presentation/screens/widgets/vertical_pr
 import 'package:fit_store/utils/constants/sizes.dart';
 import 'package:fit_store/utils/constants/text_strings.dart';
 import 'package:fit_store/utils/device/device_utility.dart';
-import 'package:fit_store/utils/helpers/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../common/di/injection_container.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../utils/constants/colors.dart';
+import '../../../../utils/helpers/helper_functions.dart';
 import 'all_products/all_products.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -26,7 +25,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return BlocProvider(
       create: (context) => sl<ProductsCubit>()..fetchFeaturedProducts(),
@@ -40,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    THomeAppBar(),
+                    HomeAppBar(),
                     SizedBox(height: TSizes.spaceBtwSections),
 
                     TSearchContainer(text: 'Search in Store', showBorder: false),

@@ -6,13 +6,13 @@ class AllProductsState {
   final AllProductsStatus status;
   final List<ProductEntity> products;
   final String errorMessage;
-  final String selectedSortOption; // حقل حفظ خيار الترتيب النشط في القائمة المنسدلة
+  final String selectedSortOption;
 
   AllProductsState({
     this.status = AllProductsStatus.initial,
     this.products = const [],
     this.errorMessage = '',
-    this.selectedSortOption = 'Name', // القيمة الابتدائية الافتراضية للفرز
+    this.selectedSortOption = 'Name',
   });
 
   AllProductsState copyWith({

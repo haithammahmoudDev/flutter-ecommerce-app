@@ -13,7 +13,6 @@ class BannerModelAdapter extends TypeAdapter<BannerModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
 
-    // قراءة الـ Enum بأمان من الـ Index المخزن
     final targetTypeIndex = fields[3] as int? ?? 0;
     final targetType = (targetTypeIndex >= 0 && targetTypeIndex < BannerTargetType.values.length)
         ? BannerTargetType.values[targetTypeIndex]
@@ -32,7 +31,7 @@ class BannerModelAdapter extends TypeAdapter<BannerModel> {
   @override
   void write(BinaryWriter writer, BannerModel obj) {
     writer
-      ..writeByte(6) // عدد الحقول الكلي (6 حقول)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -40,7 +39,7 @@ class BannerModelAdapter extends TypeAdapter<BannerModel> {
       ..writeByte(2)
       ..write(obj.isActive)
       ..writeByte(3)
-      ..write(obj.targetType.index) // تخزين الـ Enum كـ Index (رقم صحيح)
+      ..write(obj.targetType.index)
       ..writeByte(4)
       ..write(obj.targetId)
       ..writeByte(5)

@@ -1,15 +1,12 @@
 import 'package:fit_store/common/widgets/appbar/appbar.dart';
-import 'package:fit_store/features/home/data/model/product_model.dart';
 import 'package:fit_store/features/home/presentation/screens/product_reviews/widgets/overall_product_rating.dart';
 import 'package:fit_store/features/home/presentation/screens/product_reviews/widgets/user_review_card.dart';
 import 'package:fit_store/utils/constants/colors.dart';
 import 'package:fit_store/utils/constants/sizes.dart';
-import 'package:fit_store/utils/device/device_utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../domain/entities/product_entity.dart';
 
 class ProductReviewsScreen extends StatelessWidget {

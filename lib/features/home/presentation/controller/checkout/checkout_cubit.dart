@@ -32,29 +32,29 @@ class CheckoutCubit extends Cubit<CheckoutState> {
                 const SizedBox(height: TSizes.spaceBtwSections),
 
                 // 1) PayPal
-                TPaymentTile(
+                PaymentTile(
                   paymentMethod: PaymentMethodModel(name: 'Paypal', image: TImages.paypal),
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
 
                 // 2) Credit Card (الشاملة لكل البطاقات عبر Stripe)
-                TPaymentTile(
+                PaymentTile(
                   paymentMethod: PaymentMethodModel(name: 'Credit Card', image: TImages.creditCard),
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
 
                 // 3) Vodafone Cash
-                TPaymentTile(
+                PaymentTile(
                   paymentMethod: PaymentMethodModel(name: 'Vodafone Cash', image: 'assets/icons/payment_methods/vc.png'),
                 ),
 
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
                 // داخل دالة showPaymentMethodsModal في CheckoutCubit
-                TPaymentTile(
+                PaymentTile(
                   paymentMethod: PaymentMethodModel(name: 'Fawry', image: 'assets/icons/payment_methods/Fawry-Logo.jpg.webp'),
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems / 2),
-                TPaymentTile(
+                PaymentTile(
                   paymentMethod: PaymentMethodModel(name: 'InstaPay',
                       image: 'assets/icons/payment_methods/cee7c78a0483d165342d302ad395cf343be0fb861de76174e0d2a99e68bad6aa_600 (1).webp'),
                 ),

@@ -1,9 +1,6 @@
-// Path in project: lib/features/home/presentation/screens/all_products/all_products.dart
-
 import 'package:fit_store/features/home/presentation/screens/all_products/sortable_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../controller/all_products/all_products_cubit.dart';

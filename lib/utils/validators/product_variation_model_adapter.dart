@@ -3,7 +3,7 @@ import '../../features/home/data/model/product_variation_model.dart';
 
 class ProductVariationModelAdapter extends TypeAdapter<ProductVariationModel> {
   @override
-  final int typeId = 8; // Fixed: was 5, colliding with AddressModelAdapter
+  final int typeId = 8;
 
   @override
   ProductVariationModel read(BinaryReader reader) {

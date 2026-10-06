@@ -47,7 +47,7 @@ class _NotificationDetailScreenState
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return Scaffold(
       appBar: TAppBar(

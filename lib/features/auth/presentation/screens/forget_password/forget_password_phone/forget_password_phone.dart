@@ -12,7 +12,7 @@ class ForgetPasswordPhoneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Just In-case if you want to replace the Image Color for Dark Theme
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return SafeArea(
       child: Scaffold(

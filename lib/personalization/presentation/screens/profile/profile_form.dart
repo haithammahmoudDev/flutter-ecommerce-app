@@ -1,7 +1,6 @@
  import 'package:fit_store/utils/constants/sizes.dart';
 import 'package:fit_store/utils/constants/text_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 

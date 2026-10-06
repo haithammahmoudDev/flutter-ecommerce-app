@@ -2,7 +2,6 @@ import 'package:fit_store/common/widgets/custom_shapes/containers/rounded_contai
 import 'package:fit_store/common/widgets/images/t_rounded_image.dart';
 import 'package:fit_store/common/widgets/styles/shadows.dart';
 import 'package:fit_store/common/widgets/texts/t_brand_title_text_with_verified_icon.dart';
-import 'package:fit_store/common/widgets/texts/t_product_price_text.dart';
 import 'package:fit_store/common/widgets/texts/t_product_title_text.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/home/presentation/controller/products_cubit/products_cubit.dart';
@@ -27,7 +26,7 @@ class TProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsCubit = context.read<ProductsCubit>();
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     final bool isVariable =
         product.productVariations != null && product.productVariations!.isNotEmpty;

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/image_strings.dart';
 
 class ImageWithIcon extends StatelessWidget {
-  const   ImageWithIcon({super.key});
+  const ImageWithIcon({super.key});
 
   @override
   Widget build(BuildContext context) {

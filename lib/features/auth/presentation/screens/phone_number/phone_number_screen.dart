@@ -17,7 +17,7 @@ class PhoneNumberScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return Builder(
       builder: (context) {
@@ -33,7 +33,7 @@ class PhoneNumberScreen extends StatelessWidget {
                 children: [
                   /// -- Display the OTP image
                   Lottie.asset(TImages.signInAnimation,
-                      width: THelperFunctions.screenWidth(context) * 0.875, height: THelperFunctions.screenHeight() * 0.4),
+                      width: HelperFunctions.screenWidth(context) * 0.875, height: HelperFunctions.screenHeight() * 0.4),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   const SizedBox(height: TSizes.spaceBtwItems),
 

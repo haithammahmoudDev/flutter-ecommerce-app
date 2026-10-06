@@ -1,5 +1,3 @@
-// core/network/firebase/cloud_firestore.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'database_services.dart';
 
@@ -46,7 +44,6 @@ class CloudFirestore implements DatabaseServices {
 
     final result = await q.get();
 
-    // ✅ نحافظ على الـ id بتاع كل document جوه الـ Map نفسها
     return result.docs.map((doc) {
       final data = doc.data();
       data['id'] = doc.id;

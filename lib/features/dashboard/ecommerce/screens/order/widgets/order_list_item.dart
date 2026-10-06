@@ -11,7 +11,7 @@ class OrderListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return  ListView.separated(
         itemCount: 10,

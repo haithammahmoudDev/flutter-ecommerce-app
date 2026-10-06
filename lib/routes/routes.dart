@@ -4,8 +4,7 @@ class TRoutes {
   static const welcome = '/welcome-screen';
   static const onboarding = '/onboarding-screen';
   static const coursesDashboard = '/courses-dashboard-screen';
-  // static const eComDashboard = '/eCom-dashboard-screen';
-  static const home = '/home-screen';
+   static const home = '/home-screen';
   static const logIn = '/log-in';
   static const phoneSignIn = '/phone-sign-in';
   static const otpVerification = '/otp-verification';
@@ -15,8 +14,7 @@ class TRoutes {
   static const checkoutScreen = '/checkout-screen';
   static const favouritesScreen = '/favourites-screen';
    static const verifyEmailScreen = '/verifyEmail-screen';
-  //Notification
-  static const notification = '/notification';
+   static const notification = '/notification';
   static const notificationDetails = '/notification-details';
   static const productDetails = '/product-detail';
 }

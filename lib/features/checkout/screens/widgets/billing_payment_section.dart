@@ -17,7 +17,7 @@ class BillingPaymentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
 
     return BlocBuilder<CheckoutCubit, CheckoutState>(
       builder: (context, state) {

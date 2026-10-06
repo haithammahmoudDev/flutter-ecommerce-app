@@ -20,7 +20,6 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   StreamSubscription<List<NotificationModel>>? _notificationsSubscription;
 
-  /// Initialize notification details
   Future<void> init() async {
     try {
       emit(state.copyWith(isLoading: true));

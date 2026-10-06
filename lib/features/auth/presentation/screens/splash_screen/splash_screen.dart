@@ -1,9 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
- import 'package:fit_store/utils/constants/image_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../common/local_storage/local_storage.dart';
 import '../../../../../common/preferences/preferences_manager.dart';
 import '../../../../../navigation_menu.dart';
 import '../login/login_screen.dart';
@@ -60,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Scaffold(
         body: Center(
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(100), // Adjust radius to make it round
+            borderRadius: BorderRadius.circular(100),
             child: const Image(
               image: AssetImage('assets/logo/89a8d3e7-5666-4676-a7b2-8244ced04447.png'),
               width: 150,

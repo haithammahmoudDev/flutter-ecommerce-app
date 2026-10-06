@@ -5,12 +5,7 @@ import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 
 class TCircularIcon extends StatelessWidget {
-  /// A custom Circular Icon widget with a background color.
-  ///
-  /// Properties are:
-  /// Container [width], [height], & [backgroundColor].
-  ///
-  /// Icon's [size], [color] & [onPressed]
+
   const TCircularIcon({
     super.key,
     required this.icon,
@@ -36,7 +31,7 @@ class TCircularIcon extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor != null
             ? backgroundColor!
-            : THelperFunctions.isDarkMode(context)
+            : HelperFunctions.isDarkMode(context)
                 ? TColors.black.withValues(alpha: 0.9)
                 : TColors.white.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(100),

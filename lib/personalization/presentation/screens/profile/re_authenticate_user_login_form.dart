@@ -4,7 +4,6 @@ import 'package:fit_store/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../common/widgets/form/custom_form_field.dart';
 import '../../../../features/settings/presentation/controllers/user_cubit/user_cubit.dart';
 

@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
-
 import '../../../../common/widgets/shimmers/shimmer.dart';
 import '../../../../utils/constants/sizes.dart';
 
-class TBoxesShimmer extends StatelessWidget {
-  const TBoxesShimmer({super.key});
+class BoxesShimmer extends StatelessWidget {
+  const BoxesShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {

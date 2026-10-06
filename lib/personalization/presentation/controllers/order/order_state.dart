@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:fit_store/features/auth/domain/entities/order_entity.dart';
-import '../../../data/models/order_model.dart';
 
 enum OrderStatusEnum { initial, loading, success, error, processingSuccess }
 

@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../../common/widgets/success_screen/success_screen.dart';
 import '../../../../features/dashboard/ecommerce/screens/order/order_repo.dart';
 import '../../../../features/home/presentation/controller/checkout/checkout_cubit.dart';
@@ -36,7 +35,7 @@ class OrderCubit extends Cubit<OrderState> {
         status: OrderStatusEnum.error,
         errorMessage: error.message,
       ));
-      TLoaders.warningSnackBar(title: 'Oh Snap!', message: error.message, context: context);
+      Loaders.warningSnackBar(title: 'Oh Snap!', message: error.message, context: context);
     }, (userOrders) {
       emit(state.copyWith(
         status: OrderStatusEnum.success,
@@ -65,7 +64,6 @@ class OrderCubit extends Cubit<OrderState> {
     );
   }
 
-  /// Helper method to process Stripe payments
   Future<void> _processStripePayment({
     required BuildContext context,
     required double totalAmount,
@@ -76,7 +74,7 @@ class OrderCubit extends Cubit<OrderState> {
     bool loaderVisible = true;
     void hideLoader() {
       if (loaderVisible && context.mounted) {
-        TFullScreenLoader.stopLoading(context);
+        FullScreenLoader.stopLoading(context);
       }
       loaderVisible = false;
     }
@@ -85,7 +83,6 @@ class OrderCubit extends Cubit<OrderState> {
       final supabaseAnonKey = dotenv.env['SUPABASE_PUBLISHER_KEY']!;
       const functionBaseUrl = 'https://uvymvisxemcodavxgoks.supabase.co/functions/v1';
 
-      // 1) Call Edge Function to create Payment Intent
       final response = await http.post(
         Uri.parse('$functionBaseUrl/create-stripe-payment'),
         headers: {
@@ -110,11 +107,9 @@ class OrderCubit extends Cubit<OrderState> {
 
       final clientSecret = data['clientSecret'];
 
-      // Hide full screen loader before showing Stripe Payment Sheet
       hideLoader();
       if (!context.mounted) return;
 
-      // 2) Initialize Stripe Payment Sheet
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           merchantDisplayName: 'Fit Store',
@@ -129,12 +124,10 @@ class OrderCubit extends Cubit<OrderState> {
         ),
       );
 
-      // 3) Present Stripe Payment Sheet to the user
       await Stripe.instance.presentPaymentSheet();
 
-      // 4) Payment successful: show loader, save order to Firestore, and clear cart
       if (!context.mounted) return;
-      TFullScreenLoader.popUpCircular(context);
+      FullScreenLoader.popUpCircular(context);
       loaderVisible = true;
 
       final saved = await _orderRepository.saveOrder(order, userId);
@@ -157,28 +150,27 @@ class OrderCubit extends Cubit<OrderState> {
       ));
       if (context.mounted) {
         if (e is StripeException) {
-          TLoaders.warningSnackBar(
+          Loaders.warningSnackBar(
             title: 'Payment cancelled',
             message: e.error.localizedMessage ?? 'Payment was cancelled.',
             context: context,
           );
         } else {
-          TLoaders.errorSnackBar(title: 'Stripe Error', message: e.toString(), context: context);
+          Loaders.errorSnackBar(title: 'Stripe Error', message: e.toString(), context: context);
         }
       }
     }
   }
 
-  /// Process order based on selected payment method
   Future<void> processOrder({
     required BuildContext context,
     required double totalAmount,
   }) async {
-    TFullScreenLoader.popUpCircular(context);
+    FullScreenLoader.popUpCircular(context);
 
     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
     if (userId.isEmpty) {
-      TFullScreenLoader.stopLoading(context);
+      FullScreenLoader.stopLoading(context);
       return;
     }
 
@@ -189,7 +181,6 @@ class OrderCubit extends Cubit<OrderState> {
     final cartCubit = context.read<CartCubit>();
     final cartItems = cartCubit.state.cartItems;
 
-    // Add Details
     final order = OrderModel(
       id: UniqueKey().toString(),
       userId: userId,
@@ -204,12 +195,11 @@ class OrderCubit extends Cubit<OrderState> {
 
     final methodName = paymentMethod.name.toLowerCase().replaceAll('_', '').replaceAll(' ', '');
 
-    // ================= 1) PayPal Flow =================
     if (methodName == 'paypal') {
       bool loaderVisible = true;
       void hideLoader() {
         if (loaderVisible && context.mounted) {
-          TFullScreenLoader.stopLoading(context);
+          FullScreenLoader.stopLoading(context);
         }
         loaderVisible = false;
       }
@@ -243,7 +233,6 @@ class OrderCubit extends Cubit<OrderState> {
         hideLoader();
         if (!context.mounted) return;
 
-        // 2) Open PayPal inside the app and wait for approve / cancel
         final approved = await Navigator.of(context).push<bool>(
           MaterialPageRoute(
             builder: (_) => PayPalWebViewScreen(approvalUrl: approvalUrl),
@@ -252,7 +241,7 @@ class OrderCubit extends Cubit<OrderState> {
 
         if (approved != true) {
           if (context.mounted) {
-            TLoaders.warningSnackBar(
+            Loaders.warningSnackBar(
               title: 'Payment cancelled',
               message: 'You cancelled the PayPal payment.',
               context: context,
@@ -261,9 +250,8 @@ class OrderCubit extends Cubit<OrderState> {
           return;
         }
 
-        // 3) Capture the approved payment
         if (!context.mounted) return;
-        TFullScreenLoader.popUpCircular(context);
+        FullScreenLoader.popUpCircular(context);
         loaderVisible = true;
 
         final captureRes = await http.post(
@@ -285,7 +273,6 @@ class OrderCubit extends Cubit<OrderState> {
           throw 'Payment was not completed (${capData['error'] ?? 'unknown'})';
         }
 
-        // 4) Payment done: save the order and clear the cart
         final saved = await _orderRepository.saveOrder(order, userId);
         saved.fold<void>(
               (error) => throw error.message,
@@ -303,13 +290,12 @@ class OrderCubit extends Cubit<OrderState> {
           errorMessage: e.toString(),
         ));
         if (context.mounted) {
-          TLoaders.errorSnackBar(title: 'PayPal Error', message: e.toString(), context: context);
+          Loaders.errorSnackBar(title: 'PayPal Error', message: e.toString(), context: context);
         }
       }
       return;
     }
 
-    // ================= 2) Credit Card Flow (يقبل جميع البطاقات عبر Stripe) =================
     if (methodName == 'creditcard') {
       await _processStripePayment(
         context: context,
@@ -321,12 +307,9 @@ class OrderCubit extends Cubit<OrderState> {
       return;
     }
 
-    // ================= 3) Vodafone Cash Flow =================
-// ================= 3) Vodafone Cash Flow =================
-    // ================= 3) Vodafone Cash Flow =================
+
     if (methodName == 'vodafonecash') {
-      // إيقاف اللودر الابتدائي الذي تم فتحه في بداية الدالة
-      TFullScreenLoader.stopLoading(context);
+      FullScreenLoader.stopLoading(context);
 
       final TextEditingController phoneController = TextEditingController();
       final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -344,7 +327,6 @@ class OrderCubit extends Cubit<OrderState> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 1) Header: Logo + Title + Close Button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -381,14 +363,12 @@ class OrderCubit extends Cubit<OrderState> {
                   ),
                   const SizedBox(height: 16),
 
-                  // 2) Subtitle / Instructions
                   const Text(
                     'Enter your mobile wallet number to receive the payment request.',
                     style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   const SizedBox(height: 20),
 
-                  // 3) Phone Input Field with Validation
                   TextFormField(
                     controller: phoneController,
                     keyboardType: TextInputType.phone,
@@ -417,7 +397,6 @@ class OrderCubit extends Cubit<OrderState> {
                   ),
                   const SizedBox(height: 24),
 
-                  // 4) Professional Confirm Button
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -434,21 +413,20 @@ class OrderCubit extends Cubit<OrderState> {
                         if (formKey.currentState!.validate()) {
                           Navigator.pop(dialogContext);
 
-                          // بدء التحميل الحقيقي عند الحفظ
-                          TFullScreenLoader.popUpCircular(context);
+                          FullScreenLoader.popUpCircular(context);
 
                           final result = await _orderRepository.saveOrder(order, userId);
 
                           result.fold((error) {
-                            TFullScreenLoader.stopLoading(context);
+                            FullScreenLoader.stopLoading(context);
                             emit(state.copyWith(
                               status: OrderStatusEnum.error,
                               errorMessage: error.message,
                             ));
-                            TLoaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
+                            Loaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
                           }, (_) {
                             cartCubit.clearCart();
-                            TFullScreenLoader.stopLoading(context);
+                            FullScreenLoader.stopLoading(context);
                             emit(state.copyWith(status: OrderStatusEnum.processingSuccess));
                             _goToSuccess(context);
                           });
@@ -469,10 +447,8 @@ class OrderCubit extends Cubit<OrderState> {
       return;
     }
 
-    // ================= 4) Fawry Flow (Simulation) =================
     if (methodName == 'fawry') {
-      // إيقاف اللودر الابتدائي الذي تم فتحه في بداية الدالة
-      TFullScreenLoader.stopLoading(context);
+      FullScreenLoader.stopLoading(context);
 
       final String mockRefNumber = '789${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
 
@@ -526,14 +502,12 @@ class OrderCubit extends Cubit<OrderState> {
                 ),
                 const SizedBox(height: 16),
 
-                // 2) Instructions
                 const Text(
                   'Please use the reference number below to complete your payment at any Fawry outlet or via MyFawry App:',
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
                 const SizedBox(height: 20),
 
-                // 3) Reference Number Box
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
@@ -563,7 +537,6 @@ class OrderCubit extends Cubit<OrderState> {
                 ),
                 const SizedBox(height: 24),
 
-                // 4) Simulate Payment Button
                 SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -579,21 +552,20 @@ class OrderCubit extends Cubit<OrderState> {
                     onPressed: () async {
                       Navigator.pop(dialogContext);
 
-                      // بدء التحميل الحقيقي عند الحفظ
-                      TFullScreenLoader.popUpCircular(context);
+                      FullScreenLoader.popUpCircular(context);
 
                       final result = await _orderRepository.saveOrder(order, userId);
 
                       result.fold((error) {
-                        TFullScreenLoader.stopLoading(context);
+                        FullScreenLoader.stopLoading(context);
                         emit(state.copyWith(
                           status: OrderStatusEnum.error,
                           errorMessage: error.message,
                         ));
-                        TLoaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
+                        Loaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
                       }, (_) {
                         cartCubit.clearCart();
-                        TFullScreenLoader.stopLoading(context);
+                        FullScreenLoader.stopLoading(context);
                         emit(state.copyWith(status: OrderStatusEnum.processingSuccess));
                         _goToSuccess(context);
                       });
@@ -611,9 +583,8 @@ class OrderCubit extends Cubit<OrderState> {
       );
       return;
     }
-    // ================= 5) InstaPay Flow (Simulation) =================
     if (methodName == 'instapay') {
-      TFullScreenLoader.stopLoading(context);
+      FullScreenLoader.stopLoading(context);
 
       final TextEditingController ipaController = TextEditingController();
       final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -631,7 +602,6 @@ class OrderCubit extends Cubit<OrderState> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 1) Header: Logo + Title + Close Button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -663,14 +633,12 @@ class OrderCubit extends Cubit<OrderState> {
                   ),
                   const SizedBox(height: 16),
 
-                  // 2) Instructions
                   const Text(
                     'Enter your InstaPay address (IPA) or username to receive the transfer request:',
                     style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   const SizedBox(height: 20),
 
-                  // 3) IPA Input Field
                   TextFormField(
                     controller: ipaController,
                     keyboardType: TextInputType.text,
@@ -698,13 +666,12 @@ class OrderCubit extends Cubit<OrderState> {
                   ),
                   const SizedBox(height: 24),
 
-                  // 4) Simulate Payment Button
                   SizedBox(
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple, // لون مميز لـ InstaPay
+                        backgroundColor: Colors.purple,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -715,20 +682,20 @@ class OrderCubit extends Cubit<OrderState> {
                         if (formKey.currentState!.validate()) {
                           Navigator.pop(dialogContext);
 
-                          TFullScreenLoader.popUpCircular(context);
+                          FullScreenLoader.popUpCircular(context);
 
                           final result = await _orderRepository.saveOrder(order, userId);
 
                           result.fold((error) {
-                            TFullScreenLoader.stopLoading(context);
+                            FullScreenLoader.stopLoading(context);
                             emit(state.copyWith(
                               status: OrderStatusEnum.error,
                               errorMessage: error.message,
                             ));
-                            TLoaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
+                            Loaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
                           }, (_) {
                             cartCubit.clearCart();
-                            TFullScreenLoader.stopLoading(context);
+                            FullScreenLoader.stopLoading(context);
                             emit(state.copyWith(status: OrderStatusEnum.processingSuccess));
                             _goToSuccess(context);
                           });
@@ -749,18 +716,17 @@ class OrderCubit extends Cubit<OrderState> {
       return;
     }
 
-    // --- Normal flow for Cash on Delivery ---
     final result = await _orderRepository.saveOrder(order, userId);
     result.fold((error) {
-      TFullScreenLoader.stopLoading(context);
+      FullScreenLoader.stopLoading(context);
       emit(state.copyWith(
         status: OrderStatusEnum.error,
         errorMessage: error.message,
       ));
-      TLoaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
+      Loaders.errorSnackBar(title: 'Oh Snap!', message: error.message, context: context);
     }, (_) {
       cartCubit.clearCart();
-      TFullScreenLoader.stopLoading(context);
+      FullScreenLoader.stopLoading(context);
 
       emit(state.copyWith(status: OrderStatusEnum.processingSuccess));
       _goToSuccess(context);
