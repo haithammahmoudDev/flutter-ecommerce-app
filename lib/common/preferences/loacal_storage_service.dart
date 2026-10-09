@@ -2,10 +2,12 @@ import 'package:fit_store/features/home/data/model/category_model.dart';
 import 'package:fit_store/utils/validators/product_model_adapter.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 
+import '../../features/home/data/model/reviews_model.dart';
 import '../../features/settings/data/models/user_model_adapter.dart';
 import '../../utils/validators/addess_model_adapter.dart';
 import '../../utils/validators/category_model_adapter.dart';
 import '../../utils/validators/product_attributes_model_adapter.dart';
+import '../../utils/validators/reviews_model_adapter.dart';
 import 'local_reo.dart';
 import '../../features/cart/models/cart_item_model.dart';
 import '../../features/home/data/model/banners_model.dart';
@@ -34,7 +36,7 @@ class LocalStorageService {
   static late final LocalRepository<List<OrderModel>> ordersRepo;
   static late final LocalRepository<List<CategoryModel>> categoriesRepo;
   static late final LocalRepository<List<ProductModel>> categoriesProductsRepo;
-
+  static late final LocalRepository<List<ReviewModel>> reviewsRepo;
   // ✅ مستودع الأقسام الفرعية الثابت والمستقر
   static late final LocalRepository<List<CategoryModel>> subCategoriesRepo;
 
@@ -72,6 +74,9 @@ class LocalStorageService {
     }
     if (!Hive.isAdapterRegistered(9)) {
       Hive.registerAdapter<CategoryModel>(CategoryModelAdapter());
+    }
+    if (!Hive.isAdapterRegistered(10)) {
+      Hive.registerAdapter<ReviewModel>(ReviewModelAdapter());
     }
 
     // ── User ───────────────────────────────────────────────────────────────
@@ -211,6 +216,16 @@ class LocalStorageService {
     await categoriesProductsRepo.init<ProductModel>(
       adapter: ProductModelAdapter(),
       typeId: 1,
+    );
+    // ── Reviews ────────────────────────────────────────────────────────────
+    reviewsRepo = LocalRepository<List<ReviewModel>>(
+      boxName: 'reviews_box',
+      key: 'cached_reviews',
+      fromStorage: (raw) => (raw as List).cast<ReviewModel>(),
+    );
+    await reviewsRepo.init<ReviewModel>(
+      adapter: ReviewModelAdapter(),
+      typeId: 10,
     );
   }
 }

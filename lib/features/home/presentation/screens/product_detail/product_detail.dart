@@ -12,6 +12,7 @@ import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../domain/entities/product_entity.dart';
 import '../../controller/products_cubit/images_cubit.dart';
 import '../../controller/products_cubit/variation_cubit.dart';
+import '../../controller/reviews_cubit/reviews_cubit.dart';
 import '../product_reviews/product_reviews.dart';
 import 'widgets/bottom_add_to_cart_widget.dart';
 import 'widgets/product_attributes.dart';
@@ -34,107 +35,127 @@ class ProductDetailScreen extends StatelessWidget {
           create: (context) => sl<ImagesCubit>()..getAllProductImages(product),
         ),
         BlocProvider(create: (context) => sl<VariationCubit>()),
+        BlocProvider(
+          create: (context) => sl<ReviewsCubit>()..fetchReviewsForProduct(product.id),
+        ),
       ],
-      child: Scaffold(
-        bottomNavigationBar: BottomAddToCart(product: product.toModel()),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProductImageSlider(product: product),
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: TSizes.defaultSpace,
-                  left: TSizes.defaultSpace,
-                  bottom: TSizes.defaultSpace,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RatingAndShare(product: product),
-
-                    ProductMetaData(product: product),
-
-                    const SizedBox(height: TSizes.spaceBtwSections / 2),
-
-                    if (product.productType == 'variable')
-                      ProductAttributes(product: product),
-                    if (product.productType == 'variable')
-                      const SizedBox(height: TSizes.spaceBtwSections / 2),
-
-                    SizedBox(
-                      width: TDeviceUtils.getScreenWidth(context),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            TRoutes.checkoutScreen,
-                            arguments: product,
-                          );
-                        },
-                        child: const Text('Checkout'),
-                      ),
+      // 👈 استخدام Builder للحصول على context جديد تحت الـ Providers
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            bottomNavigationBar: BottomAddToCart(product: product.toModel()),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ProductImageSlider(product: product),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: TSizes.defaultSpace,
+                      left: TSizes.defaultSpace,
+                      bottom: TSizes.defaultSpace,
                     ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RatingAndShare(product: product),
 
-                    const SizedBox(height: TSizes.spaceBtwSections / 2),
+                        ProductMetaData(product: product),
 
-                    const SectionHeading(
-                      title: 'Description',
-                      showActionButton: false,
-                    ),
-                    const SizedBox(height: TSizes.spaceBtwItems),
+                        const SizedBox(height: TSizes.spaceBtwSections / 2),
 
-                    ReadMoreText(
-                      product.description ??
-                          'No description available for this product.',
-                      trimLines: 2,
-                      colorClickableText: Colors.pink,
-                      trimMode: TrimMode.Line,
-                      trimCollapsedText: ' Show more',
-                      trimExpandedText: ' Less',
-                      moreStyle: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      lessStyle: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+                        if (product.productType == 'variable')
+                          ProductAttributes(product: product),
+                        if (product.productType == 'variable')
+                          const SizedBox(height: TSizes.spaceBtwSections / 2),
 
-                    const SizedBox(height: TSizes.spaceBtwItems),
-                    const Divider(),
-                    const SizedBox(height: TSizes.spaceBtwItems),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          ProductReviewsScreen.routeName,
-                          arguments: product,
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SectionHeading(
-                            title: 'Reviews (199)',
-                            showActionButton: false,
+                        SizedBox(
+                          width: TDeviceUtils.getScreenWidth(context),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                TRoutes.checkoutScreen,
+                                arguments: product,
+                              );
+                            },
+                            child: const Text('Checkout'),
                           ),
-                          Icon(
+                        ),
+
+                        const SizedBox(height: TSizes.spaceBtwSections / 2),
+
+                        const SectionHeading(
+                          title: 'Description',
+                          showActionButton: false,
+                        ),
+                        const SizedBox(height: TSizes.spaceBtwItems),
+
+                        ReadMoreText(
+                          product.description ??
+                              'No description available for this product.',
+                          trimLines: 2,
+                          colorClickableText: Colors.pink,
+                          trimMode: TrimMode.Line,
+                          trimCollapsedText: ' Show more',
+                          trimExpandedText: ' Less',
+                          moreStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                          ),
+                          lessStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+
+                        const SizedBox(height: TSizes.spaceBtwItems),
+                        const Divider(),
+
+                        ListTile(
+                          onTap: () async {
+                            // 1. الانتقال لشاشة التقييمات وتمرير الـ Cubit الصحيح باستخدام سياق الـ Builder
+                            await Navigator.pushNamed(
+                              context,
+                              ProductReviewsScreen.routeName,
+                              arguments: {
+                                'productId': product.id,
+                                'cubit': context.read<ReviewsCubit>(),
+                              },
+                            );
+
+                            // 2. تحديث البيانات فور عودة المستخدم
+                            if (context.mounted) {
+                              context.read<ReviewsCubit>().fetchReviewsForProduct(product.id);
+                            }
+                          },
+                          contentPadding: EdgeInsets.zero, // لإزالة الـ Padding الافتراضي الخاص بـ ListTile ليتطابق مع تصميمك
+                          title: BlocBuilder<ReviewsCubit, ReviewsState>(
+                            buildWhen: (previous, current) =>
+                            previous.status != current.status ||
+                                previous.reviews.length != current.reviews.length,
+                            builder: (context, state) {
+                              final reviewCount = state.reviews.length;
+                              return SectionHeading(
+                                title: 'Reviews ($reviewCount)',
+                                showActionButton: false,
+                              );
+                            },
+                          ),
+                          trailing: Icon(
                             Iconsax.arrow_right_3,
                             size: 18,
                             color: isDark ? TColors.white : TColors.dark,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

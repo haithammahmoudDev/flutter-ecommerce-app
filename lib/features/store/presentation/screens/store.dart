@@ -15,7 +15,9 @@ import '../../../../common/widgets/custom_shapes/containers/rounded_container.da
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../../../cart/screens/cart_menu_icon.dart';
 import '../../../home/presentation/controller/categories_cubit/categories_cubit.dart';
+import '../../../home/presentation/screens/search_screen.dart';
 import '../../../home/presentation/screens/widgets/header_search_container.dart';
 import 'all_brands/all_brands.dart';
 
@@ -128,21 +130,17 @@ class StoreScreen extends StatelessWidget {
                         floating: false,
                         elevation: 0,
                         scrolledUnderElevation: 0,
+                        centerTitle: false,
+                        actionsPadding: EdgeInsets.only(right: 10),
                         title: Text(
                           'Store',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         actions: [
-                          IconButton(
-                            onPressed: () {
-                              // TODO: wire up navigation to the cart/bag screen.
-                            },
-                            icon: Icon(
-                              Iconsax.shopping_bag,
-                              color: HelperFunctions.isDarkMode(context)
-                                  ? TColors.white
-                                  : TColors.black,
-                            ),
+                          TCartCounterIcon(
+                            iconColor: TColors.iconSecondaryLight,
+                            counterBgColor: TColors.black,
+                            counterTextColor: TColors.white,
                           ),
                         ],
                         flexibleSpace: Padding(
@@ -152,10 +150,13 @@ class StoreScreen extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
                               const SizedBox(height: kToolbarHeight + 10),
-                              const TSearchContainer(
+                              TSearchContainer(
                                 text: 'Search in Store',
                                 showBorder: true,
                                 showBackground: false,
+                                onTap: (){
+                                  Navigator.pushNamed(context, SearchScreen.routeName);
+                                },
                               ),
                               const SizedBox(height: TSizes.spaceBtwItems),
                               SectionHeading(

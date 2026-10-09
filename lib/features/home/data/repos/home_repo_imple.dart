@@ -11,6 +11,7 @@ import '../../../../common/errors/failure.dart';
 import '../../../../common/network/firebase/database_services.dart';
 import '../../../../common/preferences/loacal_storage_service.dart';
 import '../../../../utils/helpers/network_manager.dart';
+import '../../../../utils/search_utils.dart';
 import '../../domain/entities/categories_entity.dart';
 import '../model/category_model.dart';
 import '../model/banners_model.dart';
@@ -78,16 +79,10 @@ class HomeRepoImple implements HomeRepo {
   Future<Either<Failure, List<ProductEntity>>> fetchProductsByQuery({
     required Map<String, dynamic> query,
   }) async {
-    print('--------------------------------------------------');
-    print('🔎 [HomeRepoImple] fetchProductsByQuery executing...');
-    print('📌 [HomeRepoImple] Incoming Query Map: $query');
 
-    // 1. التحقق من الإنترنت
     final bool isConnected = await NetworkManager.instance.isConnected();
-    print('🌐 [HomeRepoImple] Network Connection Status: $isConnected');
 
     if (!isConnected) {
-      print('⚠️ [HomeRepoImple] No internet connection!');
       return left(const NetworkFailure('لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.'));
     }
 
@@ -95,7 +90,6 @@ class HomeRepoImple implements HomeRepo {
       Query<Map<String, dynamic>> queryRef = _db.collection('Products');
 
       query.forEach((key, value) {
-        print('⚙️ [HomeRepoImple] Applying filter -> Field: "$key" = $value');
         if (value != null) {
           if (value is List) {
             if (value.isNotEmpty) {
@@ -107,13 +101,8 @@ class HomeRepoImple implements HomeRepo {
         }
       });
 
-      print('⏳ [HomeRepoImple] Executing Firestore query...');
       final QuerySnapshot<Map<String, dynamic>> snapshot = await queryRef.get();
-      print('📦 [HomeRepoImple] Firestore Documents found: ${snapshot.docs.length}');
 
-      if (snapshot.docs.isEmpty) {
-        print('⚠️ [HomeRepoImple] WARNING: Firestore returned 0 documents for this query! Check if field name exists in DB.');
-      }
 
       final List<ProductModel> productModels = snapshot.docs.map((doc) {
         final data = doc.data();
@@ -122,13 +111,10 @@ class HomeRepoImple implements HomeRepo {
 
       final List<ProductEntity> productEntities = productModels.map((e) => e.toEntity()).toList();
 
-      print('--------------------------------------------------');
       return right(productEntities);
     } on FirebaseException catch (e) {
-      print('❌ [HomeRepoImple] FirebaseException: ${e.message}');
       return left(ServerFailure(e.message ?? 'حدث خطأ أثناء جلب البيانات من الخادم.'));
     } catch (e) {
-      print('❌ [HomeRepoImple] Unexpected Error: $e');
       return left(const ServerFailure('Something went wrong. Please try again.'));
     }
   }
@@ -170,10 +156,7 @@ class HomeRepoImple implements HomeRepo {
     }
   }
 
-  /// جلب منتجات المفضلة من الكاش المحلي (LocalStorageService.productsRepo)
-  /// بدلاً من أي نداء شبكة — بيفلتر قائمة كل المنتجات المخزنة محلياً بمعرفات
-  /// المفضلة المطلوبة.
-  @override
+   @override
   Future<Either<Failure, List<ProductEntity>>> getFavouriteProducts({
     required List<String> productIds,
   }) async {
@@ -210,6 +193,50 @@ class HomeRepoImple implements HomeRepo {
     } catch (e) {
       return left(
           const ServerFailure('Something went wrong. Please try again.'));
+    }
+  }
+  @override
+  Future<Either<Failure, List<ProductEntity>>> searchProducts({
+    required String query,
+  }) async {
+    final q = query.trim();
+    if (q.isEmpty) return right([]);
+
+    try {
+       List<ProductModel> candidates =
+          LocalStorageService.productsRepo.getData() ?? [];
+
+       if (candidates.isEmpty) {
+        if (!await NetworkManager.instance.isConnected()) {
+          return left(const NetworkFailure(
+              'لا يوجد اتصال بالإنترنت، يرجى التحقق من الشبكة.'));
+        }
+        final List<Map<String, dynamic>> raw =
+        await _databaseServices.getData(path: 'Products');
+        candidates = raw
+            .map((m) => ProductModel.fromFirebaseJson(m, m['id'] as String))
+            .toList();
+        await LocalStorageService.productsRepo.saveData(candidates);
+      }
+
+      final entities = candidates.map((e) => e.toEntity()).toList();
+
+       final docs = entities
+          .map((p) => SearchDoc.build(
+        p,
+        title: p.title,
+        brand: p.brand?.name ?? '',
+      ))
+          .toList();
+
+      final results = SearchUtils.searchIndex(docs, q);
+
+      return right(results);
+    } on FirebaseException catch (e) {
+      return left(
+          ServerFailure(e.message ?? 'حدث خطأ أثناء جلب البيانات من الخادم.'));
+    } catch (e) {
+      return left(const ServerFailure('Something went wrong. Please try again.'));
     }
   }
 }

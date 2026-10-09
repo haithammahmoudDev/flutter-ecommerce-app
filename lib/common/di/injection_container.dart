@@ -46,7 +46,12 @@ import 'package:fit_store/features/store/domain/repos/store_repo.dart';
 import 'package:fit_store/features/store/presentation/controller/brand_cubit/brand_cubit.dart';
 import '../../features/home/data/repos/category_repo_impl.dart';
 import '../../features/home/data/repos/home_repo_imple.dart';
+import '../../features/home/data/repos/review_repo.dart';
+import '../../features/home/data/repos/review_repo_impl.dart';
 import '../../features/home/presentation/controller/all_products/all_products_cubit.dart';
+import '../../features/home/presentation/controller/reviews_cubit/reviews_cubit.dart';
+import '../../features/home/presentation/controller/search/search_cubit.dart';
+import '../../features/home/presentation/screens/recent_search_store.dart';
 import '../../features/store/data/repos/store_repo_imple.dart';
 
 // --- Personalization & Dashboard Imports ---
@@ -187,4 +192,22 @@ Future<void> initDependencies() async {
   sl.registerFactory<AddressCubit>(() => AddressCubit(addressRepo: sl()));
   sl.registerFactory<OrderCubit>(() => OrderCubit(orderRepository: sl()));
   sl.registerFactory<CheckoutCubit>(() => CheckoutCubit());
+// Register RecentSearchesStore
+  sl.registerLazySingleton(() => RecentSearchesStore());
+
+// Register SearchCubit with proper DI resolution
+  sl.registerFactory(() => SearchCubit(
+    homeRepo: sl<HomeRepo>(),
+    recentStore: sl<RecentSearchesStore>(),
+  ));
+
+
+   sl.registerLazySingleton<ReviewsRepo>(
+        () => ReviewsRepoImpl(),
+  );
+
+   sl.registerFactory(
+        () => ReviewsCubit(reviewsRepo: sl<ReviewsRepo>()),
+  );
+
 }

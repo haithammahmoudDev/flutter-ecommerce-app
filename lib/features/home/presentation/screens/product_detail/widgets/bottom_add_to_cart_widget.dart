@@ -75,14 +75,20 @@ class BottomAddToCart extends StatelessWidget {
                 ],
               ),
 
-               ElevatedButton(
+              ElevatedButton(
                 onPressed: quantity < 1
                     ? null
-                    : () =>
-                    cartCubit.addToCart(product, context),
+                    : () => cartCubit.addToCart(product, context),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(TSizes.md),
                   backgroundColor: TColors.black,
+
+                  // 👈 لون النص عندما يكون الزر مفاعلاً (يعمل طبيعي)
+                  foregroundColor: Colors.white,
+
+                  // 👈 لون النص عندما يكون الزر معطلاً (quantity < 1) مع مراعاة الـ Dark Mode
+                  disabledForegroundColor: dark ? Colors.grey : Colors.black54,
+
                   side: const BorderSide(color: TColors.black),
                 ),
                 child: const Text('Add to Cart'),

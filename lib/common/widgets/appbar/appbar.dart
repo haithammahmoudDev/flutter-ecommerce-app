@@ -61,7 +61,9 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
             showSkipButton
                 ? [
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(6), textStyle: Theme.of(context).textTheme.bodySmall),
                     child: const Text(AppTexts.skip),
                   ),

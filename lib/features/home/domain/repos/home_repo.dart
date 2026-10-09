@@ -21,4 +21,7 @@ abstract interface class HomeRepo {
     required List<String> productIds,
   });
    Future<Either<Failure, List<ProductEntity>>> fetchAllProducts();
+   Future<Either<Failure, List<ProductEntity>>> searchProducts({
+     required String query,
+   });
 }

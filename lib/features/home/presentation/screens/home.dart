@@ -1,8 +1,10 @@
 import 'package:fit_store/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:fit_store/common/widgets/texts/section_heading.dart';
+import 'package:fit_store/features/auth/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:fit_store/features/home/presentation/controller/all_products/all_products_cubit.dart';
 import 'package:fit_store/features/home/presentation/controller/products_cubit/products_cubit.dart';
 import 'package:fit_store/features/home/presentation/screens/product_cards/product_card_vertical.dart';
+import 'package:fit_store/features/home/presentation/screens/search_screen.dart';
 import 'package:fit_store/features/home/presentation/screens/widgets/header_categories.dart';
 import 'package:fit_store/features/home/presentation/screens/widgets/header_search_container.dart';
 import 'package:fit_store/features/home/presentation/screens/widgets/home_appbar.dart';
@@ -34,19 +36,25 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
 
-              const TPrimaryHeaderContainer(
+              TPrimaryHeaderContainer(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    HomeAppBar(),
-                    SizedBox(height: TSizes.spaceBtwSections),
+                    const HomeAppBar(),
+                    const SizedBox(height: TSizes.spaceBtwSections),
 
-                    TSearchContainer(text: 'Search in Store', showBorder: false),
-                    SizedBox(height: TSizes.spaceBtwSections),
+                    TSearchContainer(
+                        text: 'Search in Store',
+                        showBorder: false,
+                        onTap: (){
+                           Navigator.pushNamed(context, SearchScreen.routeName);
+                        },
+                    ),
+                    const SizedBox(height: TSizes.spaceBtwSections),
 
-                    THeaderCategories(),
-                    SizedBox(height: TSizes.spaceBtwSections * 2),
+                    const THeaderCategories(),
+                    const SizedBox(height: TSizes.spaceBtwSections * 2),
                   ],
                 ),
               ),
