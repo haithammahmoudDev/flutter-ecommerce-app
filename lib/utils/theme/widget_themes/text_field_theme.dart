@@ -7,26 +7,26 @@ class TTextFormFieldTheme {
   TTextFormFieldTheme._();
 
   static final InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
-    prefixIconColor: TColors.secondary,
-    floatingLabelStyle: const TextStyle(color: TColors.secondary),
+    prefixIconColor: AppColors.secondary,
+    floatingLabelStyle: const TextStyle(color: AppColors.secondary),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(TSizes.borderRadiusLg),
+      borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(TSizes.borderRadiusLg),
-      borderSide: const BorderSide(width: 2, color: TColors.secondary),
+      borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg),
+      borderSide: const BorderSide(width: 2, color: AppColors.secondary),
     ),
   );
 
   static final InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
-    prefixIconColor: TColors.primary,
-    floatingLabelStyle: const TextStyle(color: TColors.primary),
+    prefixIconColor: AppColors.primary,
+    floatingLabelStyle: const TextStyle(color: AppColors.primary),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(TSizes.borderRadiusLg),
+      borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(TSizes.borderRadiusLg),
-      borderSide: const BorderSide(width: 2, color: TColors.primary),
+      borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg),
+      borderSide: const BorderSide(width: 2, color: AppColors.primary),
     ),
   );
 }

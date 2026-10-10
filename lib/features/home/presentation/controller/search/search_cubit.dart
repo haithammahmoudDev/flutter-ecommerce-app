@@ -2,10 +2,10 @@ import 'dart:async';
  import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/home/domain/repos/home_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../../../utils/helpers/network_manager.dart';
-import '../../../../../utils/search_utils.dart';
-import '../../screens/recent_search_store.dart';
+import '../../../../../utils/search/search_utils.dart';
+import '../../screens/search/service/recent_search_store.dart';
 
 part 'search_state.dart';
 
@@ -115,7 +115,6 @@ class SearchCubit extends Cubit<SearchState> {
     ));
   }
 
-  // ------------------------- Catalog -------------------------
 
   void _setCatalog(List<ProductEntity> products) {
     _index = products

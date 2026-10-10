@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fit_store/common/errors/failure.dart';
-import 'package:fit_store/common/preferences/loacal_storage_service.dart';
+import 'package:fit_store/common/local_storage/loacal_storage_service.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/store/domain/entities/brand_entity.dart';
 import '../../../../utils/helpers/network_manager.dart';
@@ -144,7 +144,6 @@ class StoreRepoImple implements StoreRepo {
     }
   }
 
-  /// 1) جلب كل منتجات التصنيف بدون حد (بدون Limit) مع نظام الكاش والشبكة
   @override
   Future<Either<Failure, List<ProductEntity>>> fetchProductsForCategory({
     required String categoryId,

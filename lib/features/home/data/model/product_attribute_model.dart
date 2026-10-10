@@ -6,7 +6,6 @@ class ProductAttributeModel {
 
   ProductAttributeModel({this.name, this.values});
 
-  /// دالة التحويل إلى Entity المخصصة لطبقة الـ Domain
   ProductAttributeEntity toEntity() {
     return ProductAttributeEntity(
       name: name,

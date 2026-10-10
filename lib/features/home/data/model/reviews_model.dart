@@ -13,8 +13,6 @@ class ReviewModel extends ReviewEntity {
     required super.comment,
     required super.createdAt,
     super.updatedAt,
-    super.storeResponse,
-    super.storeResponseDate,
   });
 
   factory ReviewModel.fromFirebaseJson(Map<String, dynamic> json, String id) {
@@ -28,8 +26,6 @@ class ReviewModel extends ReviewEntity {
       comment: json['comment'] ?? '',
       createdAt: (json['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
       updatedAt: (json['updatedAt'] as Timestamp?)?.toDate(),
-      storeResponse: json['storeResponse'],
-      storeResponseDate: (json['storeResponseDate'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -43,8 +39,6 @@ class ReviewModel extends ReviewEntity {
       'comment': comment,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
-      'storeResponse': storeResponse,
-      'storeResponseDate': storeResponseDate,
     };
   }
 
@@ -61,8 +55,6 @@ class ReviewModel extends ReviewEntity {
       comment: entity.comment,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
-      storeResponse: entity.storeResponse,
-      storeResponseDate: entity.storeResponseDate,
     );
   }
 }

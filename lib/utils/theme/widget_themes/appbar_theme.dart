@@ -9,14 +9,14 @@ class TAppBarTheme{
     elevation: 0,
     centerTitle: true,
     backgroundColor: Colors.transparent,
-    iconTheme: IconThemeData(color: TColors.dark, size: 18.0),
-    actionsIconTheme: IconThemeData(color: TColors.dark, size: 18.0),
+    iconTheme: IconThemeData(color: AppColors.dark, size: 18.0),
+    actionsIconTheme: IconThemeData(color: AppColors.dark, size: 18.0),
   );
   static const darkAppBarTheme = AppBarTheme(
     elevation: 0,
     centerTitle: true,
     backgroundColor: Colors.transparent,
-    iconTheme: IconThemeData(color: TColors.white, size: 18.0),
-    actionsIconTheme: IconThemeData(color: TColors.white, size: 18.0),
+    iconTheme: IconThemeData(color: AppColors.white, size: 18.0),
+    actionsIconTheme: IconThemeData(color: AppColors.white, size: 18.0),
   );
 }

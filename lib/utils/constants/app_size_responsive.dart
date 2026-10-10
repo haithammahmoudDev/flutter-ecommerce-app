@@ -1,6 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AppSizes {
+class AppSizesResponsive {
   /// Font Sizes
   static final double sp8 = 8.sp;
   static final double sp14 = 14.sp;

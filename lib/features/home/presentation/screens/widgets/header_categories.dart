@@ -18,16 +18,16 @@ class THeaderCategories extends StatelessWidget {
     return BlocProvider(
         create: (context) => sl<CategoriesCubit>(),
   child: Padding(
-      padding: const EdgeInsets.only(left: TSizes.defaultSpace),
+      padding: const EdgeInsets.only(left: AppSizes.defaultSpace),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SectionHeading(
             title: 'Popular Categories',
-            textColor: TColors.white,
+            textColor: AppColors.white,
             showActionButton: false,
           ),
-          const SizedBox(height: TSizes.spaceBtwItems),
+          const SizedBox(height: AppSizes.spaceBtwItems),
 
           SizedBox(
             height: 80,
@@ -41,7 +41,7 @@ class THeaderCategories extends StatelessWidget {
                     return ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: state.categoryEntityList.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: TSizes.spaceBtwItems),
+                      separatorBuilder: (_, __) => const SizedBox(width: AppSizes.spaceBtwItems),
                       itemBuilder: (_, index) {
                         final category = state.categoryEntityList[index];
                         return TVerticalImageAndText(
@@ -92,12 +92,12 @@ class TCategoryShimmerList extends StatelessWidget {
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemCount: 6,
-      separatorBuilder: (_, __) => const SizedBox(width: TSizes.spaceBtwItems),
+      separatorBuilder: (_, __) => const SizedBox(width: AppSizes.spaceBtwItems),
       itemBuilder: (_, __) {
         return const Column(
           children: [
             TShimmerEffect(width: 56, height: 56, radius: 56),
-            SizedBox(height: TSizes.spaceBtwItems / 2),
+            SizedBox(height: AppSizes.spaceBtwItems / 2),
             TShimmerEffect(width: 55, height: 8, radius: 4),
           ],
         );
@@ -127,7 +127,7 @@ class TShimmerEffect extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: color ?? TColors.white,
+          color: color ?? AppColors.white,
           borderRadius: BorderRadius.circular(radius),
         ),
       ),

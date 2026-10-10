@@ -12,13 +12,13 @@ class TTabBar extends StatelessWidget implements PreferredSizeWidget {
     final dark = HelperFunctions.isDarkMode(context);
 
     return Material(
-      color: dark ? TColors.black : Colors.white,
+      color: dark ? AppColors.black : Colors.white,
       child: TabBar(
         isScrollable: true,
         tabAlignment: TabAlignment.start, // 💡 هذا هو السطر الذي يزيل المسافة الفارغة ويجعلها تبدأ من أقصى اليسار تماماً
-        indicatorColor: TColors.primary,
-        labelColor: dark ? TColors.white : TColors.primary,
-        unselectedLabelColor: TColors.darkGrey,
+        indicatorColor: AppColors.primary,
+        labelColor: dark ? AppColors.white : AppColors.primary,
+        unselectedLabelColor: AppColors.darkGrey,
         tabs: tabs,
       ),
     );

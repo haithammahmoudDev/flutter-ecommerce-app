@@ -17,7 +17,7 @@ class Brandcard extends StatelessWidget {
     return  GestureDetector(
       onTap: onTap,
       child: RoundedContainer(
-        padding:const EdgeInsets.all(TSizes.sm),
+        padding:const EdgeInsets.all(AppSizes.sm),
         showBorder: showBorder,
         backgroundColor: Colors.transparent,
         child: Row(
@@ -27,7 +27,7 @@ class Brandcard extends StatelessWidget {
               isNetworkImage: true,
               backgroundColor: Colors.transparent,
              ),
-            const  SizedBox(width: TSizes.spaceBtwItems / 2,),
+            const  SizedBox(width: AppSizes.spaceBtwItems / 2,),
             Expanded(child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

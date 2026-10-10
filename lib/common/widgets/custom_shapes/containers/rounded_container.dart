@@ -11,10 +11,10 @@ class RoundedContainer extends StatelessWidget {
     this.height,
     this.margin,
     this.showBorder = false,
-    this.padding = const EdgeInsets.all(TSizes.md),
-    this.borderColor = TColors.borderPrimary,
-    this.radius = TSizes.cardRadiusLg,
-    this.backgroundColor = TColors.white,
+    this.padding = const EdgeInsets.all(AppSizes.md),
+    this.borderColor = AppColors.borderPrimary,
+    this.radius = AppSizes.cardRadiusLg,
+    this.backgroundColor = AppColors.white,
   });
 
   final double? width;

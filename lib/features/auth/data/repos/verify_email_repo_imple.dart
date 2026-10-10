@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
-
 import 'package:fit_store/common/errors/failure.dart';
 import 'package:fit_store/features/auth/data/data_source/verify_email_datasource.dart';
-
 import '../../../../common/errors/exceptions.dart';
 import '../../domain/repos/verify_email_repo.dart';
 

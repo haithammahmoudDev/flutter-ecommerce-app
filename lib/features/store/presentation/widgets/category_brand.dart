@@ -45,16 +45,16 @@ class _CategoryBrandsState extends State<CategoryBrands> {
             children: List.generate(
               2,
                   (_) => Container(
-                margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
-                padding: const EdgeInsets.all(TSizes.md),
+                margin: const EdgeInsets.only(bottom: AppSizes.spaceBtwItems),
+                padding: const EdgeInsets.all(AppSizes.md),
                 decoration: BoxDecoration(
-                  border: Border.all(color: TColors.darkGrey),
-                  borderRadius: BorderRadius.circular(TSizes.cardRadiusMd),
+                  border: Border.all(color: AppColors.darkGrey),
+                  borderRadius: BorderRadius.circular(AppSizes.cardRadiusMd),
                 ),
                 child: const Column(
                   children: [
                     ListTileShimmer(),
-                    SizedBox(height: TSizes.spaceBtwItems),
+                    SizedBox(height: AppSizes.spaceBtwItems),
                     BoxesShimmer(),
                   ],
                 ),
@@ -135,11 +135,11 @@ class _CategoryBrandPreviewState extends State<_CategoryBrandPreview> {
 
         if (products == null) {
           return Container(
-            margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
-            padding: const EdgeInsets.all(TSizes.md),
+            margin: const EdgeInsets.only(bottom: AppSizes.spaceBtwItems),
+            padding: const EdgeInsets.all(AppSizes.md),
             decoration: BoxDecoration(
-              border: Border.all(color: TColors.darkGrey),
-              borderRadius: BorderRadius.circular(TSizes.cardRadiusMd),
+              border: Border.all(color: AppColors.darkGrey),
+              borderRadius: BorderRadius.circular(AppSizes.cardRadiusMd),
             ),
             child: const BoxesShimmer(),
           );

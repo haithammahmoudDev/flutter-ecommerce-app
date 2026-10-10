@@ -1,16 +1,13 @@
-// Original file: lib/features/authentication/screens/on_boarding/on_boarding_screen.dart
-// Converted: Get.put(OnBoardingController()) -> BlocProvider, Obx(...) -> BlocBuilder<OnBoardingCubit, OnBoardingState>
-    import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../../../../utils/constants/colors.dart';
 import 'onboarding_cubit/onboarding_cubit.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
- static const routeName = 'routeName';
+ static const routeName = '/onboarding-screen';
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -44,7 +41,7 @@ class OnBoardingScreen extends StatelessWidget {
                     ),
                     child: Container(
                       padding: const EdgeInsets.all(20.0),
-                      decoration: const BoxDecoration(color: TColors.black, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(color: AppColors.black, shape: BoxShape.circle),
                       child: const Icon(Icons.arrow_forward_ios),
                     ),
                   ),

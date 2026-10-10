@@ -12,9 +12,9 @@ class BoxesShimmer extends StatelessWidget {
         Row(
           children: [
             Expanded(child: TShimmerEffect(width: 150, height: 110)),
-            SizedBox(width: TSizes.spaceBtwItems),
+            SizedBox(width: AppSizes.spaceBtwItems),
             Expanded(child: TShimmerEffect(width: 150, height: 110)),
-            SizedBox(width: TSizes.spaceBtwItems),
+            SizedBox(width: AppSizes.spaceBtwItems),
             Expanded(child: TShimmerEffect(width: 150, height: 110)),
           ],
         ) // Row

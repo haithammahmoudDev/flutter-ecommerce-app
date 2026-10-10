@@ -19,7 +19,6 @@ class RatingAndShare extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // 👈 استخدام buildWhen لتحديث الواجهة فقط عند تغير حالة التحميل أو عدد/محتوى التقييمات
         BlocBuilder<ReviewsCubit, ReviewsState>(
           buildWhen: (previous, current) =>
           previous.status != current.status ||
@@ -39,7 +38,7 @@ class RatingAndShare extends StatelessWidget {
             return Row(
               children: [
                 const Icon(Iconsax.star5, color: Colors.amber, size: 24),
-                const SizedBox(width: TSizes.spaceBtwItems / 2),
+                const SizedBox(width: AppSizes.spaceBtwItems / 2),
                 Text.rich(
                   TextSpan(
                     children: [
@@ -65,7 +64,7 @@ class RatingAndShare extends StatelessWidget {
               ),
             );
           },
-          icon: const Icon(Icons.share, size: TSizes.iconMd),
+          icon: const Icon(Icons.share, size: AppSizes.iconMd),
         ),
       ],
     );

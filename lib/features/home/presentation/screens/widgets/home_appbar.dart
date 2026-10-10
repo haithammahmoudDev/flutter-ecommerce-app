@@ -1,10 +1,10 @@
+import 'package:fit_store/features/settings/presentation/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../common/widgets/appbar/home_appbar.dart';
-import '../../../../../../routes/routes.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/text_strings.dart';
-import '../../../../cart/screens/cart_menu_icon.dart';
+import '../../../../cart/presentation/screens/cart_menu_icon.dart';
 import '../../../../settings/presentation/controllers/user_cubit/user_cubit.dart';
 
 class HomeAppBar extends StatelessWidget {
@@ -17,7 +17,7 @@ class HomeAppBar extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, TRoutes.profileScreen),
+              onTap: () => Navigator.pushNamed(context, ProfileScreen.routeName),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -28,7 +28,7 @@ class HomeAppBar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(
                       context,
-                    ).textTheme.labelMedium!.apply(color: TColors.grey),
+                    ).textTheme.labelMedium!.apply(color: AppColors.grey),
                   ),
                   BlocBuilder<UserCubit, UserState>(
                     buildWhen: (previous, current) =>
@@ -41,7 +41,7 @@ class HomeAppBar extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(
                           context,
-                        ).textTheme.headlineSmall!.apply(color: TColors.white),
+                        ).textTheme.headlineSmall!.apply(color: AppColors.white),
                       );
                     },
                   ),
@@ -52,10 +52,10 @@ class HomeAppBar extends StatelessWidget {
         ],
       ),
       actions: [
-        TCartCounterIcon(
-          iconColor: TColors.white,
-          counterBgColor: TColors.black,
-          counterTextColor: TColors.white,
+        CartCounterIcon(
+          iconColor: AppColors.white,
+          counterBgColor: AppColors.black,
+          counterTextColor: AppColors.white,
         ),
       ],
     );

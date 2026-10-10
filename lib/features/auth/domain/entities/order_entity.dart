@@ -1,7 +1,7 @@
-import '../../../../personalization/data/models/address_entity.dart';
-import '../../../../personalization/data/models/cart_item_entity.dart';
+import '../../../settings/domain/entities/address_entity.dart';
+import '../../../cart/domain/entities/cart_item_entity.dart';
 import '../../../../utils/constants/enums.dart';
-   import '../../../../utils/helpers/helper_functions.dart';
+import '../../../../utils/helpers/helper_functions.dart';
 
 class OrderEntity {
   final String id;
@@ -26,7 +26,6 @@ class OrderEntity {
     this.deliveryDate,
   });
 
-  /// دوال العرض المساعدة (Getters) مطابقة للـ Model
   String get formattedOrderDate => HelperFunctions.getFormattedDate(orderDate);
 
   String get formattedDeliveryDate => deliveryDate != null
@@ -39,7 +38,6 @@ class OrderEntity {
       ? 'Shipment on the way'
       : 'Processing';
 
-  /// إنشاء كائن فارغ (Empty) مفيد في حالات الـ Initial State أو الـ Fallback
   static OrderEntity empty() => OrderEntity(
     id: '',
     userId: '',

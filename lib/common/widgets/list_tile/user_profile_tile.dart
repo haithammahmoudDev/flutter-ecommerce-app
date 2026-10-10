@@ -1,13 +1,10 @@
 import 'package:fit_store/common/widgets/images/t_circular_image.dart';
- import 'package:fit_store/personalization/presentation/screens/profile/profile_screen.dart';
-import 'package:fit_store/routes/routes.dart';
-import 'package:fit_store/utils/constants/image_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../features/settings/presentation/controllers/user_cubit/user_cubit.dart';
+import '../../../features/settings/presentation/screens/profile/profile_screen.dart';
 
 class UserProfileTile extends StatelessWidget {
   const UserProfileTile({super.key});

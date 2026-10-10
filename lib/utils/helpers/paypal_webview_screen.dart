@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-/// Opens the PayPal approval page inside the app.
-/// Pops with `true` when the buyer approved, `false` when cancelled/closed.
 class PayPalWebViewScreen extends StatefulWidget {
   const PayPalWebViewScreen({
     super.key,
@@ -13,7 +11,6 @@ class PayPalWebViewScreen extends StatefulWidget {
 
   final String approvalUrl;
 
-  /// Must match return_url / cancel_url used in the create-paypal-order function.
   final String returnUrl;
   final String cancelUrl;
 

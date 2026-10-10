@@ -2,27 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_store/features/home/data/model/product_attribute_model.dart';
 import 'package:fit_store/features/home/data/model/product_variation_model.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
-import 'package:fit_store/features/home/domain/entities/product_attribute_entity.dart'; // استيراد الـ Attribute Entity المفقود
 import '../../../store/data/models/brand_model.dart';
 import '../../../store/domain/entities/brand_entity.dart';
 
 class ProductModel {
-  String id;/////
-  int stock;////
+  String id;
+  int stock;
   String? sku;
-  double price;///
-  String title;//
-  DateTime? date;///
-  double? salePrice;//
-  String thumbnail;///
-  bool? isFeatured;///
-  BrandModel? brand;///
-  String? description;////
-  String? categoryId;///
-  List<String>? images;///
-  String productType;///
-  List<ProductAttributeModel>? productAttributes;////
-  List<ProductVariationModel>? productVariations;////
+  double price;
+  String title;
+  DateTime? date;
+  double? salePrice;
+  String thumbnail;
+  bool? isFeatured;
+  BrandModel? brand;
+  String? description;
+  String? categoryId;
+  List<String>? images;
+  String productType;
+  List<ProductAttributeModel>? productAttributes;
+  List<ProductVariationModel>? productVariations;
 
   ProductModel({
     required this.id,
@@ -43,7 +42,6 @@ class ProductModel {
     this.productVariations,
   });
 
-  /// دالة التحويل إلى Entity المخصصة لطبقة الـ Domain
   ProductEntity toEntity() {
     return ProductEntity(
       id: id,

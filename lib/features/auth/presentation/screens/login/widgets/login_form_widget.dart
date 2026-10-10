@@ -1,7 +1,6 @@
 import 'package:fit_store/common/preferences/preferences_manager.dart';
 import 'package:fit_store/features/auth/presentation/bloc/email_auth_bloc/email_auth_bloc.dart';
 import 'package:fit_store/features/auth/presentation/screens/login/widgets/remember_me_widget.dart';
-import 'package:fit_store/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
@@ -16,13 +15,12 @@ import '../../../../../../utils/popups/full_screen_loader.dart';
 import '../../../../../../utils/popups/loaders.dart';
 import '../../../cubit/social_auth-bloc/social_auth_cubit.dart';
 import '../../forget_password/forget_password_mail/forget_password_mail.dart';
-import '../../forget_password/forget_password_options/forget_password_model_bottom_sheet.dart';
 import '../../signup/verify_email.dart';
 
 class LoginFormWidget extends StatelessWidget {
   LoginFormWidget({super.key});
 
-  final email = TextEditingController(); // Controller for email input
+  final email = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   bool rememberMe = false;
@@ -36,7 +34,7 @@ class LoginFormWidget extends StatelessWidget {
             if (state is EmailAuthLoading) {
               FullScreenLoader.openLoadingDialog(
                 'Logging your in....',
-                TImages.docerAnimation,
+                AppImages.docerAnimation,
                 context,
               );
             }
@@ -85,7 +83,7 @@ class LoginFormWidget extends StatelessWidget {
             if (state is EmailAuthLoading) {
               FullScreenLoader.openLoadingDialog(
                 'Logging your in....',
-                TImages.docerAnimation,
+                AppImages.docerAnimation,
                 context,
               );
             }
@@ -106,7 +104,7 @@ class LoginFormWidget extends StatelessWidget {
         ),
       ],
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: TSizes.xl),
+        padding: const EdgeInsets.symmetric(vertical: AppSizes.xl),
         child: Form(
           key: _loginFormKey,
           child: Column(
@@ -124,7 +122,7 @@ class LoginFormWidget extends StatelessWidget {
                 },
               ),
 
-              const SizedBox(height: TSizes.xl - 20),
+              const SizedBox(height: AppSizes.xl - 20),
 
               CustomFormfieldWidget(
                 label: AppTexts.password,
@@ -137,7 +135,7 @@ class LoginFormWidget extends StatelessWidget {
                   return null;
                 },
                 withdownEar: false,),
-              const SizedBox(height: TSizes.xl - 20),
+              const SizedBox(height: AppSizes.xl - 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

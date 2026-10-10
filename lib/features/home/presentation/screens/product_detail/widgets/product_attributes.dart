@@ -26,8 +26,8 @@ class ProductAttributes extends StatelessWidget {
           children: [
             if (state.selectedVariation.id.isNotEmpty) ...[
               RoundedContainer(
-                padding: const EdgeInsets.all(TSizes.md),
-                backgroundColor: dark ? TColors.darkerGrey : TColors.grey,
+                padding: const EdgeInsets.all(AppSizes.md),
+                backgroundColor: dark ? AppColors.darkerGrey : AppColors.grey,
                 child: Column(
                   children: [
                     Row(
@@ -36,7 +36,7 @@ class ProductAttributes extends StatelessWidget {
                           title: 'Variation',
                           showActionButton: false,
                         ),
-                        const SizedBox(width: TSizes.spaceBtwItems),
+                        const SizedBox(width: AppSizes.spaceBtwItems),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -58,7 +58,7 @@ class ProductAttributes extends StatelessWidget {
                                       TextDecoration.lineThrough,
                                     ),
                                   ),
-                                  const SizedBox(width: TSizes.spaceBtwItems),
+                                  const SizedBox(width: AppSizes.spaceBtwItems),
                                 ],
                                 ProductPriceText(
                                   price: context
@@ -67,7 +67,7 @@ class ProductAttributes extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: TSizes.spaceBtwItems / 2),
+                            const SizedBox(height: AppSizes.spaceBtwItems / 2),
                             Row(
                               children: [
                                 const TProductTitleText(
@@ -87,7 +87,7 @@ class ProductAttributes extends StatelessWidget {
                       ],
                     ),
 
-                    const SizedBox(height: TSizes.spaceBtwItems),
+                    const SizedBox(height: AppSizes.spaceBtwItems),
                     TProductTitleText(
                       title: state.selectedVariation.description ?? '',
                       smallSize: true,
@@ -96,7 +96,7 @@ class ProductAttributes extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: TSizes.spaceBtwItems / 2),
+              const SizedBox(height: AppSizes.spaceBtwItems / 2),
             ],
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +108,7 @@ class ProductAttributes extends StatelessWidget {
                       title: attribute.name ?? '',
                       showActionButton: false,
                     ),
-                    const SizedBox(height: TSizes.spaceBtwItems / 2),
+                    const SizedBox(height: AppSizes.spaceBtwItems / 2),
                     Wrap(
                       spacing: 8,
                       children: attribute.values!.map((attributeValue) {
@@ -144,7 +144,7 @@ class ProductAttributes extends StatelessWidget {
                         );
                       }).toList(),
                     ),
-                    const SizedBox(height: TSizes.spaceBtwItems),
+                    const SizedBox(height: AppSizes.spaceBtwItems),
                   ],
                 );
               }).toList(),

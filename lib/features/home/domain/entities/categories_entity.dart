@@ -11,9 +11,6 @@ class CategoryEntity {
     required this.id,
   });
 
-  // نسخة فارغة للعرض الافتراضي
-
-  // دالة لتعديل بيانات العرض دون تغيير الكائن الأصلي
   CategoryEntity copyWith({
     String? id,
     String? name,

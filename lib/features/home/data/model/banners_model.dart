@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../utils/constants/enums.dart';
 import '../../domain/entities/banners_entity.dart';
 
@@ -19,7 +18,6 @@ class BannerModel {
     this.targetName,
   });
 
-  /// تحويل الـ Model إلى Entity للاستخدام في الـ Domain / Presentation
   BannerEntity toEntity() {
     return BannerEntity(
       id: id,
@@ -31,7 +29,6 @@ class BannerModel {
     );
   }
 
-  /// قراءة البيانات من Map القادمة من الـ Database Services
   factory BannerModel.fromFirebaseJson(Map<String, dynamic> json, {String id = ''}) {
     BannerTargetType parseTargetType(String? typeStr) {
       return BannerTargetType.values.firstWhere(

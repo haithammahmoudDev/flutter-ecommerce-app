@@ -21,11 +21,11 @@ class FormDividerWidget extends StatelessWidget {
           ),
         ),
         Text(
-          AppTexts.tOR,
+          AppTexts.or,
           style: Theme.of(context).textTheme.bodyLarge!.apply(
             color: dark
-                ? TColors.white.withValues(alpha: 0.5)
-                : TColors.dark.withValues(alpha: 0.5),
+                ? AppColors.white.withValues(alpha: 0.5)
+                : AppColors.dark.withValues(alpha: 0.5),
           ),
         ),
         Flexible(

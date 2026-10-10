@@ -4,7 +4,6 @@ import 'package:fit_store/features/home/presentation/controller/promo_slider_cub
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../../../../common/widgets/custom_shapes/containers/circular_container.dart';
 import '../../../../../../common/widgets/images/t_rounded_image.dart';
 import '../../../../../../utils/constants/colors.dart';
@@ -12,8 +11,8 @@ import '../../../../../../utils/constants/sizes.dart';
 import '../../../../../../utils/constants/enums.dart';
 import '../../../../../common/di/injection_container.dart';
 
-class TPromoSlider extends StatelessWidget {
-  const TPromoSlider({super.key});
+class PromoSlider extends StatelessWidget {
+  const PromoSlider({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +45,14 @@ class TPromoSlider extends StatelessWidget {
 
   Widget _buildLoadingShimmer() {
     return Shimmer.fromColors(
-      baseColor: TColors.grey,
-      highlightColor: TColors.grey.withOpacity(0.5),
+      baseColor: AppColors.grey,
+      highlightColor: AppColors.grey.withOpacity(0.5),
       child: Container(
         width: double.infinity,
         height: 180,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(TSizes.md),
+          borderRadius: BorderRadius.circular(AppSizes.md),
         ),
       ),
     );
@@ -67,13 +66,13 @@ class TPromoSlider extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.error_outline, size: 40, color: Colors.red),
-            const SizedBox(height: TSizes.sm),
+            const SizedBox(height: AppSizes.sm),
             Text(
               message ?? 'Something went wrong',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const SizedBox(height: TSizes.sm),
+            const SizedBox(height: AppSizes.sm),
             TextButton(
               onPressed: () => context.read<PromoSliderCubit>().fetchBanners(),
               child: const Text('Retry'),
@@ -128,7 +127,7 @@ class TPromoSlider extends StatelessWidget {
           ))
               .toList(),
         ),
-        const SizedBox(height: TSizes.spaceBtwItems),
+        const SizedBox(height: AppSizes.spaceBtwItems),
         Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -142,8 +141,8 @@ class TPromoSlider extends StatelessWidget {
                       height: 4,
                       margin: const EdgeInsets.only(right: 10),
                       backgroundColor: currentIndex == i
-                          ? TColors.dashboardAppbarBackground
-                          : TColors.grey,
+                          ? AppColors.dashboardAppbarBackground
+                          : AppColors.grey,
                     );
                   },
                 ),

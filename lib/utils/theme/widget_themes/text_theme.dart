@@ -7,24 +7,24 @@ class TTextTheme {
   TTextTheme._();
 
   static final TextTheme lightTextTheme = TextTheme(
-    displayLarge: GoogleFonts.poppins(fontSize: 28.0, fontWeight: FontWeight.bold, color: TColors.dark),
-    displayMedium: GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.w700, color: TColors.dark),
-    displaySmall: GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.normal, color: TColors.dark),
-    headlineMedium: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.w600, color: TColors.dark),
-    headlineSmall: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.normal, color: TColors.dark),
-    titleLarge: GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w600, color: TColors.dark),
-    bodyLarge: GoogleFonts.poppins(fontSize: 14.0, color: TColors.dark),
-    bodyMedium: GoogleFonts.poppins(fontSize: 14.0, color: TColors.dark.withValues(alpha: 0.8)),
+    displayLarge: GoogleFonts.poppins(fontSize: 28.0, fontWeight: FontWeight.bold, color: AppColors.dark),
+    displayMedium: GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.w700, color: AppColors.dark),
+    displaySmall: GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.normal, color: AppColors.dark),
+    headlineMedium: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.w600, color: AppColors.dark),
+    headlineSmall: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.normal, color: AppColors.dark),
+    titleLarge: GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w600, color: AppColors.dark),
+    bodyLarge: GoogleFonts.poppins(fontSize: 14.0, color: AppColors.dark),
+    bodyMedium: GoogleFonts.poppins(fontSize: 14.0, color: AppColors.dark.withValues(alpha: 0.8)),
   );
 
   static final TextTheme darkTextTheme = TextTheme(
-    displayLarge: GoogleFonts.poppins(fontSize: 28.0, fontWeight: FontWeight.bold, color: TColors.white),
-    displayMedium: GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.w700, color: TColors.white),
-    displaySmall: GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.normal, color: TColors.white),
-    headlineMedium: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.w600, color: TColors.white),
-    headlineSmall: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.normal, color: TColors.white),
-    titleLarge: GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w600, color: TColors.white),
-    bodyLarge: GoogleFonts.poppins(fontSize: 14.0, color: TColors.white),
-    bodyMedium: GoogleFonts.poppins(fontSize: 14.0, color: TColors.white.withValues(alpha: 0.8)),
+    displayLarge: GoogleFonts.poppins(fontSize: 28.0, fontWeight: FontWeight.bold, color: AppColors.white),
+    displayMedium: GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.w700, color: AppColors.white),
+    displaySmall: GoogleFonts.poppins(fontSize: 24.0, fontWeight: FontWeight.normal, color: AppColors.white),
+    headlineMedium: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.w600, color: AppColors.white),
+    headlineSmall: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.normal, color: AppColors.white),
+    titleLarge: GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w600, color: AppColors.white),
+    bodyLarge: GoogleFonts.poppins(fontSize: 14.0, color: AppColors.white),
+    bodyMedium: GoogleFonts.poppins(fontSize: 14.0, color: AppColors.white.withValues(alpha: 0.8)),
   );
 }

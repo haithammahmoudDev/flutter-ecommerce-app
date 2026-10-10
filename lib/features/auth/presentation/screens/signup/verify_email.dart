@@ -15,7 +15,7 @@ import '../../cubit/session_cubit/session_cubit.dart';
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({super.key, required this.email});
   final String email;
-  static const routeName = 'verify_email_screen';
+  static const routeName = '/verify-email-screen';
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -55,7 +55,7 @@ class VerifyEmailScreen extends StatelessWidget {
                           context,
                           SuccessScreen.routeName,
                           arguments: {
-                            'image': TImages.successfullyRegisterAnimation,
+                            'image': AppImages.successfullyRegisterAnimation,
                             'title': AppTexts.yourAccountCreatedTitle,
                             'subTitle': AppTexts.yourAccountCreatedSubTitle,
                             'onPressed': (successContext) {
@@ -98,7 +98,7 @@ class VerifyEmailScreen extends StatelessWidget {
                   builder: (context) {
                     final controller = context.read<VerifyEmailCubit>();
                     return Scaffold(
-                      appBar: TAppBar(
+                      appBar: AppBarCustom(
                         actions: [
                           IconButton(
                             onPressed: () {
@@ -113,16 +113,16 @@ class VerifyEmailScreen extends StatelessWidget {
 
                       body: SingleChildScrollView(
                         child: Padding(
-                          padding: const EdgeInsets.all(TSizes.defaultSpace),
+                          padding: const EdgeInsets.all(AppSizes.defaultSpace),
                           child: Column(
                             children: [
                               Image(
                                 image: const AssetImage(
-                                  TImages.deliveredEmailIllustration,
+                                  AppImages.deliveredEmailIllustration,
                                 ),
                                 width: MediaQuery.of(context).size.width * 0.6,
                               ),
-                              const SizedBox(height: TSizes.spaceBtwSections),
+                              const SizedBox(height: AppSizes.spaceBtwSections),
 
                               Text(
                                 AppTexts.confirmEmail,
@@ -131,19 +131,19 @@ class VerifyEmailScreen extends StatelessWidget {
                                 ).textTheme.headlineMedium,
                                 textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: TSizes.spaceBtwItems),
+                              const SizedBox(height: AppSizes.spaceBtwItems),
                               Text(
                                 email,
                                 style: Theme.of(context).textTheme.labelLarge,
                                 textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: TSizes.spaceBtwItems),
+                              const SizedBox(height: AppSizes.spaceBtwItems),
                               Text(
                                 AppTexts.confirmEmailSubTitle,
                                 style: Theme.of(context).textTheme.labelMedium,
                                 textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: TSizes.spaceBtwSections),
+                              const SizedBox(height: AppSizes.spaceBtwSections),
 
                               SizedBox(
                                 width: double.infinity,
@@ -176,12 +176,12 @@ class VerifyEmailScreen extends StatelessWidget {
                                                         strokeWidth: 2,
                                                       ),
                                                 )
-                                              : const Text(AppTexts.tContinue),
+                                              : const Text(AppTexts.Continue),
                                         );
                                       },
                                     ),
                               ),
-                              const SizedBox(height: TSizes.spaceBtwItems),
+                              const SizedBox(height: AppSizes.spaceBtwItems),
 
                               SizedBox(
                                 width: double.infinity,

@@ -32,7 +32,7 @@ class _AllProductsState extends State<AllProducts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TAppBar(
+      appBar: AppBarCustom(
         title: Text(widget.title),
         showBackArrow: true,
         showActions: false,
@@ -40,7 +40,7 @@ class _AllProductsState extends State<AllProducts> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          padding: const EdgeInsets.all(AppSizes.defaultSpace),
           child: BlocBuilder<AllProductsCubit, AllProductsState>(
             builder: (context, state) {
               const loader = TVerticalProductShimmer();

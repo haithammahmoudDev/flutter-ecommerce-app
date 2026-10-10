@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../../personalization/data/models/address_model.dart';
-import '../../../../personalization/data/models/order_model.dart';
+import 'address_model.dart';
+import 'order_model.dart';
 import '../../../../utils/constants/enums.dart';
 import '../../../../utils/formatters/formatter.dart';
 import '../../domain/entities/user_entity.dart';
@@ -58,7 +58,6 @@ class UserModel {
     };
   }
 
-  /// Safe date parser for Firebase & JSON data
   static DateTime? _parseDate(dynamic date) {
     if (date == null) return null;
     if (date is Timestamp) return date.toDate();
@@ -67,7 +66,6 @@ class UserModel {
     return null;
   }
 
-  /// Factory method to create UserModel from standard JSON Map
   factory UserModel.fromJson(Map<String, dynamic>? json) {
     if (json == null || json.isEmpty) return UserModel.empty();
 
@@ -91,7 +89,6 @@ class UserModel {
     );
   }
 
-  /// Create UserModel directly from raw Firebase Map data
   factory UserModel.fromFirebaseData(
       Map<String, dynamic>? data, {
         String? docId,
@@ -116,7 +113,6 @@ class UserModel {
     );
   }
 
-  /// Create UserModel from FirebaseAuth User
   factory UserModel.fromFirebaseUser({required User user,
     String? fullName, String? phoneNumber}) {
     return UserModel(
@@ -132,7 +128,6 @@ class UserModel {
     );
   }
 
-  /// Convert Domain Entity to Data Model
   factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
       id: entity.id,
@@ -148,7 +143,6 @@ class UserModel {
     );
   }
 
-  /// Convert Data Model to Domain Entity
   UserEntity toEntity() {
     return UserEntity(
       id: id,

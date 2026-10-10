@@ -12,8 +12,8 @@ import '../../../../../utils/constants/colors.dart';
     this.height = 400,
     this.radius = 400,
     this.showBorder = false,
-    this.backgroundColor = TColors.white,
-    this.borderColor = TColors.borderPrimary,
+    this.backgroundColor = AppColors.white,
+    this.borderColor = AppColors.borderPrimary,
   });
 
   final Widget? child;

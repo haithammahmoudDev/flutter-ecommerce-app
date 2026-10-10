@@ -1,10 +1,7 @@
-import 'package:bloc/bloc.dart';
-import 'package:fit_store/features/auth/domain/entities/user_entity.dart';
 import 'package:fit_store/features/auth/domain/repos/social_auth_repo.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../../../settings/domain/entities/user_entity.dart';
-
 part 'social_auth_state.dart';
 
 class SocialAuthCubit extends Cubit<SocialAuthState> {

@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fit_store/features/auth/domain/repos/reset_password_repo.dart';
-import 'package:meta/meta.dart';
-
 part 'reset_password_state.dart';
 
 class ResetPasswordCubit extends Cubit<ResetPasswordState> {

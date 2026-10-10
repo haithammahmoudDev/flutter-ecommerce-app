@@ -8,7 +8,7 @@ import '../signup/signup_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
-  static const routeName = 'welcome_screen';
+  static const routeName = '/welcome-screen';
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +19,26 @@ class WelcomeScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: isDarkMode ? TColors.secondary : Colors.lightBlue,
+        backgroundColor: isDarkMode ? AppColors.secondary : Colors.lightBlue,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(TSizes.defaultSpace),
+            padding: const EdgeInsets.all(AppSizes.defaultSpace),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image(
-                  image: const AssetImage(TImages.tWelcomeScreenImage),
+                  image: const AssetImage(AppImages.welcomeScreenImage),
                   width: width * 0.7,
                   height: height * 0.6,
                 ),
-                const SizedBox(height: TSizes.spaceBtwSections),
+                const SizedBox(height: AppSizes.spaceBtwSections),
                 Column(
                   children: [
                     Text(
                       AppTexts.welcomeTitle,
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
-                    const SizedBox(height: TSizes.sm),
+                    const SizedBox(height: AppSizes.sm),
                     Text(
                       AppTexts.welcomeSubTitle,
                       style: Theme.of(context).textTheme.bodyLarge,
@@ -46,7 +46,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: TSizes.spaceBtwSections),
+                const SizedBox(height: AppSizes.spaceBtwSections),
                 Row(
                   children: [
                     Expanded(
@@ -61,7 +61,7 @@ class WelcomeScreen extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () =>
                             Navigator.pushReplacementNamed(context, SignupScreen.routeName),
-                        child: Text(AppTexts.tSignup.toUpperCase()),
+                        child: Text(AppTexts.signup.toUpperCase()),
                       ),
                     ),
                   ],

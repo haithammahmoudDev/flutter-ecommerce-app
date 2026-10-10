@@ -48,12 +48,12 @@ class ImagesCubit extends Cubit<ImagesState> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: TSizes.defaultSpace * 2,
-                horizontal: TSizes.defaultSpace,
+                vertical: AppSizes.defaultSpace * 2,
+                horizontal: AppSizes.defaultSpace,
               ),
               child: CachedNetworkImage(imageUrl: image),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
             Align(
               alignment: Alignment.bottomCenter,
               child: SizedBox(

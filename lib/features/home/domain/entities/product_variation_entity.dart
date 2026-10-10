@@ -21,7 +21,6 @@ class ProductVariationEntity extends Equatable {
     required this.attributeValues,
   });
 
-  // التعديل هنا: تم جعل salePrice بـ null ليكون المنطق صحيحاً ولا يظهر كمنتج مجاني
   static ProductVariationEntity empty() => const ProductVariationEntity(
     id: '',
     attributeValues: {},

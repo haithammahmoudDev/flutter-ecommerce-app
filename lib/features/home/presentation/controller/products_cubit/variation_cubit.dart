@@ -2,7 +2,7 @@ import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/home/presentation/controller/products_cubit/variation_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../personalization/presentation/controllers/cart/cart_cubit.dart';
+import '../../../../cart/presentation/controllers/cart/cart_cubit.dart';
 import '../../../domain/entities/product_variation_entity.dart';
 import 'images_cubit.dart';
 

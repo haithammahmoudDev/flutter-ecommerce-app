@@ -4,8 +4,8 @@ import 'package:fit_store/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../personalization/presentation/controllers/cart/cart_cubit.dart';
-import '../../../../../personalization/presentation/controllers/cart/cart_state.dart';
+import '../../../../cart/presentation/controllers/cart/cart_cubit.dart';
+import '../../../../cart/presentation/controllers/cart/cart_state.dart';
 
 class ProductCardAddToCartButton extends StatelessWidget {
   const ProductCardAddToCartButton({
@@ -25,15 +25,15 @@ class ProductCardAddToCartButton extends StatelessWidget {
 
         return Container(
           decoration: BoxDecoration(
-            color: productQuantityInCart > 0 ? TColors.primary : TColors.dark,
+            color: productQuantityInCart > 0 ? AppColors.primary : AppColors.dark,
             borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(TSizes.cardRadiusMd),
-              bottomRight: Radius.circular(TSizes.productImageRadius),
+              topLeft: Radius.circular(AppSizes.cardRadiusMd),
+              bottomRight: Radius.circular(AppSizes.productImageRadius),
             ),
           ),
           child: SizedBox(
-            width: TSizes.iconLg * 1.2,
-            height: TSizes.iconLg * 1.2,
+            width: AppSizes.iconLg * 1.2,
+            height: AppSizes.iconLg * 1.2,
             child: Center(
               child: productQuantityInCart > 0
                   ? Text(
@@ -41,11 +41,11 @@ class ProductCardAddToCartButton extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
-                    .apply(color: TColors.white),
+                    .apply(color: AppColors.white),
               )
                   : const Icon(
                 Iconsax.add,
-                color: TColors.white,
+                color: AppColors.white,
               ),
             ),
           ),

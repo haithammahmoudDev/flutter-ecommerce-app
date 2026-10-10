@@ -1,8 +1,6 @@
-import 'package:fit_store/data/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
- import '../constants/colors.dart';
+import '../constants/colors.dart';
 import '../helpers/helper_functions.dart';
 
 class Loaders {
@@ -14,8 +12,6 @@ class Loaders {
     required String message,
     required BuildContext context,
   }) {
-
-
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         elevation: 0,
@@ -27,14 +23,11 @@ class Loaders {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             color: HelperFunctions.isDarkMode(context)
-                ? TColors.darkerGrey.withValues(alpha: 0.9)
-                : TColors.grey.withValues(alpha: 0.9),
+                ? AppColors.darkerGrey.withValues(alpha: 0.9)
+                : AppColors.grey.withValues(alpha: 0.9),
           ),
           child: Center(
-            child: Text(
-              message,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            child: Text(message, style: Theme.of(context).textTheme.bodySmall),
           ),
         ),
       ),
@@ -46,14 +39,14 @@ class Loaders {
     String message = '',
     int duration = 3,
     required BuildContext context,
-
   }) {
     _showSnackBar(
       title: title,
       message: message,
-      backgroundColor: TColors.dashboardAppbarBackground,
+      backgroundColor: AppColors.dashboardAppbarBackground,
       icon: const Icon(Iconsax.tick_circle, color: Colors.white),
-      duration: duration, context: context,
+      duration: duration,
+      context: context,
     );
   }
 
@@ -61,7 +54,6 @@ class Loaders {
     required String title,
     String message = '',
     required BuildContext context,
-
   }) {
     _showSnackBar(
       title: title,
@@ -69,7 +61,6 @@ class Loaders {
       backgroundColor: Colors.orange,
       icon: const Icon(Iconsax.warning_2, color: Colors.white),
       context: context,
-
     );
   }
 
@@ -82,7 +73,8 @@ class Loaders {
       title: title,
       message: message,
       backgroundColor: Colors.red,
-      icon: const Icon(Iconsax.warning_2, color: Colors.white), context: context,
+      icon: const Icon(Iconsax.warning_2, color: Colors.white),
+      context: context,
     );
   }
 
@@ -94,7 +86,6 @@ class Loaders {
     required BuildContext context,
     int duration = 3,
   }) {
-
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(

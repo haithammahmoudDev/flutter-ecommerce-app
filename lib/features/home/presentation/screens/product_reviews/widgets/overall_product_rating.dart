@@ -25,14 +25,12 @@ class OverallProductRating extends StatelessWidget {
       );
     }
 
-    // 1. حساب متوسط التقييم العام
     double totalRating = 0.0;
     for (var review in reviews) {
       totalRating += review.rating;
     }
     double averageRating = totalRating / reviews.length;
 
-    // 2. حساب عدد التقييمات لكل نجمة (من 5 إلى 1)
     Map<int, int> starCounts = {5: 0, 4: 0, 3: 0, 2: 0, 1: 0};
     for (var review in reviews) {
       int star = review.rating.round();
@@ -45,7 +43,6 @@ class OverallProductRating extends StatelessWidget {
 
     return Row(
       children: [
-        // عرض المتوسط برقم عشري واحد (مثلاً 4.8)
         Expanded(
           flex: 3,
           child: Text(

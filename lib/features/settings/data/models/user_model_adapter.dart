@@ -19,7 +19,6 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       email: fields[2] as String,
       phoneNumber: fields[3] as String,
       profilePicture: fields[4] as String,
-      // الحقول التالية لم نعد نخزنها محلياً، نمرر لها قيم افتراضية أو null
       role: AppRole.user,
       createdAt: null,
       updatedAt: null,
@@ -31,7 +30,7 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(5) // 5 حقول فقط في الذاكرة
+      ..writeByte(5)
       ..writeByte(0)..write(obj.id)
       ..writeByte(1)..write(obj.fullName)
       ..writeByte(2)..write(obj.email)

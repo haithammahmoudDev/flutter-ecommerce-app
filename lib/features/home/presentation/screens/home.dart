@@ -1,10 +1,9 @@
 import 'package:fit_store/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:fit_store/common/widgets/texts/section_heading.dart';
-import 'package:fit_store/features/auth/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:fit_store/features/home/presentation/controller/all_products/all_products_cubit.dart';
 import 'package:fit_store/features/home/presentation/controller/products_cubit/products_cubit.dart';
 import 'package:fit_store/features/home/presentation/screens/product_cards/product_card_vertical.dart';
-import 'package:fit_store/features/home/presentation/screens/search_screen.dart';
+import 'package:fit_store/features/home/presentation/screens/search/search_screen.dart';
 import 'package:fit_store/features/home/presentation/screens/widgets/header_categories.dart';
 import 'package:fit_store/features/home/presentation/screens/widgets/header_search_container.dart';
 import 'package:fit_store/features/home/presentation/screens/widgets/home_appbar.dart';
@@ -24,7 +23,7 @@ import 'all_products/all_products.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
+  static const String routeName = '/home-screen';
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
@@ -42,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
 
                     const HomeAppBar(),
-                    const SizedBox(height: TSizes.spaceBtwSections),
+                    const SizedBox(height: AppSizes.spaceBtwSections),
 
                     TSearchContainer(
                         text: 'Search in Store',
@@ -51,26 +50,21 @@ class HomeScreen extends StatelessWidget {
                            Navigator.pushNamed(context, SearchScreen.routeName);
                         },
                     ),
-                    const SizedBox(height: TSizes.spaceBtwSections),
+                    const SizedBox(height: AppSizes.spaceBtwSections),
 
                     const THeaderCategories(),
-                    const SizedBox(height: TSizes.spaceBtwSections * 2),
+                    const SizedBox(height: AppSizes.spaceBtwSections * 2),
                   ],
                 ),
               ),
 
               Padding(
-                padding: const EdgeInsets.all(TSizes.defaultSpace),
+                padding: const EdgeInsets.all(AppSizes.defaultSpace),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /// -- Promo Slider 1
-                    const TPromoSlider(),
-                    const SizedBox(height: TSizes.spaceBtwSections),
-
-                    /// -- Popular Products
-                    /// -- Popular Products
-                    /// -- Popular Products
+                    const PromoSlider(),
+                    const SizedBox(height: AppSizes.spaceBtwSections),
                     SectionHeading(
                       title: AppTexts.popularProducts,
                       onPressed: () {
@@ -83,7 +77,6 @@ class HomeScreen extends StatelessWidget {
                               value: allProductsCubit,
                               child: AllProducts(
                                 title: AppTexts.popularProducts,
-                                // 👈 جلب جميع المنتجات بدلاً من المصفاة فقط
                                 fetchProductsFuture: () => allProductsCubit.fetchAllProducts(),
                               ),
                             ),
@@ -91,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: TSizes.spaceBtwItems),
+                    const SizedBox(height: AppSizes.spaceBtwItems),
 
                     BlocBuilder<ProductsCubit, ProductsState>(
                       builder: (context, state) {
@@ -107,11 +100,11 @@ class HomeScreen extends StatelessWidget {
 
                         final popularProducts = state.featuredProducts;
 
-                        if (popularProducts.isEmpty) {
+                        if (popularProducts.isEmpty && state.status == FeaturedProductsStatus.success) {
                           return Center(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                vertical: TSizes.spaceBtwSections,
+                                vertical: AppSizes.spaceBtwSections,
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -119,13 +112,13 @@ class HomeScreen extends StatelessWidget {
                                   Icon(
                                     Iconsax.bag_cross5,
                                     size: 64,
-                                    color: dark ? TColors.darkGrey : TColors.grey,
+                                    color: dark ? AppColors.darkGrey : AppColors.grey,
                                   ),
-                                  const SizedBox(height: TSizes.spaceBtwItems),
+                                  const SizedBox(height: AppSizes.spaceBtwItems),
                                   Text(
                                     'لا توجد منتجات متاحة حالياً',
                                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                      color: dark ? TColors.grey : TColors.darkerGrey,
+                                      color: dark ? AppColors.grey : AppColors.darkerGrey,
                                     ),
                                   ),
                                 ],
@@ -136,14 +129,14 @@ class HomeScreen extends StatelessWidget {
 
                         return TGridLayout(
                           itemCount: popularProducts.length,
-                          itemBuilder: (_, index) => TProductCardVertical(
+                          itemBuilder: (_, index) => ProductCardVertical(
                             product: popularProducts[index],
                           ),
                         );
                       },
                     ),
                     SizedBox(
-                      height: TDeviceUtils.getBottomNavigationBarHeight() + TSizes.defaultSpace,
+                      height: TDeviceUtils.getBottomNavigationBarHeight() + AppSizes.defaultSpace,
                     ),
                   ],
                 ),

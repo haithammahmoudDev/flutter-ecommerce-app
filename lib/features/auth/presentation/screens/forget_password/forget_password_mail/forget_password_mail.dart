@@ -15,7 +15,7 @@ import '../../../../../../utils/popups/loaders.dart';
 
 class ForgetPasswordMailScreen extends StatefulWidget {
   const ForgetPasswordMailScreen({super.key});
-  static const routeName = 'forget-password-email-screen';
+  static const routeName = '/forget-password-email-screen';
   @override
   State<ForgetPasswordMailScreen> createState() =>
       _ForgetPasswordMailScreenState();
@@ -72,22 +72,22 @@ class _ForgetPasswordMailScreenState extends State<ForgetPasswordMailScreen> {
               child: Scaffold(
                 body: SingleChildScrollView(
                   child: Container(
-                    padding: const EdgeInsets.all(TSizes.defaultSpace),
+                    padding: const EdgeInsets.all(AppSizes.defaultSpace),
                     child: Column(
                       children: [
-                        const SizedBox(height: TSizes.defaultSpace * 4),
+                        const SizedBox(height: AppSizes.defaultSpace * 4),
                         FormHeaderWidget(
                           imageColor: dark
-                              ? TColors.primary
-                              : TColors.secondary,
-                          image: TImages.tForgetPasswordImage,
+                              ? AppColors.primary
+                              : AppColors.secondary,
+                          image: AppImages.forgetPasswordImage,
                           title: AppTexts.forgetPassword,
-                          subTitle: AppTexts.tForgetPasswordSubTitle,
+                          subTitle: AppTexts.forgetPasswordSubTitle,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           heightBetween: 30.0,
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: TSizes.xl),
+                        const SizedBox(height: AppSizes.xl),
                         Form(
                           key: _formKey,
                           child: Column(
@@ -98,11 +98,10 @@ class _ForgetPasswordMailScreenState extends State<ForgetPasswordMailScreen> {
                                   if (value == null || value.trim().isEmpty) {
                                     return 'Email is required';
                                   }
-                                  final emailRegex = RegExp(
-                                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                                  );
-                                  if (!emailRegex.hasMatch(value.trim())) {
-                                    return 'Enter a valid email address';
+                                  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+                                  if (!emailRegex.hasMatch(value)) {
+                                    return 'Please enter a valid email address';
                                   }
                                   return null;
                                 }),

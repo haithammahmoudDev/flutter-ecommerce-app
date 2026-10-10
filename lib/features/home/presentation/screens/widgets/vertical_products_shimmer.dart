@@ -21,20 +21,20 @@ class TVerticalProductShimmer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TShimmerEffect(width: 180, height: 180, radius: TSizes.productImageRadius),
-            SizedBox(height: TSizes.spaceBtwItems),
+            TShimmerEffect(width: 180, height: 180, radius: AppSizes.productImageRadius),
+            SizedBox(height: AppSizes.spaceBtwItems),
             TShimmerEffect(width: 160, height: 15),
-            SizedBox(height: TSizes.spaceBtwItems / 2),
+            SizedBox(height: AppSizes.spaceBtwItems / 2),
             TShimmerEffect(width: 110, height: 12),
-            SizedBox(height: TSizes.spaceBtwItems),
+            SizedBox(height: AppSizes.spaceBtwItems),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TShimmerEffect(width: 60, height: 20),
                 TShimmerEffect(
-                  width: TSizes.iconLg * 1.2,
-                  height: TSizes.iconLg * 1.2,
-                  radius: TSizes.cardRadiusMd,
+                  width: AppSizes.iconLg * 1.2,
+                  height: AppSizes.iconLg * 1.2,
+                  radius: AppSizes.cardRadiusMd,
                 ),
               ],
             ),

@@ -2,10 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fit_store/features/home/domain/entities/reviews_entity.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../../../utils/helpers/network_manager.dart';
 import '../../../../../utils/popups/full_screen_loader.dart';
-import '../../../data/repos/review_repo.dart';
+import '../../../domain/repos/review_repo.dart';
 
 part 'reviews_state.dart';
 
@@ -16,7 +16,6 @@ class ReviewsCubit extends Cubit<ReviewsState> {
       : _reviewsRepo = reviewsRepo,
         super(const ReviewsState());
 
-  /// جلب التقييمات الخاصة بمنتج معين (مع دعم الكاش المحلي والأوفلاين)
   Future<void> fetchReviewsForProduct(String productId) async {
     emit(state.copyWith(status: ReviewsStatus.loading));
 
@@ -56,7 +55,6 @@ class ReviewsCubit extends Cubit<ReviewsState> {
     }
   }
 
-  /// إضافة تقييم جديد
   Future<void> addReview(ReviewEntity review, BuildContext context) async {
     emit(state.copyWith(status: ReviewsStatus.actionInProgress));
     final result = await _reviewsRepo.addReview(review);
@@ -74,8 +72,7 @@ class ReviewsCubit extends Cubit<ReviewsState> {
     );
   }
 
-  /// تعديل تقييم موجود
-  Future<void> updateReview(ReviewEntity review, BuildContext context) async {
+   Future<void> updateReview(ReviewEntity review, BuildContext context) async {
     emit(state.copyWith(status: ReviewsStatus.actionInProgress));
 
     final result = await _reviewsRepo.updateReview(review);
@@ -93,7 +90,6 @@ class ReviewsCubit extends Cubit<ReviewsState> {
     );
   }
 
-  /// حذف تقييم
   Future<void> deleteReview({
     required String reviewId,
     required String productId,

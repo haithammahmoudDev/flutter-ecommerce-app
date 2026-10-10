@@ -5,7 +5,7 @@ import 'package:fit_store/features/home/domain/repos/home_repo.dart';
 import 'package:fit_store/features/store/data/models/brand_model.dart';
  import 'package:meta/meta.dart';
 
-import '../../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../../../utils/helpers/network_manager.dart';
 import '../../../data/model/banners_model.dart';
 

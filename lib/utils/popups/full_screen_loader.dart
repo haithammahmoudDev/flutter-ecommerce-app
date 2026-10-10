@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../common/widgets/loaders/animation_loader.dart';
 import '../../common/widgets/loaders/circular_loader.dart';
 import '../constants/colors.dart';
@@ -13,14 +12,14 @@ import '../helpers/helper_functions.dart';
       builder: (_) => PopScope(
         canPop: false,
         child: Container(
-          color: HelperFunctions.isDarkMode(context) ? TColors.darkContainer :
-          TColors.white,
+          color: HelperFunctions.isDarkMode(context) ? AppColors.darkContainer :
+          AppColors.white,
           width: double.infinity,
           height: double.infinity,
           child: Column(
             children: [
               const SizedBox(height: 250),
-              TAnimationLoaderWidget(text: text, animation: animation),
+              AnimationLoaderWidget(text: text, animation: animation),
             ],
           ),
         ),
@@ -47,6 +46,6 @@ import '../helpers/helper_functions.dart';
   }
 
   static stopLoading(BuildContext context) {
-    Navigator.of(context).pop(); // Close the dialog using the Navigator
+    Navigator.of(context).pop();
   }
 }

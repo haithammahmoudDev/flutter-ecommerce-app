@@ -1,4 +1,4 @@
-class TSizes {
+class AppSizes {
   static const double xs = 4.0;
   static const double sm = 10.0;
   static const double md = 16.0;

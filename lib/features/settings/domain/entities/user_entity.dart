@@ -1,4 +1,4 @@
-import '../../../../personalization/data/models/address_entity.dart';
+import 'address_entity.dart';
 import '../../../../utils/constants/enums.dart';
 import '../../../../utils/formatters/formatter.dart';
 import '../../../auth/domain/entities/order_entity.dart';
@@ -38,7 +38,6 @@ class UserEntity {
   String get formattedUpdatedAtDate =>
       updatedAt != null ? TFormatter.formatDate(updatedAt!) : '';
 
-  /// Static constant for an empty UserEntity
   static const empty = UserEntity(
     id: '',
     email: '',

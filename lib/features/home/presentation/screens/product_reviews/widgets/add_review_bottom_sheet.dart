@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/sizes.dart';
 import '../../../../domain/entities/reviews_entity.dart';
@@ -32,9 +32,9 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: TSizes.defaultSpace,
-        right: TSizes.defaultSpace,
-        top: TSizes.defaultSpace,
+        left: AppSizes.defaultSpace,
+        right: AppSizes.defaultSpace,
+        top: AppSizes.defaultSpace,
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -42,9 +42,8 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Add Your Review', style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: TSizes.spaceBtwItems),
+            const SizedBox(height: AppSizes.spaceBtwItems),
 
-            // اختيار النجوم
             Center(
               child: RatingBar.builder(
                 initialRating: 5,
@@ -55,7 +54,7 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
                 itemSize: 36,
                 itemBuilder: (context, _) => const Icon(
                   Iconsax.star1,
-                  color: TColors.primary,
+                  color: AppColors.primary,
                 ),
                 onRatingUpdate: (rating) {
                   setState(() {
@@ -64,9 +63,8 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
                 },
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
 
-            // حقل كتابة التعليق
             TextField(
               controller: _commentController,
               maxLines: 4,
@@ -75,20 +73,17 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
 
-            // زر الإرسال
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   if (_commentController.text.trim().isEmpty) return;
-
-                  // جلب بيانات المستخدم الحالي المخزنة محلياً لتضمين اسمه وصورته
                   final currentUser = LocalStorageService.userRepo.getData();
 
                   final newReview = ReviewEntity(
-                    id: '', // سيتم توليده تلقائياً من فايربيس عبر الـ .add()
+                    id: '',
                     productId: widget.productId,
                     userId: currentUser?.id ?? '1',
                     userName: currentUser?.fullName ?? 'User',
@@ -98,16 +93,13 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
                     createdAt: DateTime.now(),
                   );
 
-                  // استدعاء الـ Cubit لإضافة التقييم
                   context.read<ReviewsCubit>().addReview(newReview, context);
-
-                  // إغلاق النافذة
                   Navigator.pop(context);
                 },
                 child: const Text('Submit Review'),
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
           ],
         ),
       ),

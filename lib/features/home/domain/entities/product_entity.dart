@@ -19,7 +19,7 @@ class ProductEntity extends Equatable {
   String productType;
   final String? description;
   final List<String>? images;
-  final BrandEntity? brand; // يمكنك استبداله بـ BrandEntity لاحقاً
+  final BrandEntity? brand;
   final List<ProductAttributeEntity>? productAttributes;
   final List<ProductVariationEntity>? productVariations;
 
@@ -49,7 +49,6 @@ class ProductEntity extends Equatable {
       salePrice: salePrice,
       description: description,
       images: images,
-      // Map domain sub-entities to data models using their respective fromEntity constructors
       brand: brand != null ? BrandModel.fromEntity(brand!) : null,
       productAttributes: productAttributes?.map((e) =>
           ProductAttributeModel.fromEntity(e)).toList(),

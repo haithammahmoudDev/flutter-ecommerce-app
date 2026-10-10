@@ -1,10 +1,10 @@
+import 'package:fit_store/features/checkout/presentation/screens/checkout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../../common/di/injection_container.dart';
 import '../../../../../common/widgets/texts/section_heading.dart';
-import '../../../../../routes/routes.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/device/device_utility.dart';
@@ -23,7 +23,7 @@ import 'widgets/rating_share_widget.dart';
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key, required this.product});
 
-  static const routeName = TRoutes.productDetails;
+  static const String routeName = '/details-product-details';
   final ProductEntity product;
 
   @override
@@ -39,7 +39,6 @@ class ProductDetailScreen extends StatelessWidget {
           create: (context) => sl<ReviewsCubit>()..fetchReviewsForProduct(product.id),
         ),
       ],
-      // 👈 استخدام Builder للحصول على context جديد تحت الـ Providers
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -51,9 +50,9 @@ class ProductDetailScreen extends StatelessWidget {
                   ProductImageSlider(product: product),
                   Padding(
                     padding: const EdgeInsets.only(
-                      right: TSizes.defaultSpace,
-                      left: TSizes.defaultSpace,
-                      bottom: TSizes.defaultSpace,
+                      right: AppSizes.defaultSpace,
+                      left: AppSizes.defaultSpace,
+                      bottom: AppSizes.defaultSpace,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,12 +61,12 @@ class ProductDetailScreen extends StatelessWidget {
 
                         ProductMetaData(product: product),
 
-                        const SizedBox(height: TSizes.spaceBtwSections / 2),
+                        const SizedBox(height: AppSizes.spaceBtwSections / 2),
 
                         if (product.productType == 'variable')
                           ProductAttributes(product: product),
                         if (product.productType == 'variable')
-                          const SizedBox(height: TSizes.spaceBtwSections / 2),
+                          const SizedBox(height: AppSizes.spaceBtwSections / 2),
 
                         SizedBox(
                           width: TDeviceUtils.getScreenWidth(context),
@@ -75,7 +74,7 @@ class ProductDetailScreen extends StatelessWidget {
                             onPressed: () {
                               Navigator.pushNamed(
                                 context,
-                                TRoutes.checkoutScreen,
+                                CheckoutScreen.routeName,
                                 arguments: product,
                               );
                             },
@@ -83,13 +82,13 @@ class ProductDetailScreen extends StatelessWidget {
                           ),
                         ),
 
-                        const SizedBox(height: TSizes.spaceBtwSections / 2),
+                        const SizedBox(height: AppSizes.spaceBtwSections / 2),
 
                         const SectionHeading(
                           title: 'Description',
                           showActionButton: false,
                         ),
-                        const SizedBox(height: TSizes.spaceBtwItems),
+                        const SizedBox(height: AppSizes.spaceBtwItems),
 
                         ReadMoreText(
                           product.description ??
@@ -109,12 +108,11 @@ class ProductDetailScreen extends StatelessWidget {
                           ),
                         ),
 
-                        const SizedBox(height: TSizes.spaceBtwItems),
+                        const SizedBox(height: AppSizes.spaceBtwItems),
                         const Divider(),
 
                         ListTile(
                           onTap: () async {
-                            // 1. الانتقال لشاشة التقييمات وتمرير الـ Cubit الصحيح باستخدام سياق الـ Builder
                             await Navigator.pushNamed(
                               context,
                               ProductReviewsScreen.routeName,
@@ -124,12 +122,11 @@ class ProductDetailScreen extends StatelessWidget {
                               },
                             );
 
-                            // 2. تحديث البيانات فور عودة المستخدم
                             if (context.mounted) {
                               context.read<ReviewsCubit>().fetchReviewsForProduct(product.id);
                             }
                           },
-                          contentPadding: EdgeInsets.zero, // لإزالة الـ Padding الافتراضي الخاص بـ ListTile ليتطابق مع تصميمك
+                          contentPadding: EdgeInsets.zero,
                           title: BlocBuilder<ReviewsCubit, ReviewsState>(
                             buildWhen: (previous, current) =>
                             previous.status != current.status ||
@@ -145,7 +142,7 @@ class ProductDetailScreen extends StatelessWidget {
                           trailing: Icon(
                             Iconsax.arrow_right_3,
                             size: 18,
-                            color: isDark ? TColors.white : TColors.dark,
+                            color: isDark ? AppColors.white : AppColors.dark,
                           ),
                         ),
                       ],

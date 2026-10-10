@@ -10,11 +10,11 @@ class TElevatedButtonTheme {
   static final lightElevatedButtonTheme  = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: TColors.white,
-      backgroundColor: TColors.dark,
-      side: const BorderSide(color: TColors.dark),
-      padding: const EdgeInsets.symmetric(vertical: TSizes.buttonHeight),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TSizes.borderRadiusLg)),
+      foregroundColor: AppColors.white,
+      backgroundColor: AppColors.dark,
+      side: const BorderSide(color: AppColors.dark),
+      padding: const EdgeInsets.symmetric(vertical: AppSizes.buttonHeight),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg)),
     ),
   );
 
@@ -22,11 +22,11 @@ class TElevatedButtonTheme {
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: TColors.dark,
-      backgroundColor: TColors.primary,
-      side: const BorderSide(color: TColors.primary),
-      padding: const EdgeInsets.symmetric(vertical: TSizes.buttonHeight),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TSizes.borderRadiusLg)),
+      foregroundColor: AppColors.dark,
+      backgroundColor: AppColors.primary,
+      side: const BorderSide(color: AppColors.primary),
+      padding: const EdgeInsets.symmetric(vertical: AppSizes.buttonHeight),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg)),
     ),
   );
 }

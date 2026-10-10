@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
+import 'package:fit_store/common/errors/exceptions.dart';
 import 'package:get/get.dart';
-import '../../utils/exceptions/firebase_exceptions.dart';
-import '../../utils/exceptions/format_exceptions.dart';
-import '../../utils/exceptions/platform_exceptions.dart';
+
 
  abstract class TBaseRepositoryController<T> extends GetxController {
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -72,11 +70,7 @@ import '../../utils/exceptions/platform_exceptions.dart';
     try {
       return await operation();
     } on FirebaseException catch (e) {
-       throw TFirebaseException(e.code).message;
-    } on FormatException catch (_) {
-       throw const TFormatException();
-    } on PlatformException catch (e) {
-       throw TPlatformException(e.code).message;
+       throw ServerException(e.code).message;
     } catch (e) {
        throw 'Something went wrong. Please try again';
     }

@@ -35,11 +35,11 @@ class SortableProducts extends StatelessWidget {
                   .map((option) => DropdownMenuItem(value: option, child: Text(option)))
                   .toList(),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
 
             TGridLayout(
               itemCount: displayProducts.length,
-              itemBuilder: (_, index) => TProductCardVertical(product: displayProducts[index]),
+              itemBuilder: (_, index) => ProductCardVertical(product: displayProducts[index]),
             ),
           ],
         );

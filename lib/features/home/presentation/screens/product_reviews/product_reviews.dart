@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../common/di/injection_container.dart';
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -14,14 +13,13 @@ import 'widgets/user_review_card.dart';
 class ProductReviewsScreen extends StatelessWidget {
   const ProductReviewsScreen({super.key, required this.productId});
 
-  static const routeName = 'productReviewsScreen';
+  static const routeName = '/product-reviews-screen';
   final String productId;
 
   @override
   Widget build(BuildContext context) {
-    // 👈 لا داعي لإنشاء BlocProvider جديد هنا، لأننا استلمناه من الشاشة السابقة
     return Scaffold(
-      appBar: const TAppBar(
+      appBar: const AppBarCustom(
         title: Text('Reviews & Rating'),
         showActions: false,
         showSkipButton: true,
@@ -37,17 +35,17 @@ class ProductReviewsScreen extends StatelessWidget {
             ),
           );
         },
-        backgroundColor: TColors.primary,
+        backgroundColor: AppColors.primary,
         child: const Icon(Iconsax.edit, color: Colors.white),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          padding: const EdgeInsets.all(AppSizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text("Ratings and reviews are verified and are from people who use the same type of device that you use."),
-              const SizedBox(height: TSizes.spaceBtwItems),
+              const SizedBox(height: AppSizes.spaceBtwItems),
 
               BlocBuilder<ReviewsCubit, ReviewsState>(
                 builder: (context, state) {
@@ -68,20 +66,20 @@ class ProductReviewsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       OverallProductRating(reviews: state.reviews),
-                      const SizedBox(height: TSizes.spaceBtwItems),
+                      const SizedBox(height: AppSizes.spaceBtwItems),
                       RatingBarIndicator(
                         rating: averageRating,
                         itemSize: 28,
-                        unratedColor: TColors.grey,
+                        unratedColor: AppColors.grey,
                         itemBuilder: (BuildContext context, int index) {
-                          return const Icon(Iconsax.star1, color: TColors.primary);
+                          return const Icon(Iconsax.star1, color: AppColors.primary);
                         },
                       ),
                       Text(
                         '${state.reviews.length} Reviews',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const SizedBox(height: TSizes.spaceBtwSections),
+                      const SizedBox(height: AppSizes.spaceBtwSections),
 
                       if (state.reviews.isEmpty)
                         const Padding(

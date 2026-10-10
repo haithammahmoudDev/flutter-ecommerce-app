@@ -10,8 +10,8 @@ import 'package:fit_store/utils/constants/text_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
- part 'onboarding_state.dart';
 
+ part 'onboarding_state.dart';
 
 class OnBoardingCubit extends Cubit<OnBoardingState> {
   OnBoardingCubit() : super(const OnBoardingState());
@@ -19,8 +19,6 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   final LiquidController controller = LiquidController();
 
    skip() => controller.jumpToPage(page: 2);
-
-  // animateToNextSlide() => controller.animateToPage(page: controller.currentPage + 1);
 
   animateToNextSlideWithLocalStorage(BuildContext context) async{
     if (controller.currentPage == 2) {
@@ -38,29 +36,29 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   final pages = [
     OnBoardingPageWidget(
       model: OnBoardingModel(
-        image: TImages.onBoardingImage1,
+        image: AppImages.onBoardingImage1,
         title: AppTexts.onBoardingTitle1,
         subTitle: AppTexts.onBoardingSubTitle1,
         counterText: AppTexts.onBoardingCounter1,
-        bgColor: TColors.onBoardingPage1Color,
+        bgColor: AppColors.onBoardingPage1Color,
       ),
     ),
     OnBoardingPageWidget(
       model: OnBoardingModel(
-        image: TImages.onBoardingImage2,
+        image: AppImages.onBoardingImage2,
         title: AppTexts.onBoardingTitle2,
         subTitle: AppTexts.onBoardingSubTitle2,
         counterText: AppTexts.onBoardingCounter2,
-        bgColor: TColors.onBoardingPage2Color,
+        bgColor: AppColors.onBoardingPage2Color,
       ),
     ),
     OnBoardingPageWidget(
       model: OnBoardingModel(
-        image: TImages.onBoardingImage3,
+        image: AppImages.onBoardingImage3,
         title: AppTexts.onBoardingTitle3,
         subTitle: AppTexts.onBoardingSubTitle3,
         counterText: AppTexts.onBoardingCounter3,
-        bgColor: TColors.onBoardingPage3Color,
+        bgColor: AppColors.onBoardingPage3Color,
       ),
     ),
   ];

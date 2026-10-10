@@ -13,7 +13,7 @@ import '../product_cards/product_cart_horizontal.dart';
 
 class SubCategoriesScreen extends StatefulWidget {
   const SubCategoriesScreen({super.key, required this.category});
-  static const routeName = 'sub_categories_screen';
+  static const routeName = '/subcategories-screen';
   final CategoryEntity category;
 
   @override
@@ -37,16 +37,16 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
         showBackArrow: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(TSizes.defaultSpace),
+        padding: const EdgeInsets.all(AppSizes.defaultSpace),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TRoundedImage(
-              imageUrl: TImages.promoBanner3,
+              imageUrl: AppImages.promoBanner3,
               width: double.infinity,
               applyImageRadius: true,
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
             BlocBuilder<CategoriesCubit, CategoriesState>(
               builder: (context, state) {
                 if (state.subCategoriesStatus == SubCategoriesStatus.loading) {
@@ -90,7 +90,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                     }
 
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: TSizes.spaceBtwSections),
+                      padding: const EdgeInsets.only(bottom: AppSizes.spaceBtwSections),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -112,7 +112,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                               );
                             },
                           ),
-                          const SizedBox(height: TSizes.spaceBtwItems / 2),
+                          const SizedBox(height: AppSizes.spaceBtwItems / 2),
                           switch (subStatus) {
                             SubProductsCategoryStatus.loading =>
                                 _buildHorizontalProductShimmer(),
@@ -123,9 +123,9 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                                 scrollDirection: Axis.horizontal,
                                 physics: const BouncingScrollPhysics(),
                                 separatorBuilder: (context, index) =>
-                                const SizedBox(width: TSizes.spaceBtwItems),
+                                const SizedBox(width: AppSizes.spaceBtwItems),
                                 itemBuilder: (context, index) {
-                                  return TProductCardHorizontal(
+                                  return ProductCardHorizontal(
                                     product: subProducts[index],
                                   );
                                 },
@@ -151,7 +151,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(2, (index) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: TSizes.spaceBtwSections),
+          padding: const EdgeInsets.only(bottom: AppSizes.spaceBtwSections),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -167,7 +167,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: TSizes.spaceBtwItems / 2),
+              const SizedBox(height: AppSizes.spaceBtwItems / 2),
               _buildHorizontalProductShimmer(),
             ],
           ),
@@ -183,7 +183,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
         itemCount: 3,
         scrollDirection: Axis.horizontal,
         physics: const NeverScrollableScrollPhysics(),
-        separatorBuilder: (context, index) => const SizedBox(width: TSizes.spaceBtwItems),
+        separatorBuilder: (context, index) => const SizedBox(width: AppSizes.spaceBtwItems),
         itemBuilder: (context, index) {
           return Shimmer.fromColors(
             baseColor: Colors.grey[300]!,
@@ -192,7 +192,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
               width: 275,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(TSizes.productImageRadius),
+                borderRadius: BorderRadius.circular(AppSizes.productImageRadius),
               ),
             ),
           );

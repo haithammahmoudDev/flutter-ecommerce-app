@@ -2,12 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fit_store/features/home/presentation/controller/products_cubit/images_cubit.dart';
 import 'package:fit_store/features/settings/presentation/controllers/user_cubit/user_cubit.dart';
-import 'package:fit_store/personalization/presentation/controllers/address_cubit.dart';
-import 'package:fit_store/personalization/presentation/controllers/cart/cart_cubit.dart';
-import 'package:fit_store/personalization/presentation/controllers/order/order_cubit.dart';
-import 'package:fit_store/personalization/presentation/controllers/theme/theme_controller_provider.dart';
+import 'package:fit_store/features/settings/presentation/controllers/address/address_cubit.dart';
 import 'package:fit_store/utils/helpers/deep_link_handler.dart';
-import 'package:fit_store/common/preferences/loacal_storage_service.dart';
+import 'package:fit_store/common/local_storage/loacal_storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -19,11 +16,14 @@ import 'app.dart';
 import 'common/di/injection_container.dart';
 import 'common/preferences/preferences_manager.dart';
 import 'data/services/notifications/notification_service.dart';
+import 'features/cart/presentation/controllers/cart/cart_cubit.dart';
+import 'features/favourites/presentation/controllers/favorites_cubit/favorites_cubit.dart';
 import 'features/home/data/model/product_model.dart';
 import 'features/home/presentation/controller/all_products/all_products_cubit.dart';
 import 'features/home/presentation/controller/categories_cubit/categories_cubit.dart';
-import 'features/home/presentation/controller/favorites_cubit/favorites_cubit.dart';
 import 'features/home/presentation/controller/products_cubit/products_cubit.dart';
+import 'features/settings/presentation/controllers/order/order_cubit.dart';
+import 'features/settings/presentation/controllers/theme/theme_controller_provider.dart';
 import 'features/store/presentation/controller/brand_cubit/brand_cubit.dart';
 import 'firebase_options.dart';
 
@@ -48,8 +48,6 @@ Future<void> main() async {
 
   TNotificationService();
 
-  // Deep links: open product details from a shared link
-  // Deep links: open product details from a shared link
   final deepLinkHandler = DeepLinkHandler(
     fetchProductById: (id) async {
       final doc = await FirebaseFirestore.instance

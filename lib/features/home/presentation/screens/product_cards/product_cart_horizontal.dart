@@ -3,18 +3,18 @@ import 'package:fit_store/common/widgets/images/t_rounded_image.dart';
 import 'package:fit_store/common/widgets/texts/t_brand_title_text_with_verified_icon.dart';
 import 'package:fit_store/common/widgets/texts/t_product_title_text.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
-import 'package:fit_store/features/home/presentation/screens/favourite_icon.dart';
 import 'package:fit_store/utils/constants/colors.dart';
 import 'package:fit_store/utils/constants/sizes.dart';
 import 'package:fit_store/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../favourites/presentation/screens/widgets/favourite_icon.dart';
 import '../../controller/products_cubit/products_cubit.dart';
 import '../product_detail/product_detail.dart';
 
-class TProductCardHorizontal extends StatelessWidget {
-  const TProductCardHorizontal({super.key, required this.product});
+class ProductCardHorizontal extends StatelessWidget {
+  const ProductCardHorizontal({super.key, required this.product});
 
   final ProductEntity product;
 
@@ -31,7 +31,6 @@ class TProductCardHorizontal extends StatelessWidget {
     bool hasDiscount = false;
     String? salePercentage;
 
-    // --- منطق حساب نسبة الخصم ---
     if (isVariable) {
       Set<int> percentages = {};
       for (var v in product.productVariations!) {
@@ -71,8 +70,8 @@ class TProductCardHorizontal extends StatelessWidget {
         width: 322,
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(TSizes.productImageRadius),
-          color: dark ? TColors.darkerGrey : TColors.softGrey,
+          borderRadius: BorderRadius.circular(AppSizes.productImageRadius),
+          color: dark ? AppColors.darkerGrey : AppColors.softGrey,
         ),
         child: Stack(
           children: [
@@ -80,8 +79,8 @@ class TProductCardHorizontal extends StatelessWidget {
               children: [
                 RoundedContainer(
                   height: 120,
-                  padding: const EdgeInsets.all(TSizes.sm),
-                  backgroundColor: dark ? TColors.dark : TColors.lightGrey,
+                  padding: const EdgeInsets.all(AppSizes.sm),
+                  backgroundColor: dark ? AppColors.dark : AppColors.lightGrey,
                   child: Stack(
                     children: [
                       SizedBox(
@@ -101,11 +100,11 @@ class TProductCardHorizontal extends StatelessWidget {
                           child: ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: 75),
                             child: RoundedContainer(
-                              radius: TSizes.sm,
-                              backgroundColor: TColors.primary.withValues(alpha: 0.8),
+                              radius: AppSizes.sm,
+                              backgroundColor: AppColors.primary.withValues(alpha: 0.8),
                               padding: const EdgeInsets.symmetric(
-                                horizontal: TSizes.xs,
-                                vertical: TSizes.xs,
+                                horizontal: AppSizes.xs,
+                                vertical: AppSizes.xs,
                               ),
                               child: Text(
                                 salePercentage.endsWith('%')
@@ -115,7 +114,7 @@ class TProductCardHorizontal extends StatelessWidget {
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelLarge!
-                                    .apply(color: TColors.black),
+                                    .apply(color: AppColors.black),
                               ),
                             ),
                           ),
@@ -125,7 +124,7 @@ class TProductCardHorizontal extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: TSizes.sm, left: TSizes.sm),
+                    padding: const EdgeInsets.only(top: AppSizes.sm, left: AppSizes.sm),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -136,7 +135,7 @@ class TProductCardHorizontal extends StatelessWidget {
                               title: product.title,
                               smallSize: true,
                             ),
-                            const SizedBox(height: TSizes.spaceBtwItems / 2),
+                            const SizedBox(height: AppSizes.spaceBtwItems / 2),
                             if (product.brand != null)
                               BrandTitleWithVerifiedIcon(title: product.brand!.name),
                           ],
@@ -151,7 +150,7 @@ class TProductCardHorizontal extends StatelessWidget {
                                 children: [
                                   if (!isVariable && hasDiscount)
                                     Padding(
-                                      padding: const EdgeInsets.only(left: TSizes.xs),
+                                      padding: const EdgeInsets.only(left: AppSizes.xs),
                                       child: Text(
                                         '\$${product.price}',
                                         style: Theme.of(context)
@@ -163,11 +162,11 @@ class TProductCardHorizontal extends StatelessWidget {
                                       ),
                                     ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: TSizes.xs),
+                                    padding: const EdgeInsets.only(left: AppSizes.xs),
                                     child: Text(
                                       displayPrice,
                                       style: Theme.of(context).textTheme.titleMedium!.apply(
-                                        color: dark ? TColors.white : TColors.dark,
+                                        color: dark ? AppColors.white : AppColors.dark,
                                       ),
                                     ),
                                   ),
@@ -176,19 +175,19 @@ class TProductCardHorizontal extends StatelessWidget {
                             ),
                             Container(
                               decoration: const BoxDecoration(
-                                color: TColors.dark,
+                                color: AppColors.dark,
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(TSizes.cardRadiusMd),
+                                  topLeft: Radius.circular(AppSizes.cardRadiusMd),
                                   bottomRight: Radius.circular(
-                                    TSizes.productImageRadius,
+                                    AppSizes.productImageRadius,
                                   ),
                                 ),
                               ),
                               child: const SizedBox(
-                                width: TSizes.iconLg * 1.2,
-                                height: TSizes.iconLg * 1.2,
+                                width: AppSizes.iconLg * 1.2,
+                                height: AppSizes.iconLg * 1.2,
                                 child: Center(
-                                  child: Icon(Iconsax.add, color: TColors.white),
+                                  child: Icon(Iconsax.add, color: AppColors.white),
                                 ),
                               ),
                             ),
@@ -204,7 +203,7 @@ class TProductCardHorizontal extends StatelessWidget {
              Positioned(
               top: 30,
               right: 0,
-              child: TFavouriteIcon(productId: product.id),
+              child: FavouriteIcon(productId: product.id),
             ),
           ],
         ),

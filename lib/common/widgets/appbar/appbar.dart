@@ -7,8 +7,8 @@ import '../../../utils/device/device_utility.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../styles/spacing_styles.dart';
 
-class TAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TAppBar({
+class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
+  const AppBarCustom({
     super.key,
     this.title,
     this.actions,
@@ -52,9 +52,9 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ? IconButton(onPressed: () =>
                 Navigator.pop(context),
                 icon: Icon(Iconsax.arrow_left_24,
-                    color: dark ? TColors.white : TColors.dark,size: 25))
+                    color: dark ? AppColors.white : AppColors.dark,size: 25))
                 : leadingIcon != null
-                ? IconButton(onPressed: leadingOnPressed, icon: Icon(leadingIcon, color: dark ? TColors.white : TColors.dark))
+                ? IconButton(onPressed: leadingOnPressed, icon: Icon(leadingIcon, color: dark ? AppColors.white : AppColors.dark))
                 : null,
         title: title,
         actions:
@@ -75,10 +75,10 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
                       showActionWithBadge
                           ? badges.Badge(
                             position: badges.BadgePosition.topEnd(top: 0, end: 0),
-                            badgeStyle: const badges.BadgeStyle(badgeColor: TColors.primary),
-                             child: IconButton(onPressed: actionOnPressed, icon: Icon(actionIcon, color: dark ? TColors.white : TColors.dark)),
+                            badgeStyle: const badges.BadgeStyle(badgeColor: AppColors.primary),
+                             child: IconButton(onPressed: actionOnPressed, icon: Icon(actionIcon, color: dark ? AppColors.white : AppColors.dark)),
                           )
-                          : IconButton(onPressed: actionOnPressed, icon: Icon(actionIcon, color: dark ? TColors.white : TColors.dark)),
+                          : IconButton(onPressed: actionOnPressed, icon: Icon(actionIcon, color: dark ? AppColors.white : AppColors.dark)),
                     ]
                 : null,
       ),

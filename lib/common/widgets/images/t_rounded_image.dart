@@ -15,7 +15,7 @@ class TRoundedImage extends StatelessWidget {
     this.fit = BoxFit.contain,
     this.backgroundColor,
     this.isNetworkImage = false,
-    this.borderRadius = TSizes.md,
+    this.borderRadius = AppSizes.md,
   });
 
   final double? width, height;

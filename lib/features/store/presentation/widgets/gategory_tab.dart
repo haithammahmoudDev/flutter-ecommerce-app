@@ -28,7 +28,6 @@ class _CategoryTabState extends State<CategoryTab>
   @override
   void initState() {
     super.initState();
-    // جلب المنتجات المحدودة (4 عناصر فقط) للـ Preview عبر BrandCubit
     context.read<BrandCubit>().fetchLimitedProductsForCategory(
       categoryId: widget.category.id,
     );
@@ -43,11 +42,11 @@ class _CategoryTabState extends State<CategoryTab>
       physics: const NeverScrollableScrollPhysics(),
       children: [
         Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          padding: const EdgeInsets.all(AppSizes.defaultSpace),
           child: Column(
             children: [
               CategoryBrands(category: widget.category),
-              const SizedBox(height: TSizes.spaceBtwItems),
+              const SizedBox(height: AppSizes.spaceBtwItems),
 
               SectionHeading(
                 title: 'You might like',
@@ -68,7 +67,7 @@ class _CategoryTabState extends State<CategoryTab>
                   );
                 },
               ),
-              const SizedBox(height: TSizes.spaceBtwItems),
+              const SizedBox(height: AppSizes.spaceBtwItems),
 
               BlocBuilder<BrandCubit, BrandState>(
                 builder: (context, state) {
@@ -90,7 +89,7 @@ class _CategoryTabState extends State<CategoryTab>
                   return TGridLayout(
                     itemCount: products.length,
                     itemBuilder: (_, index) =>
-                        TProductCardVertical(product: products[index]),
+                        ProductCardVertical(product: products[index]),
                   );
                 },
               ),

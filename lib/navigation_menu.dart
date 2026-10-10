@@ -1,24 +1,19 @@
 import 'package:equatable/equatable.dart';
-import 'package:fit_store/features/settings/presentation/screens/settings/setting_screen.dart';
-import 'package:fit_store/features/home/presentation/controller/categories_cubit/categories_cubit.dart';
+import 'package:fit_store/features/settings/presentation/screens/setting_screen.dart';
 import 'package:fit_store/features/store/presentation/screens/store.dart';
-import 'package:fit_store/personalization/presentation/controllers/address_cubit.dart';
 import 'package:fit_store/utils/helpers/helper_functions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'common/di/injection_container.dart';
 import 'features/home/presentation/screens/home.dart';
-import 'features/favourites/favourite.dart';
+import 'features/favourites/presentation/screens/favourite.dart';
 
 class NavigationMenu extends StatelessWidget {
-  const NavigationMenu(
-      {super.key});
+  const NavigationMenu({super.key});
 
-  static const routeName = 'navigation_menu';
+  static const routeName = '/navigation-menu';
 
-   static final List<Widget> screens = [
+  static final List<Widget> screens = [
     const HomeScreen(),
     const StoreScreen(),
     const FavouriteScreen(),
@@ -27,7 +22,7 @@ class NavigationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return MultiBlocProvider(
+    return MultiBlocProvider(
       providers: [
         BlocProvider<NavigationBarCubit>(
           create: (context) => NavigationBarCubit(),
@@ -83,27 +78,20 @@ class NavigationMenu extends StatelessWidget {
   }
 }
 
-//--- حالات الـ Cubit ---
 class NavigationBarState extends Equatable {
   final int currentIndex;
 
-  const NavigationBarState({
-    this.currentIndex = 0,
-  });
+  const NavigationBarState({this.currentIndex = 0});
 
-  NavigationBarState copyWith({
-    int? currentIndex,
-  }) {
-    return NavigationBarState(
-      currentIndex: currentIndex ?? this.currentIndex,
-    );
+  NavigationBarState copyWith({int? currentIndex}) {
+    return NavigationBarState(currentIndex: currentIndex ?? this.currentIndex);
   }
 
   @override
   List<Object?> get props => [currentIndex];
 }
 
- class NavigationBarCubit extends Cubit<NavigationBarState> {
+class NavigationBarCubit extends Cubit<NavigationBarState> {
   NavigationBarCubit() : super(const NavigationBarState());
 
   void changeIndex(int index) {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/home/domain/repos/home_repo.dart';
-import '../../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../../../utils/constants/enums.dart';
 import '../../../../../utils/helpers/network_manager.dart';
 

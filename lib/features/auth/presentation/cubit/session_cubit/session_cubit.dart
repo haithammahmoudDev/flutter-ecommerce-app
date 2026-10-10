@@ -1,8 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
-
-import '../../../domain/entities/user_entity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/repos/session_repo.dart';
 
 part 'session_state.dart';
@@ -12,16 +9,15 @@ class SessionCubit extends Cubit<SessionState> {
   SessionCubit({required this.sessionRepository}) : super(SessionInitial());
 
   Future<void> SignOut() async {
-      final result = await sessionRepository.signOut();
+    final result = await sessionRepository.signOut();
 
     result.fold(
-          (failure) {emit(SessionError(message: failure.message));
-           },
-          (_) {
-            emit(
-                const Unauthenticated()
-            );
-           }
+      (failure) {
+        emit(SessionError(message: failure.message));
+      },
+      (_) {
+        emit(const Unauthenticated());
+      },
     );
   }
 }

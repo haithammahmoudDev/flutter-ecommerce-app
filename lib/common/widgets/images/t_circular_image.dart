@@ -13,7 +13,7 @@ class CircularImage extends StatelessWidget {
     this.backgroundColor,
     required this.image,
     this.fit = BoxFit.fill,
-    this.padding = TSizes.sm,
+    this.padding = AppSizes.sm,
     this.isNetworkImage = false,
   });
 
@@ -32,7 +32,7 @@ class CircularImage extends StatelessWidget {
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
          color: backgroundColor ??
-            (HelperFunctions.isDarkMode(context) ? TColors.black : TColors.white),
+            (HelperFunctions.isDarkMode(context) ? AppColors.black : AppColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
       child: Center(

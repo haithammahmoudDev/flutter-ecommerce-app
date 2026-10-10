@@ -38,19 +38,21 @@ class _EditReviewBottomSheetState extends State<EditReviewBottomSheet> {
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: TSizes.defaultSpace,
-        right: TSizes.defaultSpace,
-        top: TSizes.defaultSpace,
+        left: AppSizes.defaultSpace,
+        right: AppSizes.defaultSpace,
+        top: AppSizes.defaultSpace,
       ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Edit Your Review', style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: TSizes.spaceBtwItems),
+            Text(
+              'Edit Your Review',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: AppSizes.spaceBtwItems),
 
-            // اختيار النجوم المعدلة مسبقاً
             Center(
               child: RatingBar.builder(
                 initialRating: _rating,
@@ -59,10 +61,8 @@ class _EditReviewBottomSheetState extends State<EditReviewBottomSheet> {
                 allowHalfRating: false,
                 itemCount: 5,
                 itemSize: 36,
-                itemBuilder: (context, _) => const Icon(
-                  Iconsax.star1,
-                  color: TColors.primary,
-                ),
+                itemBuilder: (context, _) =>
+                    const Icon(Iconsax.star1, color: AppColors.primary),
                 onRatingUpdate: (rating) {
                   setState(() {
                     _rating = rating;
@@ -70,9 +70,8 @@ class _EditReviewBottomSheetState extends State<EditReviewBottomSheet> {
                 },
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
 
-            // حقل تعديل التعليق
             TextField(
               controller: _commentController,
               maxLines: 4,
@@ -81,9 +80,8 @@ class _EditReviewBottomSheetState extends State<EditReviewBottomSheet> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
 
-            // زر التحديث
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -101,16 +99,16 @@ class _EditReviewBottomSheetState extends State<EditReviewBottomSheet> {
                     createdAt: widget.review.createdAt,
                   );
 
-                  // استدعاء دالة التحديث في الـ Cubit
-                  context.read<ReviewsCubit>().updateReview(updatedReview, context);
-
-                  // إغلاق النافذة
+                  context.read<ReviewsCubit>().updateReview(
+                    updatedReview,
+                    context,
+                  );
                   Navigator.pop(context);
                 },
                 child: const Text('Update Review'),
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: AppSizes.spaceBtwSections),
           ],
         ),
       ),

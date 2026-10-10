@@ -6,47 +6,67 @@ import '../../../../../../utils/constants/text_strings.dart';
 import '../../../../../../utils/helpers/helper_functions.dart';
 
 class TermsAndConditionOncheckbox extends StatefulWidget {
-    TermsAndConditionOncheckbox({super.key, required this.valueChanged,});
-    final ValueChanged<bool> valueChanged;
+  TermsAndConditionOncheckbox({super.key, required this.valueChanged});
+  final ValueChanged<bool> valueChanged;
 
   @override
-  State<TermsAndConditionOncheckbox> createState() => _TermsAndConditionOncheckboxState();
+  State<TermsAndConditionOncheckbox> createState() =>
+      _TermsAndConditionOncheckboxState();
 }
 
-class _TermsAndConditionOncheckboxState extends State<TermsAndConditionOncheckbox> {
+class _TermsAndConditionOncheckboxState
+    extends State<TermsAndConditionOncheckbox> {
   bool privacyPolicy = false;
   @override
   Widget build(BuildContext context) {
-
     final dark = HelperFunctions.isDarkMode(context);
-    return
-      Row(
-        children: [
-          SizedBox(width: 24, height: 24, child: Checkbox(value: privacyPolicy, onChanged: (value) {
-            privacyPolicy = value ?? false;
-            widget.valueChanged(value ?? false);
-            setState(() {});
-          })),
-          const SizedBox(width: TSizes.spaceBtwItems),
-          Text.rich(
-            TextSpan(children: [
-              TextSpan(text: 'I agree to ', style: Theme.of(context).textTheme.bodySmall),
-              TextSpan(text: 'Privacy policy ', style: Theme.of(context).textTheme.bodyMedium!.apply(
-                color: dark ? TColors.white : TColors.primary,
-                decoration: TextDecoration.underline,
-                decorationColor: dark ? TColors.white : TColors.primary,
-              )), // TextSpan
-              TextSpan(text: '${AppTexts.and} ', style: Theme.of(context).textTheme.bodySmall),
-              TextSpan(text: 'Terms of use', style: Theme.of(context).textTheme.bodyMedium!.apply(
-                color: dark ? TColors.white : TColors.primary,
-                decoration: TextDecoration.underline,
-                decorationColor: dark ? TColors.white : TColors.primary,
-              )), // TextSpan
-            ]), // TextSpan
-          ), // Text.rich
-        ],
-      ) // Row
-        ;
+    return Row(
+      children: [
+        SizedBox(
+          width: 24,
+          height: 24,
+          child: Checkbox(
+            value: privacyPolicy,
+            onChanged: (value) {
+              privacyPolicy = value ?? false;
+              widget.valueChanged(value ?? false);
+              setState(() {});
+            },
+          ),
+        ),
+        const SizedBox(width: AppSizes.spaceBtwItems),
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: 'I agree to ',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              TextSpan(
+                text: 'Privacy policy ',
+                style: Theme.of(context).textTheme.bodyMedium!.apply(
+                  color: dark ? AppColors.white : AppColors.primary,
+                  decoration: TextDecoration.underline,
+                  decorationColor: dark ? AppColors.white : AppColors.primary,
+                ),
+              ), // TextSpan
+              TextSpan(
+                text: '${AppTexts.and} ',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              TextSpan(
+                text: 'Terms of use',
+                style: Theme.of(context).textTheme.bodyMedium!.apply(
+                  color: dark ? AppColors.white : AppColors.primary,
+                  decoration: TextDecoration.underline,
+                  decorationColor: dark ? AppColors.white : AppColors.primary,
+                ),
+              ), // TextSpan
+            ],
+          ), // TextSpan
+        ), // Text.rich
+      ],
+    ) // Row
+    ;
   }
 }
-

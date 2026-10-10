@@ -12,7 +12,7 @@ import '../../../domain/entities/brand_entity.dart';
 
 class AllBrandsScreen extends StatefulWidget {
   const AllBrandsScreen({super.key});
-  static const routeName = 'all_brands_screen';
+  static const routeName = '/all-brands-screen';
 
   @override
   State<AllBrandsScreen> createState() => _AllBrandsScreenState();
@@ -31,11 +31,11 @@ class _AllBrandsScreenState extends State<AllBrandsScreen> {
       appBar: const TEComAppBar(title: Text('Brand'), showBackArrow: true),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          padding: const EdgeInsets.all(AppSizes.defaultSpace),
           child: Column(
             children: [
               SectionHeading(title: 'Brands'),
-              const SizedBox(height: TSizes.spaceBtwItems),
+              const SizedBox(height: AppSizes.spaceBtwItems),
               BlocBuilder<BrandCubit, BrandState>(
                 buildWhen: (previous, current) =>
                 previous.allBrandsStatus != current.allBrandsStatus ||

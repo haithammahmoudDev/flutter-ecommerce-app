@@ -4,7 +4,7 @@ import 'package:fit_store/common/errors/failure.dart';
 import 'package:fit_store/features/auth/data/data_source/email_auth_datasource.dart';
 import '../../../../common/network/firebase/auth_client.dart';
 import '../../../../common/network/firebase/database_services.dart';
-import '../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../settings/data/models/user_model.dart';
 import '../../../settings/domain/entities/user_entity.dart';
 import '../../domain/repos/email_auth_repo.dart';

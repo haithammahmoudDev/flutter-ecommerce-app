@@ -63,21 +63,21 @@ class ProductMetaData extends StatelessWidget {
                      (isSelected ? (effectiveSalePrice != null &&
                          effectiveSalePrice > 0) : true)) ...[
                   RoundedContainer(
-                    backgroundColor: TColors.primary,
-                    radius: TSizes.sm,
+                    backgroundColor: AppColors.primary,
+                    radius: AppSizes.sm,
                     padding: const EdgeInsets.symmetric(
-                      horizontal: TSizes.sm,
-                      vertical: TSizes.xs,
+                      horizontal: AppSizes.sm,
+                      vertical: AppSizes.xs,
                     ),
                     child: Text(
                       '$salePercentage%',
                       style: Theme.of(context)
                           .textTheme
                           .labelLarge!
-                          .apply(color: TColors.black),
+                          .apply(color: AppColors.black),
                     ),
                   ),
-                  const SizedBox(width: TSizes.spaceBtwItems),
+                  const SizedBox(width: AppSizes.spaceBtwItems),
                 ],
 
                  if (hasSale) ...[
@@ -89,7 +89,7 @@ class ProductMetaData extends StatelessWidget {
                       decoration: TextDecoration.lineThrough,
                     ),
                   ),
-                  const SizedBox(width: TSizes.spaceBtwItems),
+                  const SizedBox(width: AppSizes.spaceBtwItems),
                 ],
 
                  ProductPriceText(
@@ -98,9 +98,9 @@ class ProductMetaData extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: TSizes.spaceBtwItems / 1.5),
+            const SizedBox(height: AppSizes.spaceBtwItems / 1.5),
             TProductTitleText(title: product.title),
-            const SizedBox(height: TSizes.spaceBtwItems / 1.5),
+            const SizedBox(height: AppSizes.spaceBtwItems / 1.5),
             Row(
               children: [
                 const TProductTitleText(title: 'Stock : ', smallSize: true),
@@ -112,7 +112,7 @@ class ProductMetaData extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: TSizes.spaceBtwItems / 2),
+            const SizedBox(height: AppSizes.spaceBtwItems / 2),
             Row(
               spacing: 3,
               children: [

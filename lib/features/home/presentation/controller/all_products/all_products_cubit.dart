@@ -1,12 +1,10 @@
-// Path in project: lib/features/home/presentation/controller/all_products/all_products_cubit.dart
-
 import 'package:bloc/bloc.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/home/domain/repos/home_repo.dart';
 import 'package:fit_store/features/store/domain/repos/store_repo.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 
-import '../../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../../../utils/helpers/network_manager.dart';
 import '../../../data/model/product_model.dart';
 
@@ -109,11 +107,9 @@ class AllProductsCubit extends Cubit<AllProductsState> {
 
       result.fold(
             (failure) {
-          print('❌ [AllProductsCubit] Failure: ${failure.message}. Fallback to Cache.');
           _fetchCategoryProductsFromCache(categoryId: categoryId);
         },
             (successProducts) {
-          print('✅ [AllProductsCubit] Success! Fetched ${successProducts.length} products.');
           emit(state.copyWith(
             status: AllProductsStatus.success,
             products: successProducts,
@@ -125,7 +121,6 @@ class AllProductsCubit extends Cubit<AllProductsState> {
     }
    }
 
-  /// -- دالة مساعدة لجلب كل منتجات التصنيف من الـ Hive Cache محلياً
   void _fetchCategoryProductsFromCache({required String categoryId}) {
     final List<ProductModel>? cachedProducts =
     LocalStorageService.categoriesProductsRepo.getData(customKey: 'products_categories_$categoryId');

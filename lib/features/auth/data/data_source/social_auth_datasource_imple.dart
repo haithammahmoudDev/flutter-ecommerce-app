@@ -1,32 +1,27 @@
- import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_store/features/auth/data/data_source/social_auth_datasource.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../../../common/errors/exceptions.dart';
 import '../../../../common/network/firebase/auth_client.dart';
 import '../../../settings/data/models/user_model.dart';
-import '../models/user_model.dart';
 
 class SocialAuthDataSourceImpl implements SocialAuthDatasource {
   final AuthClient _authClient;
   final GoogleSignIn _googleSignIn;
-  final FacebookAuth _facebookAuth;
   bool _isInitialized = false;
 
   SocialAuthDataSourceImpl({
-     required this._authClient,
-     required this._googleSignIn,
-     required this._facebookAuth,
-  }
-      );
+    required this._authClient,
+    required this._googleSignIn,
+  });
 
   Future<void> ensureInitialized() async {
     if (_isInitialized) return;
 
     await _googleSignIn.initialize(
       serverClientId:
-      '601648007192-kct8sttd56gea41ddplr6up6rvpnlf9u.apps.googleusercontent.com'
+          '601648007192-kct8sttd56gea41ddplr6up6rvpnlf9u.apps.googleusercontent.com',
     );
 
     _isInitialized = true;
@@ -37,53 +32,35 @@ class SocialAuthDataSourceImpl implements SocialAuthDatasource {
     try {
       await ensureInitialized();
 
-      final GoogleSignInAccount googleUser =
-      await _googleSignIn.authenticate();
+      final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
 
-      final GoogleSignInAuthentication googleAuth =
-          googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
 
-      final response =
-      await _authClient.signInWithCredential(
-        credential,
-      );
+      final response = await _authClient.signInWithCredential(credential);
 
       final user = response.user;
 
       if (user == null) {
-        throw AuthException(
-          'فشل تسجيل الدخول بواسطة Google',
-        );
+        throw AuthException('فشل تسجيل الدخول بواسطة Google');
       }
 
       return UserModel.fromFirebaseUser(user: user);
     } on GoogleSignInException catch (e) {
-      throw AuthException(
-        _mapGoogleSignInError(e.code),
-      );
+      throw AuthException(_mapGoogleSignInError(e.code));
     } on FirebaseAuthException catch (e) {
-      throw AuthException(
-        _mapFirebaseAuthError(
-          e.code,
-          provider: 'Google',
-        ),
-      );
+      throw AuthException(_mapFirebaseAuthError(e.code, provider: 'Google'));
     } on AuthException {
       rethrow;
     } catch (_) {
-      throw ServerException(
-        'حدث خطأ في الخادم، يرجى المحاولة لاحقاً',
-      );
+      throw ServerException('حدث خطأ في الخادم، يرجى المحاولة لاحقاً');
     }
   }
 
-  String _mapGoogleSignInError(
-      GoogleSignInExceptionCode code,
-      ) {
+  String _mapGoogleSignInError(GoogleSignInExceptionCode code) {
     switch (code) {
       case GoogleSignInExceptionCode.canceled:
         return 'تم إلغاء تسجيل الدخول';
@@ -105,10 +82,7 @@ class SocialAuthDataSourceImpl implements SocialAuthDatasource {
     }
   }
 
-  String _mapFirebaseAuthError(
-      String code, {
-        required String provider,
-      }) {
+  String _mapFirebaseAuthError(String code, {required String provider}) {
     switch (code) {
       case 'account-exists-with-different-credential':
         return 'يوجد حساب مرتبط بهذا البريد الإلكتروني بطريقة تسجيل دخول مختلفة';

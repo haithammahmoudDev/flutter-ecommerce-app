@@ -1,4 +1,5 @@
 part of 'verify_email_cubit.dart';
+
 enum VerifyEmailStatus {
   initial,
   checkLoading,

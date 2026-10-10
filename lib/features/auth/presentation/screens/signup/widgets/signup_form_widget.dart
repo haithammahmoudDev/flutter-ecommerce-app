@@ -1,5 +1,4 @@
 import 'package:fit_store/features/auth/presentation/bloc/email_auth_bloc/email_auth_bloc.dart';
-import 'package:fit_store/features/auth/presentation/cubit/verify_email_cubit/verify_email_cubit.dart';
 import 'package:fit_store/features/auth/presentation/screens/signup/widgets/terms_and_condition_oncheckbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +30,7 @@ class SignUpFormWidget extends StatelessWidget {
             if (state is EmailAuthLoading) {
               FullScreenLoader.openLoadingDialog(
                 'we are processing your information....',
-                TImages.docerAnimation,
+                AppImages.docerAnimation,
                 context,
               );
             }
@@ -62,8 +61,8 @@ class SignUpFormWidget extends StatelessWidget {
           },
           child: Container(
             padding: const EdgeInsets.only(
-              top: TSizes.xl - 15,
-              bottom: TSizes.xl,
+              top: AppSizes.xl - 15,
+              bottom: AppSizes.xl,
             ),
             child: Form(
               key: _signupFormKey,
@@ -71,24 +70,22 @@ class SignUpFormWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomFormfieldWidget.withdownEar(
-                    label: AppTexts.tFullName,
+                    label: AppTexts.fullName,
                     controller: fullName,
                     prefixIcon: Icon(LineAwesomeIcons.user),
                     validator: (String? value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Full name is required';
+                        return 'Name is required';
                       }
-                      if (value.trim().length < 3) {
-                        return 'Full name must be at least 3 characters';
+
+                      if (value.trim().length < 2) {
+                        return 'Name must be at least 2 characters long';
                       }
-                      final nameRegex = RegExp(r"^[a-zA-Z\s'-]+$");
-                      if (!nameRegex.hasMatch(value.trim())) {
-                        return 'Full name can only contain letters';
-                      }
+
                       return null;
                     },
                   ),
-                  const SizedBox(height: TSizes.xl - 20),
+                  const SizedBox(height: AppSizes.xl - 20),
                   CustomFormfieldWidget.withdownEar(
                     label: AppTexts.email,
                     controller: email,
@@ -97,36 +94,35 @@ class SignUpFormWidget extends StatelessWidget {
                       if (value == null || value.trim().isEmpty) {
                         return 'Email is required';
                       }
-                      final emailRegex = RegExp(
-                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                      );
-                      if (!emailRegex.hasMatch(value.trim())) {
-                        return 'Enter a valid email address';
+
+                      final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+                      if (!emailRegex.hasMatch(value)) {
+                        return 'Please enter a valid email address';
                       }
+
                       return null;
                     },
                   ),
-                  const SizedBox(height: TSizes.xl - 20),
+                  const SizedBox(height: AppSizes.xl - 20),
                   CustomFormfieldWidget.withdownEar(
-                    label: AppTexts.tPhoneNo,
+                    label: AppTexts.phoneNo,
                     controller: phoneNumber,
                     prefixIcon: Icon(LineAwesomeIcons.phone_solid),
                     validator: (String? value) {
                       if (value == null || value.trim().isEmpty) {
                         return 'Phone number is required';
                       }
-                      final digitsOnly = value.replaceAll(RegExp(r'\D'), '');
-                      if (digitsOnly.length < 10 || digitsOnly.length > 15) {
-                        return 'Enter a valid phone number';
+                      final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
+
+                      if (!phoneRegex.hasMatch(value)) {
+                        return 'Please enter a valid phone number';
                       }
-                      final phoneRegex = RegExp(r'^[\d\s\-\+\(\)]+$');
-                      if (!phoneRegex.hasMatch(value.trim())) {
-                        return 'Phone number contains invalid characters';
-                      }
+
                       return null;
                     },
                   ),
-                  const SizedBox(height: TSizes.xl - 20),
+                  const SizedBox(height: AppSizes.xl - 20),
                   CustomFormfieldWidget(
                     label: AppTexts.password,
                     controller: password,
@@ -135,35 +131,25 @@ class SignUpFormWidget extends StatelessWidget {
                       if (value == null || value.isEmpty) {
                         return 'Password is required';
                       }
-                      if (value.length < 8) {
-                        return 'Password must be at least 8 characters';
+
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters long';
                       }
-                      if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                        return 'Password must contain an uppercase letter';
-                      }
-                      if (!RegExp(r'[a-z]').hasMatch(value)) {
-                        return 'Password must contain a lowercase letter';
-                      }
-                      if (!RegExp(r'[0-9]').hasMatch(value)) {
-                        return 'Password must contain a number';
-                      }
-                      if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-                        return 'Password must contain a special character';
-                      }
+
                       return null;
                     },
                     withdownEar: false,
                   ),
-                  const SizedBox(height: TSizes.xl - 10),
+                  const SizedBox(height: AppSizes.xl - 10),
                   TermsAndConditionOncheckbox(
                     valueChanged: (bool value) => privacyPolicy = value,
                   ),
-                  const SizedBox(height: TSizes.xl - 10),
+                  const SizedBox(height: AppSizes.xl - 10),
                   BlocBuilder<EmailAuthBloc, EmailAuthState>(
                     builder: (context, state) {
                       return PrimaryButton(
                         isLoading: state is EmailAuthLoading,
-                        text: AppTexts.tSignup.tr,
+                        text: AppTexts.signup.tr,
                         onPressed: () {
                           if (_signupFormKey.currentState!.validate()) {
                             if (!privacyPolicy) {

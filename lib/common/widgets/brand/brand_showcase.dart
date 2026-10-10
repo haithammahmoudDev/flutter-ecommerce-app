@@ -40,10 +40,10 @@ class TBrandShowcase extends StatelessWidget {
 
     return RoundedContainer(
       showBorder: true,
-      borderColor: TColors.darkGrey,
+      borderColor: AppColors.darkGrey,
       backgroundColor: Colors.transparent,
-      padding: const EdgeInsets.all(TSizes.md),
-      margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
+      padding: const EdgeInsets.all(AppSizes.md),
+      margin: const EdgeInsets.only(bottom: AppSizes.spaceBtwItems),
       child: Column(
         children: [
            Brandcard(
@@ -67,7 +67,7 @@ class TBrandShowcase extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: TSizes.spaceBtwItems),
+          const SizedBox(height: AppSizes.spaceBtwItems),
 
            Row(
             children: paddedImages.map((image) {
@@ -75,7 +75,7 @@ class TBrandShowcase extends StatelessWidget {
                  return Expanded(
                   child: Container(
                     height: 100,
-                    margin: const EdgeInsets.only(right: TSizes.sm),
+                    margin: const EdgeInsets.only(right: AppSizes.sm),
                   ),
                 );
               }
@@ -92,9 +92,9 @@ class TBrandShowcase extends StatelessWidget {
     return Expanded(
       child: RoundedContainer(
         height: 100,
-        padding: const EdgeInsets.all(TSizes.md),
-        margin: const EdgeInsets.only(right: TSizes.sm),
-        backgroundColor: isDark ? TColors.disabledBackgroundLight : TColors.disabledBackgroundLight,
+        padding: const EdgeInsets.all(AppSizes.md),
+        margin: const EdgeInsets.only(right: AppSizes.sm),
+        backgroundColor: isDark ? AppColors.disabledBackgroundLight : AppColors.disabledBackgroundLight,
         child: CachedNetworkImage(
           fit: BoxFit.contain,
           imageUrl: image,

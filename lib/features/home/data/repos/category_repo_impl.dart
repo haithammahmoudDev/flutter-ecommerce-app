@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-
 import '../../../../common/errors/failure.dart';
-import '../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../common/local_storage/loacal_storage_service.dart';
 import '../../domain/entities/categories_entity.dart';
 import '../../domain/entities/product_entity.dart';
 import '../../domain/repos/category_repo.dart';
@@ -13,15 +12,20 @@ class CategoryRepoImpl implements CategoryRepo {
   @override
   Future<Either<Failure, List<CategoryEntity>>> fetchAllCategories() async {
     try {
-      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
-          .collection('categories')
-          .where('parentId', isEqualTo: "")
-          .get();
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('categories')
+              .where('parentId', isEqualTo: "")
+              .get();
       final List<CategoryModel> categoryModelList = querySnapshot.docs
-          .map((category) => CategoryModel.fromFirebaseJson(category.data(), category.id))
+          .map(
+            (category) =>
+                CategoryModel.fromFirebaseJson(category.data(), category.id),
+          )
           .toList();
-      final List<CategoryEntity> categoryEntityList =
-      categoryModelList.map((e) => e.toEntity()).toList();
+      final List<CategoryEntity> categoryEntityList = categoryModelList
+          .map((e) => e.toEntity())
+          .toList();
       await LocalStorageService.categoriesRepo.saveData(categoryModelList);
       return right(categoryEntityList);
     } catch (e) {
@@ -41,8 +45,9 @@ class CategoryRepoImpl implements CategoryRepo {
       final List<CategoryModel> subCategoriesModel = querySnapshot.docs
           .map((doc) => CategoryModel.fromFirebaseJson(doc.data(), doc.id))
           .toList();
-      final List<CategoryEntity> subCategories =
-      subCategoriesModel.map((e) => e.toEntity()).toList();
+      final List<CategoryEntity> subCategories = subCategoriesModel
+          .map((e) => e.toEntity())
+          .toList();
       await LocalStorageService.subCategoriesRepo.saveData(
         subCategoriesModel,
         customKey: categoryId,
@@ -50,19 +55,18 @@ class CategoryRepoImpl implements CategoryRepo {
 
       return right(subCategories);
     } catch (e) {
-      return left(const ServerFailure('Something went wrong. Please try again.'));
+      return left(
+        const ServerFailure('Something went wrong. Please try again.'),
+      );
     }
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> fetchProductsForCategory(
-      {required String categoryId}) async {
+  Future<Either<Failure, List<ProductEntity>>> fetchProductsForCategory({
+    required String categoryId,
+  }) async {
     try {
       final Map<String, ProductModel> productsById = {};
-
-      // 1) Products linked directly via the CategoryId field on the
-      //    product document itself (this only ever reflects the FIRST
-      //    category an admin picked when creating/editing the product).
       final directQuery = await FirebaseFirestore.instance
           .collection('Products')
           .where('CategoryId', isEqualTo: categoryId)
@@ -72,11 +76,6 @@ class CategoryRepoImpl implements CategoryRepo {
         final model = ProductModel.fromFirebaseJson(doc.data(), doc.id);
         productsById[model.id.isNotEmpty ? model.id : doc.id] = model;
       }
-
-      // 2) Products linked via the ProductCategory junction collection
-      //    (many-to-many: covers every category an admin picked, not just
-      //    the first one). Without this step, a product assigned to more
-      //    than one category only ever shows up under its first category.
       final linkQuery = await FirebaseFirestore.instance
           .collection('ProductCategory')
           .where('categoryId', isEqualTo: categoryId)
@@ -88,9 +87,6 @@ class CategoryRepoImpl implements CategoryRepo {
           .where((id) => id.isNotEmpty && !productsById.containsKey(id))
           .toSet()
           .toList();
-
-      // Firestore whereIn supports at most 30 values per query, so fetch
-      // the linked products in chunks.
       for (var i = 0; i < linkedProductIds.length; i += 30) {
         final chunk = linkedProductIds.sublist(
           i,
@@ -113,16 +109,24 @@ class CategoryRepoImpl implements CategoryRepo {
         return right(<ProductEntity>[]);
       }
 
-      final List<ProductEntity> productsEntity = products.map((e) => e.toEntity()).toList();
+      final List<ProductEntity> productsEntity = products
+          .map((e) => e.toEntity())
+          .toList();
 
-      await LocalStorageService.categoriesProductsRepo
-          .saveData(products, customKey: 'category_products_$categoryId');
+      await LocalStorageService.categoriesProductsRepo.saveData(
+        products,
+        customKey: 'category_products_$categoryId',
+      );
 
       return right(productsEntity);
     } on FirebaseException catch (e) {
-      return left(ServerFailure(e.message ?? 'حدث خطأ أثناء جلب البيانات من الخادم.'));
+      return left(
+        ServerFailure(e.message ?? 'حدث خطأ أثناء جلب البيانات من الخادم.'),
+      );
     } catch (e) {
-      return left(const ServerFailure('Something went wrong. Please try again.'));
+      return left(
+        const ServerFailure('Something went wrong. Please try again.'),
+      );
     }
   }
 }

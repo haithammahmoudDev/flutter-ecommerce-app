@@ -48,10 +48,10 @@ class AttributeWidget extends StatelessWidget {
                 onSelected: (selected) {
                   if (selected && isAvailable) onValueSelected(value);
                 },
-                selectedColor: TColors.primary,
-                labelStyle: TextStyle(color: isSelected ? Colors.white : (isAvailable ? isDark ? TColors.white : TColors.dark : isDark ? Colors.white30 :Colors.grey)),
+                selectedColor: AppColors.primary,
+                labelStyle: TextStyle(color: isSelected ? Colors.white : (isAvailable ? isDark ? AppColors.white : AppColors.dark : isDark ? Colors.white30 :Colors.grey)),
                 elevation: isSelected ? 5.0 : 0.0,
-                backgroundColor: isSelected ? TColors.primary : (isAvailable ? Colors.transparent : isDark ? TColors.dark : Colors.grey.shade200),
+                backgroundColor: isSelected ? AppColors.primary : (isAvailable ? Colors.transparent : isDark ? AppColors.dark : Colors.grey.shade200),
                 iconTheme: IconThemeData(color: isSelected ? Colors.white : Colors.black, size: 18),
                 padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
               ),

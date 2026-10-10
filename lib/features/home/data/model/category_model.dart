@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/categories_entity.dart';
 
 class CategoryModel {
@@ -36,10 +35,9 @@ class CategoryModel {
     );
   }
 
-  // تم تعديلها لتأخذ documentId الخاص بفايربيس
   factory CategoryModel.fromFirebaseJson(Map<String, dynamic> json, String documentId) {
     return CategoryModel(
-      id: documentId, // الـ ID الحقيقي من فايربيس
+      id: documentId,
       name: json['name'] ?? '',
       image: json['image'] ?? '',
       parentId: json['parentId'] ?? '',

@@ -1,16 +1,24 @@
 part of 'reset_password_cubit.dart';
 
-@immutable
-sealed class ResetPasswordState extends Equatable{
+
+sealed class ResetPasswordState extends Equatable {
+  const ResetPasswordState();
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 final class ResetPasswordInitial extends ResetPasswordState {}
+
 final class ResetPasswordLoading extends ResetPasswordState {}
+
 final class ResetPasswordSuccess extends ResetPasswordState {}
+
 final class ResetPasswordFailure extends ResetPasswordState {
   final String errorMessage;
-  ResetPasswordFailure({required this.errorMessage});
+
+  const ResetPasswordFailure({required this.errorMessage});
+
+  @override
+  List<Object?> get props => [errorMessage];
 }

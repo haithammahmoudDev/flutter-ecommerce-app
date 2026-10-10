@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../common/widgets/icons/t_circular_icon.dart';
-import '../../../../../../personalization/presentation/controllers/cart/cart_cubit.dart';
-import '../../../../../../personalization/presentation/controllers/cart/cart_state.dart';
 import '../../../../../../utils/constants/colors.dart';
 import '../../../../../../utils/constants/sizes.dart';
 import '../../../../../../utils/helpers/helper_functions.dart';
+import '../../../../../cart/presentation/controllers/cart/cart_cubit.dart';
+import '../../../../../cart/presentation/controllers/cart/cart_state.dart';
 import '../../../../data/model/product_model.dart';
 
 
@@ -26,14 +26,14 @@ class BottomAddToCart extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: TSizes.defaultSpace,
-        vertical: TSizes.defaultSpace / 2,
+        horizontal: AppSizes.defaultSpace,
+        vertical: AppSizes.defaultSpace / 2,
       ),
       decoration: BoxDecoration(
-        color: dark ? TColors.darkerGrey : TColors.white,
+        color: dark ? AppColors.darkerGrey : AppColors.white,
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(TSizes.cardRadiusLg),
-          topRight: Radius.circular(TSizes.cardRadiusLg),
+          topLeft: Radius.circular(AppSizes.cardRadiusLg),
+          topRight: Radius.circular(AppSizes.cardRadiusLg),
         ),
       ),
       child: BlocBuilder<CartCubit, CartState>(
@@ -46,30 +46,30 @@ class BottomAddToCart extends StatelessWidget {
             children: [
               Row(
                 children: [
-                   TCircularIcon(
+                   CircularIcon(
                     icon: Iconsax.minus,
-                    backgroundColor: TColors.darkGrey,
+                    backgroundColor: AppColors.darkGrey,
                     width: 40,
                     height: 40,
-                    color: TColors.white,
+                    color: AppColors.white,
                     onPressed: quantity < 1
                         ? null
                         : () => cartCubit.decrementProductQuantity(),
                   ),
-                  const SizedBox(width: TSizes.spaceBtwItems),
+                  const SizedBox(width: AppSizes.spaceBtwItems),
 
                    Text(
                     '$quantity',
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  const SizedBox(width: TSizes.spaceBtwItems),
+                  const SizedBox(width: AppSizes.spaceBtwItems),
 
-                   TCircularIcon(
+                   CircularIcon(
                     icon: Iconsax.add,
-                    backgroundColor: TColors.black,
+                    backgroundColor: AppColors.black,
                     width: 40,
                     height: 40,
-                    color: TColors.white,
+                    color: AppColors.white,
                     onPressed: () => cartCubit.incrementProductQuantity(),
                   ),
                 ],
@@ -80,16 +80,11 @@ class BottomAddToCart extends StatelessWidget {
                     ? null
                     : () => cartCubit.addToCart(product, context),
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(TSizes.md),
-                  backgroundColor: TColors.black,
-
-                  // 👈 لون النص عندما يكون الزر مفاعلاً (يعمل طبيعي)
+                  padding: const EdgeInsets.all(AppSizes.md),
+                  backgroundColor: AppColors.black,
                   foregroundColor: Colors.white,
-
-                  // 👈 لون النص عندما يكون الزر معطلاً (quantity < 1) مع مراعاة الـ Dark Mode
                   disabledForegroundColor: dark ? Colors.grey : Colors.black54,
-
-                  side: const BorderSide(color: TColors.black),
+                  side: const BorderSide(color: AppColors.black),
                 ),
                 child: const Text('Add to Cart'),
               ),

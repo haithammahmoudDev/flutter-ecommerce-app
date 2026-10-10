@@ -32,7 +32,7 @@ import '../custom_shapes/containers/circular_container.dart';
         padding: HelperFunctions.getColor(text) != null ? const EdgeInsets.all(0) : null,
         shape: HelperFunctions.getColor(text) != null ? const CircleBorder() : null,
         backgroundColor: HelperFunctions.getColor(text) != null ? HelperFunctions.getColor(text)! : null,
-        labelStyle: TextStyle(color: selected ? TColors.white : null),
+        labelStyle: TextStyle(color: selected ? AppColors.white : null),
       ),
     );
   }

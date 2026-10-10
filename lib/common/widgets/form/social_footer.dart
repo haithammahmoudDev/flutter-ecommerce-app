@@ -12,8 +12,8 @@ import '../buttons/social_button.dart';
 class SocialFooter extends StatelessWidget {
   const SocialFooter({
     super.key,
-    this.text1 = AppTexts.tDontHaveAnAccount,
-    this.text2 = AppTexts.tSignup,
+    this.text1 = AppTexts.donotHaveAnAccount,
+    this.text2 = AppTexts.signup,
     required this.onPressed,
   });
 
@@ -25,18 +25,18 @@ class SocialFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
-        top: TSizes.defaultSpace * 1.5,
-        bottom: TSizes.defaultSpace,
+        top: AppSizes.defaultSpace * 1.5,
+        bottom: AppSizes.defaultSpace,
       ),
       child: Column(
         children: [
           BlocBuilder<SocialAuthCubit, SocialAuthState>(
             builder: (context, state) {
               return TSocialButton(
-                image: TImages.tGoogleLogo,
-                background: TColors.googleBackgroundColor,
-                foreground: TColors.googleForegroundColor,
-                text: '${AppTexts.tConnectWith.tr} ${AppTexts.tGoogle.tr}',
+                image: AppImages.googleLogo,
+                background: AppColors.googleBackgroundColor,
+                foreground: AppColors.googleForegroundColor,
+                text: '${AppTexts.connectWith.tr} ${AppTexts.google.tr}',
                 isLoading: state is SocialAuthLoading,
                 onPressed: () {
                   context.read<SocialAuthCubit>().signInWithGoogle();
@@ -44,7 +44,7 @@ class SocialFooter extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: TSizes.defaultSpace * 2),
+          const SizedBox(height: AppSizes.defaultSpace * 2),
           ClickableRichTextWidget(
             text1: text1.tr,
             text2: text2.tr,

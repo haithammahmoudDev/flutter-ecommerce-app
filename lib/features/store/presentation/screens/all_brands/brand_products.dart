@@ -1,19 +1,16 @@
-// Path in project: lib/features/store/presentation/screens/all_brands/brand_products.dart
-
 import 'package:fit_store/common/widgets/appbar/home_appbar.dart';
 import 'package:fit_store/features/store/domain/entities/brand_entity.dart';
 import 'package:fit_store/features/store/presentation/controller/brand_cubit/brand_cubit.dart';
 import 'package:fit_store/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../common/widgets/brand/brandCard.dart';
 import '../../../../home/presentation/screens/all_products/sortable_products.dart';
 
 class BrandProducts extends StatefulWidget {
   const BrandProducts({super.key, required this.brand});
 
-  static const routeName = 'brand_products';
+  static const routeName = '/brand-products';
   final BrandEntity brand;
 
   @override
@@ -33,12 +30,11 @@ class _BrandProductsState extends State<BrandProducts> {
       appBar: TEComAppBar(title: Text(widget.brand.name), showBackArrow: true),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          padding: const EdgeInsets.all(AppSizes.defaultSpace),
           child: Column(
             children: [
-              /// Brand Detail
               Brandcard(showBorder: true, brand: widget.brand),
-              const SizedBox(height: TSizes.spaceBtwSections),
+              const SizedBox(height: AppSizes.spaceBtwSections),
 
               BlocBuilder<BrandCubit, BrandState>(
                 buildWhen: (previous, current) =>

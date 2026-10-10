@@ -27,8 +27,7 @@ class ProductVariationModel {
       sku: document['Sku']?.toString() ?? '',
       image: document['Image']?.toString() ?? '',
       description: document['Description']?.toString(),
-      // استخدام as num لتفادي مشاكل اختلاف نوع الأرقام بين int و double في Firebase
-      price: document['Price'] != null ? (document['Price'] as num).toDouble() : 0.0,
+       price: document['Price'] != null ? (document['Price'] as num).toDouble() : 0.0,
       salePrice: document['SalePrice'] != null ? (document['SalePrice'] as num).toDouble() : null,
       stock: document['Stock'] != null ? (document['Stock'] as num).toInt() : 0,
       attributeValues: document['AttributeValues'] != null
@@ -41,7 +40,6 @@ class ProductVariationModel {
     );
   }
 
-  /// Convert Model to Json to store in Firebase
   Map<String, dynamic> toJson() {
     return {
       'Id': id,
@@ -55,7 +53,6 @@ class ProductVariationModel {
     };
   }
 
-  /// دالة التحويل إلى Entity المخصصة لطبقة الـ Domain (العرض فقط)
   ProductVariationEntity toEntity() {
     return ProductVariationEntity(
       id: id,

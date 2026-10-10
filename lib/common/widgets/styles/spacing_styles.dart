@@ -4,24 +4,24 @@ import '../../../utils/constants/sizes.dart';
 
 class TSpacingStyle {
   static const EdgeInsetsGeometry paddingWithAppBarHeight = EdgeInsets.only(
-    top: TSizes.appBarHeight,
-    left: TSizes.defaultSpace,
-    bottom: TSizes.defaultSpace,
-    right: TSizes.defaultSpace,
+    top: AppSizes.appBarHeight,
+    left: AppSizes.defaultSpace,
+    bottom: AppSizes.defaultSpace,
+    right: AppSizes.defaultSpace,
   );
   static const EdgeInsetsGeometry paddingWithDefaultWidth = EdgeInsets.only(
-    left: TSizes.defaultSpace,
-    right: TSizes.defaultSpace,
+    left: AppSizes.defaultSpace,
+    right: AppSizes.defaultSpace,
   );
 
   static const EdgeInsetsGeometry paddingOnlyVertical = EdgeInsets.symmetric(
-    vertical: TSizes.defaultSpace,
+    vertical: AppSizes.defaultSpace,
   );
 
   static const EdgeInsetsGeometry paddingWithDefaultHeight = EdgeInsets.only(
-    top: TSizes.defaultSpace,
-    left: TSizes.defaultSpace,
-    bottom: TSizes.defaultSpace,
-    right: TSizes.defaultSpace,
+    top: AppSizes.defaultSpace,
+    left: AppSizes.defaultSpace,
+    bottom: AppSizes.defaultSpace,
+    right: AppSizes.defaultSpace,
   );
 }

@@ -1,9 +1,6 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:fit_store/common/errors/failure.dart';
-
-import '../../../auth/domain/entities/user_entity.dart';
 import '../entities/user_entity.dart';
 
 abstract class UserRepo {

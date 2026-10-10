@@ -11,7 +11,7 @@ class BrandTitleWithVerifiedIcon extends StatelessWidget {
     this.textColor,
     this.maxLines = 1,
     required this.title,
-    this.iconColor = TColors.dashboardAppbarBackground,
+    this.iconColor = AppColors.dashboardAppbarBackground,
     this.textAlign = TextAlign.center,
     this.brandTextSize = TextSizes.small,
   });
@@ -36,8 +36,8 @@ class BrandTitleWithVerifiedIcon extends StatelessWidget {
             brandTextSize: brandTextSize,
           ),
         ),
-        const SizedBox(width: TSizes.xs),
-        Icon(Iconsax.verify5, color: iconColor, size: TSizes.iconXs),
+        const SizedBox(width: AppSizes.xs),
+        Icon(Iconsax.verify5, color: iconColor, size: AppSizes.iconXs),
       ],
     );
   }

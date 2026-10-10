@@ -1,18 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_store/common/errors/failure.dart';
 import 'package:fit_store/common/network/firebase/database_services.dart';
-import 'package:fit_store/features/auth/domain/entities/user_entity.dart';
 import 'package:fit_store/features/settings/domain/repos/user_repo.dart';
-
 import '../../../../common/errors/exceptions.dart';
 import '../../../../common/network/firebase/auth_client.dart';
 import '../../../../common/network/firebase/storage_service.dart';
-import '../../../../common/preferences/loacal_storage_service.dart';
-import '../../../auth/data/models/user_model.dart';
+import '../../../../common/local_storage/loacal_storage_service.dart';
 import '../../domain/entities/user_entity.dart';
 import '../models/user_model.dart';
 

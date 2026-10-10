@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../../../utils/constants/text_strings.dart';
 
 class RememberMe extends StatefulWidget {
@@ -26,7 +25,7 @@ class _RememberMeState extends State<RememberMe> {
             setState(() {});
           },
         ),
-        const Text(AppTexts.tRememberMe),
+        const Text(AppTexts.rememberMe),
       ],
     );
   }

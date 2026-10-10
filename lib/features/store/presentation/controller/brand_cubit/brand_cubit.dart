@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fit_store/common/preferences/loacal_storage_service.dart';
+import 'package:fit_store/common/local_storage/loacal_storage_service.dart';
 import 'package:fit_store/features/store/domain/entities/brand_entity.dart';
 import 'package:fit_store/features/store/domain/repos/store_repo.dart';
 import '../../../../../utils/helpers/network_manager.dart';

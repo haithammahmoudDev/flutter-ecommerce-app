@@ -8,8 +8,6 @@ class ReviewEntity {
   final String comment;
   final DateTime createdAt;
   final DateTime? updatedAt;
-  final String? storeResponse;
-  final DateTime? storeResponseDate;
 
   const ReviewEntity({
     required this.id,
@@ -21,8 +19,6 @@ class ReviewEntity {
     required this.comment,
     required this.createdAt,
     this.updatedAt,
-    this.storeResponse,
-    this.storeResponseDate,
   });
 
   bool get isEdited => updatedAt != null;

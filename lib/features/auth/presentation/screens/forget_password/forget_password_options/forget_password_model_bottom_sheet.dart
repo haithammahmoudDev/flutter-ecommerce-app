@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../../utils/constants/sizes.dart';
 import '../../../../../../utils/constants/text_strings.dart';
 import '../forget_password_mail/forget_password_mail.dart';
@@ -13,16 +12,16 @@ class ForgetPasswordScreen {
         borderRadius: BorderRadius.circular(20.0),
       ),
       builder: (context) => Container(
-        padding: const EdgeInsets.all(TSizes.defaultSpace),
+        padding: const EdgeInsets.all(AppSizes.defaultSpace),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppTexts.tForgetPasswordTitle,
+              AppTexts.forgetPasswordTitle,
               style: Theme.of(context).textTheme.displayMedium,
             ),
             Text(
-              AppTexts.tForgetPasswordSubTitle,
+              AppTexts.forgetPasswordSubTitle,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 30.0),
@@ -37,14 +36,14 @@ class ForgetPasswordScreen {
                 );
               },
               title: AppTexts.email,
-              subTitle: AppTexts.tResetViaEMail,
+              subTitle: AppTexts.resetViaEMail,
               btnIcon: Icons.mail_outline_rounded,
             ),
             const SizedBox(height: 20.0),
             ForgetPasswordBtnWidget(
               onTap: () {},
-              title: AppTexts.tPhoneNo,
-              subTitle: AppTexts.tResetViaPhone,
+              title: AppTexts.phoneNo,
+              subTitle: AppTexts.resetViaPhone,
               btnIcon: Icons.mobile_friendly_rounded,
             ),
           ],

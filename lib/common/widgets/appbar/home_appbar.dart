@@ -20,14 +20,14 @@ class TEComAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: TSizes.md),
+      padding: const EdgeInsets.symmetric(horizontal: AppSizes.md),
       child: AppBar(
         automaticallyImplyLeading: false,
         scrolledUnderElevation: 0.0,
         centerTitle: false,
         leading:
             showBackArrow
-                ? IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Iconsax.arrow_left, color: dark ? TColors.white : TColors.dark))
+                ? IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Iconsax.arrow_left, color: dark ? AppColors.white : AppColors.dark))
                 : leadingIcon != null
                 ? IconButton(onPressed: leadingOnPressed, icon: Icon(leadingIcon))
                 : null,

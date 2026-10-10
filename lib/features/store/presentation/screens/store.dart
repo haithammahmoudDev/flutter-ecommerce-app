@@ -15,15 +15,15 @@ import '../../../../common/widgets/custom_shapes/containers/rounded_container.da
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
-import '../../../cart/screens/cart_menu_icon.dart';
+import '../../../cart/presentation/screens/cart_menu_icon.dart';
 import '../../../home/presentation/controller/categories_cubit/categories_cubit.dart';
-import '../../../home/presentation/screens/search_screen.dart';
+import '../../../home/presentation/screens/search/search_screen.dart';
 import '../../../home/presentation/screens/widgets/header_search_container.dart';
 import 'all_brands/all_brands.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
-  static const routeName = 'store_screen';
+  static const routeName = '/store-screen';
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class StoreScreen extends StatelessWidget {
               if (isLoading) {
                 final isDark = HelperFunctions.isDarkMode(context);
                 return Padding(
-                  padding: const EdgeInsets.all(TSizes.defaultSpace),
+                  padding: const EdgeInsets.all(AppSizes.defaultSpace),
                   child: Column(
                     children: [
                       const SizedBox(height: 50),
@@ -65,7 +65,7 @@ class StoreScreen extends StatelessWidget {
                                   ? Colors.grey[700]!
                                   : Colors.grey[100]!,
                               child: RoundedContainer(
-                                padding: const EdgeInsets.all(TSizes.sm),
+                                padding: const EdgeInsets.all(AppSizes.sm),
                                 showBorder: true,
                                 backgroundColor: Colors.transparent,
                                 child: Row(
@@ -93,16 +93,16 @@ class StoreScreen extends StatelessWidget {
               if (featuredCategories.isEmpty) {
                 return Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(TSizes.defaultSpace),
+                    padding: const EdgeInsets.all(AppSizes.defaultSpace),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Icon(
                           Iconsax.category,
                           size: 56,
-                          color: TColors.darkGrey,
+                          color: AppColors.darkGrey,
                         ),
-                        const SizedBox(height: TSizes.spaceBtwItems),
+                        const SizedBox(height: AppSizes.spaceBtwItems),
                         Text(
                           'No Categories Found',
                           style: Theme.of(context).textTheme.titleMedium,
@@ -122,7 +122,7 @@ class StoreScreen extends StatelessWidget {
                       SliverAppBar(
                         automaticallyImplyLeading: false,
                         backgroundColor: HelperFunctions.isDarkMode(context)
-                            ? TColors.black
+                            ? AppColors.black
                             : Colors.white,
                         surfaceTintColor: Colors.transparent,
                         expandedHeight: 440,
@@ -137,14 +137,14 @@ class StoreScreen extends StatelessWidget {
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         actions: [
-                          TCartCounterIcon(
-                            iconColor: TColors.iconSecondaryLight,
-                            counterBgColor: TColors.black,
-                            counterTextColor: TColors.white,
+                          CartCounterIcon(
+                            iconColor: AppColors.iconSecondaryLight,
+                            counterBgColor: AppColors.black,
+                            counterTextColor: AppColors.white,
                           ),
                         ],
                         flexibleSpace: Padding(
-                          padding: const EdgeInsets.all(TSizes.defaultSpace),
+                          padding: const EdgeInsets.all(AppSizes.defaultSpace),
                           child: ListView(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -154,11 +154,14 @@ class StoreScreen extends StatelessWidget {
                                 text: 'Search in Store',
                                 showBorder: true,
                                 showBackground: false,
-                                onTap: (){
-                                  Navigator.pushNamed(context, SearchScreen.routeName);
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    SearchScreen.routeName,
+                                  );
                                 },
                               ),
-                              const SizedBox(height: TSizes.spaceBtwItems),
+                              const SizedBox(height: AppSizes.spaceBtwItems),
                               SectionHeading(
                                 title: 'Featured Brands',
                                 onPressed: () {
@@ -183,7 +186,7 @@ class StoreScreen extends StatelessWidget {
                                 },
                               ),
                               const SizedBox(
-                                height: TSizes.spaceBtwItems / 1.5,
+                                height: AppSizes.spaceBtwItems / 1.5,
                               ),
                               BlocBuilder<BrandCubit, BrandState>(
                                 buildWhen: (previous, current) =>
@@ -210,7 +213,7 @@ class StoreScreen extends StatelessWidget {
                                               : Colors.grey[100]!,
                                           child: RoundedContainer(
                                             padding: const EdgeInsets.all(
-                                              TSizes.sm,
+                                              AppSizes.sm,
                                             ),
                                             showBorder: true,
                                             backgroundColor: Colors.transparent,
@@ -237,7 +240,7 @@ class StoreScreen extends StatelessWidget {
                                       FeaturedBrandsStatus.error) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
-                                        vertical: TSizes.spaceBtwItems * 1.5,
+                                        vertical: AppSizes.spaceBtwItems * 1.5,
                                       ),
                                       child: Center(
                                         child: Column(
@@ -246,10 +249,11 @@ class StoreScreen extends StatelessWidget {
                                             const Icon(
                                               Iconsax.warning_2,
                                               size: 36,
-                                              color: TColors.darkGrey,
+                                              color: AppColors.darkGrey,
                                             ),
                                             const SizedBox(
-                                              height: TSizes.spaceBtwItems / 2,
+                                              height:
+                                                  AppSizes.spaceBtwItems / 2,
                                             ),
                                             Text(
                                               state.errorMessage ??
@@ -258,7 +262,7 @@ class StoreScreen extends StatelessWidget {
                                                   .textTheme
                                                   .bodyMedium
                                                   ?.copyWith(
-                                                    color: TColors.darkGrey,
+                                                    color: AppColors.darkGrey,
                                                   ),
                                               textAlign: TextAlign.center,
                                             ),
@@ -294,7 +298,7 @@ class StoreScreen extends StatelessWidget {
                           preferredSize: const Size.fromHeight(kToolbarHeight),
                           child: ColoredBox(
                             color: HelperFunctions.isDarkMode(context)
-                                ? TColors.black
+                                ? AppColors.black
                                 : Colors.white,
                             child: TTabBar(
                               tabs: featuredCategories

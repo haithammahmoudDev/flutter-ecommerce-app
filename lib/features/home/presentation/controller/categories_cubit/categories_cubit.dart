@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:fit_store/features/home/domain/entities/categories_entity.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/home/domain/repos/category_repo.dart';
-import '../../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../../../utils/helpers/network_manager.dart';
 
 part 'categories_state.dart';

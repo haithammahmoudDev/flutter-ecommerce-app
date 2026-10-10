@@ -5,12 +5,12 @@ import 'package:fit_store/utils/constants/image_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../../personalization/presentation/screens/profile/re_authenticate_user_login_form.dart';
 import '../../../../../utils/popups/full_screen_loader.dart';
 import '../../../../../utils/popups/loaders.dart';
 import '../../../../auth/presentation/screens/login/login_screen.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/repos/user_repo.dart';
+import '../../screens/profile/re_authenticate_user_login_form.dart';
 
 part 'user_state.dart';
 
@@ -117,7 +117,7 @@ class UserCubit extends Cubit<UserState> {
   Future<void> deleteAccount(BuildContext context) async {
     FullScreenLoader.openLoadingDialog(
       'Processing...',
-      TImages.docerAnimation,
+      AppImages.docerAnimation,
       context,
     );
 
@@ -178,7 +178,7 @@ class UserCubit extends Cubit<UserState> {
   }) async {
     FullScreenLoader.openLoadingDialog(
       'Processing...',
-      TImages.docerAnimation,
+      AppImages.docerAnimation,
       context,
     );
 

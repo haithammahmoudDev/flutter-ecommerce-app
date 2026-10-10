@@ -17,8 +17,6 @@ class ForgetPasswordBtnWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    //Use for Dark Theme
     final dark = HelperFunctions.isDarkMode(context);
 
     return GestureDetector(
@@ -27,8 +25,7 @@ class ForgetPasswordBtnWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: dark ? TColors.secondary : Colors.grey.shade200,
-          // color: Colors.grey.shade200,
+          color: dark ? AppColors.secondary : Colors.grey.shade200,
         ),
         child: Row(
           children: [

@@ -1,7 +1,4 @@
-
 import '../../../settings/data/models/user_model.dart';
-import '../models/user_model.dart';
-
 
 abstract class EmailAuthDatasource {
   Future<UserModel> signUp({

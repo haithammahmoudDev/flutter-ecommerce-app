@@ -14,7 +14,7 @@ class TVerticalImageAndText extends StatelessWidget {
     required this.image,
     required this.title,
     this.backgroundColor,
-    this.textColor = TColors.white,
+    this.textColor = AppColors.white,
   });
 
   final Color textColor;
@@ -28,7 +28,7 @@ class TVerticalImageAndText extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(right: TSizes.spaceBtwItems),
+        padding: const EdgeInsets.only(right: AppSizes.spaceBtwItems),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

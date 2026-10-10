@@ -9,19 +9,19 @@ class TOutlinedButtonTheme {
 
    static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: TColors.secondary,
-      side: const BorderSide(color: TColors.secondary),
-      padding: const EdgeInsets.symmetric(vertical: TSizes.buttonHeight),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TSizes.borderRadiusLg)),
+      foregroundColor: AppColors.secondary,
+      side: const BorderSide(color: AppColors.secondary),
+      padding: const EdgeInsets.symmetric(vertical: AppSizes.buttonHeight),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg)),
     ),
   );
 
   static final darkOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: TColors.white,
-      side: const BorderSide(color: TColors.white),
-      padding: const EdgeInsets.symmetric(vertical: TSizes.buttonHeight),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TSizes.borderRadiusLg)),
+      foregroundColor: AppColors.white,
+      side: const BorderSide(color: AppColors.white),
+      padding: const EdgeInsets.symmetric(vertical: AppSizes.buttonHeight),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.borderRadiusLg)),
     ),
   );
 }

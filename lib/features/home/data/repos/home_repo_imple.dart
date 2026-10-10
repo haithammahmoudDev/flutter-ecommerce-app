@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fit_store/common/preferences/local_reo.dart';
+import 'package:fit_store/common/local_storage/local_reo.dart';
 import 'package:fit_store/features/home/domain/entities/banners_entity.dart';
 import 'package:fit_store/features/home/domain/entities/product_entity.dart';
 import 'package:fit_store/features/home/domain/repos/home_repo.dart';
@@ -9,9 +9,9 @@ import 'package:hive_ce_flutter/adapters.dart';
 
 import '../../../../common/errors/failure.dart';
 import '../../../../common/network/firebase/database_services.dart';
-import '../../../../common/preferences/loacal_storage_service.dart';
+import '../../../../common/local_storage/loacal_storage_service.dart';
 import '../../../../utils/helpers/network_manager.dart';
-import '../../../../utils/search_utils.dart';
+import '../../../../utils/search/search_utils.dart';
 import '../../domain/entities/categories_entity.dart';
 import '../model/category_model.dart';
 import '../model/banners_model.dart';
